@@ -1,0 +1,68 @@
+<div [hidden]="totalCount === 0">
+  <bc-table [dataSource]="datasource" [fixed]="false" *ngIf="totalCount !== 0">
+    <ng-container [columnDef]="columns.SOURCE">
+      <bc-header-cell *headerCellDef>{{'data-table.columns.source' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        {{('data-overview.source-system.' + column.source_system) | translate}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.MUNICIPALITY">
+      <bc-header-cell *headerCellDef>{{'data-table.columns.municipality' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        <span *ngIf="!column.municipality_id; else municipality">{{'data-table.notAvailable' | translate}}</span>
+        <ng-template #municipality>{{column.municipality_name}} ({{column.municipality_id}})</ng-template>
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.LATESTUPDATE">
+      <bc-header-cell *headerCellDef>{{'data-table.columns.latestUpdate' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        {{column.audit_info.modified_at | localDate: true}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.DURATION">
+      <bc-header-cell *headerCellDef>{{'data-table.columns.duration' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        {{column.total_elapsed_milliseconds}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.CREATEDBY">
+      <bc-header-cell *headerCellDef>{{'data-table.columns.uploadedBy' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        {{column.audit_info.created_by_name}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.RECORDS">
+      <bc-header-cell *headerCellDef>{{'data-table.columns.records' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        <div class="people-container">
+          {{column.import_records_count_total | number}}
+        </div>
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.STATE">
+      <bc-header-cell *headerCellDef>{{'data-table.columns.state' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        <app-data-import-status-icon [status]="column.import_status"></app-data-import-status-icon>
+      </bc-data-cell>
+    </ng-container>
+    <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+    <bc-data-row
+      *dataRowDef="let row; columns: columnsToDisplay"
+      class="pointer"
+      [class.selected]="row.id === selectedRow?.id"
+      (click)="selectRow(row)"
+    ></bc-data-row>
+  </bc-table>
+  <bc-paginator
+    showFirstLastButtons
+    (page)="paginatorListener($event)"
+    [length]="pagination.length"
+    [pageSize]="pagination.pageSize"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]">
+  </bc-paginator>
+</div>
+<div *ngIf="totalCount === 0">
+  <div>
+    <p class="empty-text">{{'data-table.no-data' | translate}}</p>
+  </div>
+</div>

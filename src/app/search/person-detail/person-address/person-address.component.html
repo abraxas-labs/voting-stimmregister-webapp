@@ -1,0 +1,28 @@
+<bc-card [sideStripe]="true">
+  <bc-card-header>
+    <bc-card-title [label]="'person.address-title' | translate"></bc-card-title>
+  </bc-card-header>
+  <bc-card-content>
+    <div class="address-content" #address>
+      <ng-container *ngIf="person.contactAddressLines.length === 0; else addressLines">
+        {{person.firstName}} {{person.officialName}}<br />
+        {{person.contactAddressStreet}} {{person.contactAddressHouseNumber}}<br *ngIf="person.contactAddressStreet && person.contactAddressHouseNumber">
+        {{person.contactAddressPostOfficeBoxText}} {{person.contactAddressPostOfficeBoxNumber}}<br *ngIf="person.contactAddressPostOfficeBoxText || person.contactAddressPostOfficeBoxNumber"/>
+        {{person.contactAddressZipCode}} {{person.contactAddressTown}}
+      </ng-container>
+      <ng-template #addressLines>
+        <ng-container *ngFor="let line of person.contactAddressLines">
+          {{line}} <br />
+        </ng-container>
+      </ng-template>
+    </div>
+    <bc-divider></bc-divider>
+    <div class="address-copy">
+      <bc-button
+        [variant]="'tertiary'"
+        [label]="'shared.action.copy' | translate"
+        [cdkCopyToClipboard]="addressText"
+      ></bc-button>
+    </div>
+  </bc-card-content>
+</bc-card>

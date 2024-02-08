@@ -1,0 +1,38 @@
+@use '@abraxas/voting-lib/style/color' as *;
+
+.details {
+  padding: 1rem;
+  border: solid 1px $color-grey-4;
+  border-radius: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+
+  h5 {
+    margin-bottom: .3rem;
+    font-weight: bold;
+  }
+
+  > div {
+    min-width: 6rem;
+  }
+
+  .spacer {
+    flex-basis: 100%;
+  }
+
+  &.processing-error {
+    border-color: $color-error;
+    border-width: 2px;
+
+    .processing-error-detail h5 {
+      font-weight: bolder;
+      color: $color-error;
+    }
+
+    .processing-error-detail span {
+      overflow-wrap: break-word;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.bc-column-actuality {
+  width: 4%;
+}
+
+.actuality {
+
+  &__true {
+    color: #1c9048;
+  }
+
+  &__false {
+    color: #ffa000;
+  }
+}
+
+.bc-column-date-of-birth {
+  width: 5%;
+}
+
+.bc-column-contact-address-swiss-zip-code {
+  width: 4%;
+}
+
+.bc-column-country {
+  width: 5%;
+}
+
+.bc-column-is-voting-allowed {
+  width: 5%;
+}

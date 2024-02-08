@@ -1,0 +1,16 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
+export enum ImportStatus {
+  IMPORT_STATUS_UNSPECIFIED = 0,
+  IMPORT_STATUS_QUEUED = 1,
+  IMPORT_STATUS_RUNNING = 2,
+  IMPORT_STATUS_ABORTED = 3,
+  IMPORT_STATUS_FINISHEDWITHERRORS = 4,
+  IMPORT_STATUS_FINISHEDSUCCESSFULLY = 5,
+  IMPORT_STATUS_STALE = 6,
+  IMPORT_STATUS_FAILED = 7,
+}

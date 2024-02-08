@@ -1,0 +1,7 @@
+<div class="content">
+  <bc-text class="content-description" [readonly]="true" [appearance]="'compact'" [value]="'person.attribute-label.'+title | translate"></bc-text>
+  <div class="content-data">
+    <bc-text *ngIf="content" [readonly]="true" [appearance]="'compact'" [value]="content"></bc-text>
+    <bc-text *ngIf="!content" [readonly]="true" [appearance]="'compact'" [value]="'-'"></bc-text>
+  </div>
+</div>

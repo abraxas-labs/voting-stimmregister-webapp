@@ -1,0 +1,17 @@
+<bc-label class="filter-criteria-label" [label]="'shared.filter-labels.'+ criteria.referenceId | translate"></bc-label>
+<div class="value">
+  <bc-icon *ngIf="criteria.filterDataType === 'date' || criteria.filterDataType === 'string' || criteria.filterDataType === 'numeric'"
+           [icon]="criteria.filterOperator | changeCase: 'kebab-case' "></bc-icon>
+  <ng-container [ngSwitch]="criteria.filterDataType">
+    <span *ngSwitchCase="'string'">{{criteria.filterValue}}</span>
+    <span *ngSwitchCase="'date'">{{criteria.filterValue | localDate}}</span>
+    <span *ngSwitchCase="'numeric'">{{criteria.filterValue | number}}</span>
+    <span *ngSwitchCase="'boolean'">{{'boolean.' + criteria.filterValue | translate}}</span>
+    <span *ngSwitchCase="'select'">{{ 'select-items.' + criteria.referenceId + '.' + criteria.filterValue | translate }}</span>
+    <div *ngSwitchCase="'multiselect'">
+    <span *ngFor="let value of criteria.filterValue">
+      {{ 'select-items.' + criteria.referenceId + '.' + value | translate }}
+    </span>
+    </div>
+  </ng-container>
+</div>

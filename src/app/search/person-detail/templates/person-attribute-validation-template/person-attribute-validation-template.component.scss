@@ -1,0 +1,84 @@
+.content {
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 10px;
+  margin-top: 10px;
+
+  &-description {
+    flex-grow: 1;
+    width: 60%;
+    max-width: 60%;
+  }
+
+  bc-text.content-description {
+    width: inherit;
+  }
+
+  &-data {
+    width: 40%;
+    max-width: 40%;
+    flex-grow: 1;
+    padding-left: 5px;
+    padding-right: 5px;
+    display: table;
+    align-items: center;
+
+    .validation-icon {
+      display: table-cell;
+      vertical-align: middle;
+      padding-right: 0.4rem;
+    }
+
+    &-text {
+      display: table-cell;
+    }
+  }
+}
+
+.tooltip ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 1.5rem;
+  padding-right: 0;
+}
+
+.tooltip {
+  border-radius: 3px;
+  padding: 4px 8px;
+  display: none;
+  z-index: 9999;
+}
+
+.tooltip[data-show] {
+  display: block;
+}
+
+.arrow,
+.arrow span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+}
+
+.arrow span {
+  content: '';
+  transform: rotate(45deg);
+  z-index: 0;
+  background: #333;
+}
+
+.tooltip[data-popper-placement^='top'] > .arrow {
+  bottom: -4px;
+}
+
+.tooltip[data-popper-placement^='bottom'] > .arrow {
+  top: -4px;
+}
+
+.tooltip[data-popper-placement^='left'] > .arrow {
+  right: -4px;
+}
+
+.tooltip[data-popper-placement^='right'] > .arrow {
+  left: -4px;
+}

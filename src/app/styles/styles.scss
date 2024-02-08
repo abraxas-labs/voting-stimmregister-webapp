@@ -1,0 +1,16 @@
+@use '~normalize.css/normalize';
+@use '@abraxas/voting-lib/style' as *;
+
+@import './layout';
+@import './shared';
+@import './overrides';
+@import './table';
+@import '../../../node_modules/bootstrap/dist/css/bootstrap-grid.css';
+
+@include layout();
+@include shared();
+@include overrides();
+
+.custom-dialog-container .mat-dialog-container {
+  padding: 0;
+}

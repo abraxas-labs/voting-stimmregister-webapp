@@ -1,0 +1,77 @@
+@use '@abraxas/voting-lib/style/color' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e6eff1;
+
+  .cancel-icon {
+    color: #005d76;
+    margin: 1rem;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #393939;
+    }
+  }
+
+  &__buttons {
+    margin-right: 1rem;
+  }
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem 1rem 0;
+
+  .criteria {
+    display: flex;
+    padding: 1rem;
+    column-gap: 1.5rem;
+  }
+}
+
+.table {
+  padding: 1rem 1rem 5rem;
+}
+
+.version {
+  background-color: #fff6e6;
+}
+
+.version-deadline {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+}
+
+.audit-details {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+
+  .value {
+    justify-self: end;
+  }
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 450;
+  color: $color-grey-3;
+}

@@ -1,0 +1,47 @@
+.backwards-icon {
+  color: #005d76;
+  margin: 1rem;
+}
+
+.person-header {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2rem;
+  row-gap: .75rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  justify-content: space-between;
+
+  span {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__actuality {
+    &__true {
+      color: #1c9048;
+    }
+
+    &__false {
+      color: #ffa000;
+    }
+  }
+
+  &__votingRight {
+    margin-top: -2px;
+    white-space: nowrap;
+  }
+}
+
+.search {
+  width: 95%;
+}
+
+.address span {
+  display: block;
+}
+
+::ng-deep .cards > * {
+  flex: 1 1 max(30%, 20rem);
+}

@@ -1,0 +1,20 @@
+<div class="content">
+  <bc-text class="content-description" [readonly]="true" [appearance]="'compact'" [value]="'person.attribute-label.'+title | translate"></bc-text>
+  <div class="content-data">
+    <div #tooltip class="tooltip">
+      <ul>
+        <li *ngFor="let message of validationInfo">
+          {{message}}
+        </li>
+      </ul>
+      <div class="arrow" #arrow data-popper-arrow><span></span></div>
+    </div>
+    <span #validationIcon class="validation-icon" *ngIf="!!validationInfo">
+      <bc-icon
+        [iconColor]="'warning'"
+        [icon]="'exclamation-circle-o'"
+      ></bc-icon>
+    </span>
+    <bc-text [readonly]="true" [appearance]="'compact'" [value]="content || '-'"></bc-text>
+  </div>
+</div>

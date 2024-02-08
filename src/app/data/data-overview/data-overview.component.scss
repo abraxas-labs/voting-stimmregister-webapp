@@ -1,0 +1,42 @@
+.content {
+  height: 100%;
+  display: flex;
+
+  &__imports {
+    padding: 2rem;
+    width: 60%;
+    height: 82vh;
+    overflow: auto;
+
+    > * + * {
+      margin-top: 2rem;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+
+      h5 {
+        font-size: 18px;
+        color: #575757;
+        line-height: 24px;
+      }
+    }
+  }
+
+  &__history {
+    width: 40%;
+    padding: 2rem;
+
+    h5 {
+      font-size: 18px;
+      color: #575757;
+      line-height: 24px;
+    }
+  }
+}
+
+.empty-text {
+  font-size: 14px;
+  line-height: 16px;
+}

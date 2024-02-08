@@ -1,0 +1,9 @@
+<bc-button
+  [color]="color"
+  [label]="label"
+  [variant]="variant"
+  [type]="type"
+  [disabled]="disabled || loading"
+  (buttonClick)="clicked.next()"
+></bc-button>
+<bc-spinner *ngIf="loading"></bc-spinner>

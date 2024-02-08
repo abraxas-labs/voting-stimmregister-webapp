@@ -1,0 +1,11 @@
+<app-filter-fields (searchEvent)="search($event)"
+                   (resetCriteria)="resetCriteria.emit()"
+                   [canSaveFilter]="canSaveFilter"
+                   [criteria]="currentCriteria"
+                   (criteriaChange)="onCriteriaChanged($event)"></app-filter-fields>
+<app-person-table [criteria]="currentCriteria"
+                  [searchType]="searchType"
+                  [(pageSize)]="pageSize"
+                  (pageSizeChange)="pageSizeChange.emit($event)"
+                  [(pageIndex)]="pageIndex"
+                  (pageIndexChange)="pageIndexChange.emit($event)"></app-person-table>

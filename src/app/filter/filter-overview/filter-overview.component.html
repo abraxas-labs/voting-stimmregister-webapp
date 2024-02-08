@@ -1,0 +1,48 @@
+<div class="filter-container" *ngIf="loaded">
+  <div class="header">
+    <div>
+      <h5>{{'filter-overview.title' | translate}}</h5>
+    </div>
+    <div></div>
+    <div>
+      <bc-button *ngIf="isManager" [variant]="'tertiary'" [icon]="'plus'" [label]="'filter-overview.create-filter' | translate"
+                 (buttonClick)="openCreateView()"></bc-button>
+    </div>
+  </div>
+  <div>
+    <div *ngIf="filters.data.length === 0">
+      <p class="empty-text">{{'filter-overview.empty' | translate}}</p>
+    </div>
+    <bc-table [dataSource]="filters" [fixed]="false" *ngIf="filters.data.length !== 0">
+      <ng-container [columnDef]="columns.NAME">
+        <bc-header-cell *headerCellDef>{{'filter-overview.table.name'| translate}}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row">
+          {{row[columns.NAME]}}
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.DESCRIPTION">
+        <bc-header-cell *headerCellDef>{{'filter-overview.table.description'| translate}}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row">
+          {{row[columns.DESCRIPTION]}}
+        </bc-data-cell>
+      </ng-container>
+
+      <ng-container [columnDef]="columns.LATEST_VERSION">
+        <bc-header-cell *headerCellDef>{{'filter-overview.table.latestVersion'| translate}}</bc-header-cell>
+        <bc-data-cell *dataCellDef="let row">
+          <span *ngIf="row.latestVersion">
+            {{'filter-overview.table.latestVersionContent' | translate: { name: row.latestVersion.name, deadline: (row.latestVersion.deadline | localDate) } }}
+            <br />
+            {{'filter-overview.table.latestVersionCountContent' | translate: {count: (row.latestVersion.count | number)} }}
+          </span>
+        </bc-data-cell>
+      </ng-container>
+
+      <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+      <bc-data-row *dataRowDef="let row; columns: columnsToDisplay"
+                   class="pointer"
+                   (click)="openDetailView(row)"></bc-data-row>
+    </bc-table>
+  </div>
+</div>

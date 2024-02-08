@@ -1,0 +1,10 @@
+<div class="content">
+  <bc-text class="content-description" [readonly]="true" [appearance]="'compact'" [value]="'person.attribute-label.eVoting' | translate"></bc-text>
+  <div class="content-data" [class.content-error]="!eVotingFlag">
+    <bc-text class="content-data-text" [readonly]="true" [appearance]="'compact'" [value]="('eVoting.' + (eVotingFlag)) | translate"></bc-text>
+    <bc-icon class="success" icon="check-circle" *ngIf="eVotingFlag; else error"></bc-icon>
+    <ng-template #error>
+      <div class="error"></div>
+    </ng-template>
+  </div>
+</div>

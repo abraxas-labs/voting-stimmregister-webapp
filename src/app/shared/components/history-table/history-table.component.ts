@@ -1,0 +1,102 @@
+/**
+ * (c) Copyright by Abraxas Informatik AG
+ *
+ * For license information see LICENSE file.
+ */
+
+import { Component, ErrorHandler, EventEmitter, Input, Output } from "@angular/core";
+import { PageEvent } from "@abraxas/base-components";
+import { HistoryColumn } from "./history-column";
+import { ImportStatisticService } from "../../../services/import-statistic.service";
+import { ImportStatistic } from "../../../models/data/importStatistic.model";
+import { BehaviorSubject } from "rxjs";
+
+@Component({
+  selector: "app-history-table",
+  templateUrl: "./history-table.component.html",
+  styleUrls: ["./history-table.component.scss"]
+})
+export class HistoryTableComponent {
+
+  public columns = HistoryColumn;
+  public columnsToDisplay: string[] = [
+    HistoryColumn.LATESTUPDATE,
+    HistoryColumn.DURATION,
+    HistoryColumn.PERSONS,
+    HistoryColumn.STATE
+  ];
+
+  public hasDetail: boolean = false;
+  public isLoading: boolean = false;
+
+  public totalCount: number = 0;
+  public datasource = new BehaviorSubject<ImportStatistic[]>([]);
+
+  public pagination: PageEvent = {
+    length: 0,
+    pageIndex: 0,
+    pageSize: 10,
+    previousPageIndex: 0,
+  };
+
+  public importStats: ImportStatistic | undefined;
+
+  @Input()
+  public set importStatistic(importStats: ImportStatistic | undefined) {
+    this.importStats = importStats;
+    this.loadData();
+  }
+
+  @Input()
+  public selectedStatistic?: ImportStatistic;
+
+  @Output()
+  private selectedStatisticChange = new EventEmitter<ImportStatistic>();
+
+  constructor(
+    private readonly importStatisticService: ImportStatisticService,
+    private readonly errorHandler: ErrorHandler) {
+  }
+
+  public selectHistory(row: ImportStatistic) {
+    if (row.id === this.selectedStatistic?.id) {
+      return;
+    }
+
+    this.selectedStatistic = row;
+    this.selectedStatisticChange.emit(row);
+  }
+
+  private async loadData(): Promise<void> {
+    if (this.importStats === undefined) {
+      this.datasource.next([]);
+      this.totalCount = 0;
+      this.hasDetail = false;
+      return;
+    }
+
+    this.isLoading = true;
+    try {
+      const response = await this.importStatisticService.getHistoryOfImport(
+        this.importStats.import_type,
+        this.importStats.source_system,
+        this.importStats.municipality_id,
+        this.pagination.pageIndex,
+        this.pagination.pageSize);
+        
+      this.datasource.next(response.importStatistics);
+      this.totalCount = response.totalCount;
+      this.pagination.length = this.totalCount;
+      this.hasDetail = true;
+    } catch (e) {
+      this.errorHandler.handleError(e);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  paginatorListener(page: PageEvent) {
+    this.pagination = page;
+    this.loadData();
+  }
+}

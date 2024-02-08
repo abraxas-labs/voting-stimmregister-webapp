@@ -1,0 +1,18 @@
+@use '@abraxas/voting-lib/style/color' as *;
+
+::ng-deep bc-label.filter-criteria-label label {
+  font-weight: 450;
+  color: $color-grey-3;
+}
+
+.value {
+  display: flex;
+  align-items: center;
+  column-gap: .3rem;
+
+  span {
+    font-size: .8rem;
+    font-weight: 400;
+    display: block;
+  }
+}

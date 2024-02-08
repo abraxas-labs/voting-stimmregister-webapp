@@ -1,0 +1,138 @@
+<div *ngIf="totalCount === 0">
+  <div class="mb-3">
+    <p *ngIf="!loading; else loadingSpinner">{{'person-search.result' | translate}} {{'person-search.no-results' | translate}}</p>
+    <ng-template #loadingSpinner>
+      <app-labeled-spinner *ngIf="loading"></app-labeled-spinner>
+    </ng-template>
+  </div>
+</div>
+<div [hidden]="totalCount === 0">
+  <div>
+    <app-labeled-spinner *ngIf="loading; else count" class="mb-2"></app-labeled-spinner>
+    <ng-template #count>
+      <p>{{'person-search.result' | translate}}{{totalCount | number}}</p>
+      <p *ngIf="invalidCount > 0" class="italic"><bc-icon class="color-warning" icon="exclamation-triangle-o"></bc-icon> {{ 'person-search.invalid-count' | translate: {count: invalidCount | number} }}</p>
+    </ng-template>
+  </div>
+  <app-fixed-space-loading-bar [loading]="loading"></app-fixed-space-loading-bar>
+  <bc-table [dataSource]="datasource" [fixed]="false" *ngIf="totalCount !== 0">
+    <ng-container [columnDef]="columns.actuality">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.actuality | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        <bc-icon *ngIf="person[columns.actuality]; else outOfDate"
+                 [icon]="'checkmark'"
+                 class="actuality__true"
+                 [title]="('person.actuality' | translate) + (person.actualityDate | localDate: true)"
+        >
+        </bc-icon>
+        <ng-template #outOfDate>
+          <bc-icon [icon]="'exclamation-circle-o'"
+                   class="actuality__false"
+                   [title]="('person.actuality' | translate) + (person.actualityDate | localDate: true)"
+          ></bc-icon>
+        </ng-template>
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.officialName">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.officialName | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.officialName}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.firstName">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.firstName | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.firstName}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.dateOfBirth">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.dateOfBirth | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.dateOfBirth | localDate}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.street">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.street | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.contactAddressStreet}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.houseNumber">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.houseNumber | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.contactAddressHouseNumber}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.zipCode">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.zipCode | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.contactAddressZipCode}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.town">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.town | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.contactAddressTown}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.countryNameShort">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.countryNameShort | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.countryNameShort ? person.countryNameShort : person.country}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.locality">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.locality | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        <span *ngIf="!person.isSwissAbroad; else swissAbroad">{{person.contactAddressLocality || person.municipalityName}} ({{person.municipalityId}})</span>
+        <ng-template #swissAbroad>
+          <span>{{person.municipalityName}} ({{person.municipalityId}})</span>
+        </ng-template>
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.residence">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.residence | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{person.typeOfResidence}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.source">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.source | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        {{('data-overview.source-system.' + person.sourceSystemName) | translate}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.isVotingAllowed">
+      <bc-header-cell *headerCellDef>{{'person-table.columns.' + columns.isVotingAllowed | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let person">
+        <bc-status-label *ngIf="person.isVotingAllowed"
+                         [backgroundColor]="'#e8f4ed'"
+                         [width]="'60px'"
+                         [label]="'person-table.votingRight.yes' | translate"
+        ></bc-status-label>
+        <bc-status-label *ngIf="!person.isVotingAllowed"
+                         [backgroundColor]="'#c60000'"
+                         [foregroundColor]="'light'"
+                         [width]="'60px'"
+                         [label]="'person-table.votingRight.no' | translate"
+        ></bc-status-label>
+      </bc-data-cell>
+    </ng-container>
+
+    <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+    <bc-data-row
+      *dataRowDef="let row; columns: columnsToDisplay"
+      class="pointer"
+      (click)="openDetailView(row.registerId)"
+    ></bc-data-row>
+  </bc-table>
+  <bc-paginator
+    showFirstLastButtons
+    (page)="selectPage($event)"
+    [length]="totalCount"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]">
+  </bc-paginator>
+</div>
+<bc-divider></bc-divider>

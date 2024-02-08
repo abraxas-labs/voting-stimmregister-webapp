@@ -1,0 +1,50 @@
+<h5>{{'data-overview.history' | translate}}</h5>
+<bc-spinner *ngIf="isLoading"></bc-spinner>
+<div [hidden]="totalCount === 0">
+  <bc-table [dataSource]="datasource" [fixed]="false" *ngIf="totalCount !== 0">
+    <ng-container [columnDef]="columns.LATESTUPDATE">
+      <bc-header-cell *headerCellDef>{{'history-table.columns.latestDate' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        {{column.audit_info.modified_at | localDate: true}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.DURATION">
+      <bc-header-cell *headerCellDef>{{'history-table.columns.duration' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        {{column.total_elapsed_milliseconds}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.PERSONS">
+      <bc-header-cell *headerCellDef>{{'history-table.columns.persons' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        {{column.import_records_count_total | number}}
+      </bc-data-cell>
+    </ng-container>
+    <ng-container [columnDef]="columns.STATE">
+      <bc-header-cell *headerCellDef>{{'history-table.columns.state' | translate}}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let column">
+        <app-data-import-status-icon [status]="column.import_status"></app-data-import-status-icon>
+      </bc-data-cell>
+    </ng-container>
+
+    <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+    <bc-data-row *dataRowDef="let row; columns: columnsToDisplay"
+                 [class.selected]="row.id === selectedStatistic?.id"
+                 class="pointer"
+                 (click)="selectHistory(row)"
+    ></bc-data-row>
+  </bc-table>
+  <bc-paginator
+    showFirstLastButtons
+    (page)="paginatorListener($event)"
+    [length]="pagination.length"
+    [pageSize]="pagination.pageSize"
+    [pageSizeOptions]="[5, 10, 20, 50, 100]">
+  </bc-paginator>
+</div>
+
+<div *ngIf="!isLoading && totalCount === 0">
+  <div>
+    <p class="empty-text">{{hasDetail ?  'history-table.empty' : 'history-table.no-data' | translate}}</p>
+  </div>
+</div>
