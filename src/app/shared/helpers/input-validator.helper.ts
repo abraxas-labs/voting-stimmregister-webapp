@@ -19,7 +19,7 @@ export class InputValidatorHelper {
   }
 
   public static getComplexSlText(): string {
-    return "^[A-Za-z0-9\\u0080-\\uFFFF_! '()+,\-./:?@\\\\]{0,200}$";
+    return "^[A-Za-z0-9\\u0080-\\uFFFF _!\?+\-@,\.:'\(\)\/—\"«»;&–`´’\+\*%]{0,200}$";
   }
 
   public static getExactDate(): RegExp {

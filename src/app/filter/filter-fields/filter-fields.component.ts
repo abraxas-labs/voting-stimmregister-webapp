@@ -57,6 +57,13 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
   public async ngOnInit(): Promise<void> {
     this.isManager = await this.roleService.isManager();
     this.updateAttributes();
+    
+    // VOTING-3928: convert string value to a boolean in order for checkboxes to initialize properly
+    this.criteria.forEach((criteria: FilterCriteria) => {
+      if(criteria.filterDataType === 'boolean') {
+        criteria.filterValue = criteria.filterValue === 'true';
+      }
+    });
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

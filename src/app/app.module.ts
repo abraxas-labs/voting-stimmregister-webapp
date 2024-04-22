@@ -55,6 +55,8 @@ import { PersonTableComponent } from "./shared/components/person-table/person-ta
 import { MatTableModule } from "@angular/material/table";
 import { FilterOverviewComponent } from "./filter/filter-overview/filter-overview.component";
 import { DataOverviewComponent } from "./data/data-overview/data-overview.component";
+import { RegistrationStatisticsComponent } from "./registration/registration-statistics/registration-statistics.component";
+import { RegistrationStatisticsTableComponent } from "./registration/registration-statistics-table/registration-statistics-table.component";
 import { FilterFieldsComponent } from "./filter/filter-fields/filter-fields.component";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { DataTableComponent } from "./shared/components/data-table/data-table.component";
@@ -100,6 +102,7 @@ import { LabeledSpinnerComponent } from './shared/components/labeled-spinner/lab
 import { PersonAddressComponent } from './search/person-detail/person-address/person-address.component';
 import { IfHasAnyRoleDirective } from "./shared/directives/if-has-any-role.directive";
 import { ENV_INJECTION_TOKEN, VotingLibModule } from "@abraxas/voting-lib";
+import { FilterTableComponent } from "./filter/filter-table/filter-table.component";
 
 @NgModule({
     imports: [
@@ -159,6 +162,8 @@ import { ENV_INJECTION_TOKEN, VotingLibModule } from "@abraxas/voting-lib";
     PersonDetailComponent,
     FilterOverviewComponent,
     DataOverviewComponent,
+    RegistrationStatisticsComponent,
+    RegistrationStatisticsTableComponent,
     PersonAttributeTemplateComponent,
     PersonAttributeValidationTemplateComponent,
     PersonAttributeAdvancedTemplateComponent,
@@ -185,6 +190,7 @@ import { ENV_INJECTION_TOKEN, VotingLibModule } from "@abraxas/voting-lib";
     FixedSpaceLoadingBarComponent,
     LabeledSpinnerComponent,
     PersonAddressComponent,
+    FilterTableComponent,
   ],
   bootstrap: [AppComponent],
   providers: [

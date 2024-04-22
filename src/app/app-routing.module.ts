@@ -13,6 +13,7 @@ import { RoleGuard } from "./core/guards/role.guard";
 import { SearchOverviewComponent } from "./search/search-overview/search-overview.component";
 import { FilterOverviewComponent } from "./filter/filter-overview/filter-overview.component";
 import { DataOverviewComponent } from "./data/data-overview/data-overview.component";
+import { RegistrationStatisticsComponent } from "./registration/registration-statistics/registration-statistics.component";
 import { MainLayoutComponent } from "./layouts/main-layout/main-layout.component";
 import { PersonDetailComponent } from "./search/person-detail/person-detail.component";
 import { FilterDetailComponent } from "./filter/filter-detail/filter-detail.component";
@@ -113,6 +114,15 @@ export const APP_ROUTES: Routes = [
             data: {
               guardList: [IsAuthenticatedGuard, TenantGuard, RoleGuard],
               role: [AccessRole.Reader, AccessRole.Manager],
+            },
+          },
+          {
+            path: 'registration',
+            component: RegistrationStatisticsComponent,
+            canActivate: [MultiGuard],
+            data: {
+              guardList: [IsAuthenticatedGuard, TenantGuard, RoleGuard],
+              role: [AccessRole.EVotingStatisticsReader],
             },
           },
           {

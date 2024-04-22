@@ -8,4 +8,5 @@ export enum FilterColumn {
   NAME = 'name',
   DESCRIPTION = 'description',
   LATEST_VERSION = 'latestVersion',
+  TENANT_NAME = 'tenantName',
 }

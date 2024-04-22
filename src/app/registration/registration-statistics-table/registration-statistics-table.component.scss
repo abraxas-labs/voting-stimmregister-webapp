@@ -1,0 +1,41 @@
+.bc-column-municipality-name {
+  width: 20%;
+}
+
+.bc-column-registrations-count {
+  width: 12%;
+}
+
+.bc-column-deregistration-count {
+  width: 12%;
+}
+
+.bc-column-total-evoter-count {
+  width: 12%;
+}
+
+.bc-column-total-voter-count {
+  width: 12%;
+}
+
+.bc-column-evoter-share {
+  width: 12%;
+}
+
+.bc-column-evoter-share-chart {
+  width: 20%;
+}
+
+.bar-container {
+  width: 100%;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.bar {
+  height: 20px;
+  background-color: #4caf50;
+  text-align: right;
+  color: white;
+  line-height: 20px;
+}

@@ -80,7 +80,7 @@ export class HandleVersionPopupComponent {
 
   private buildForm(): FormGroup {
     return this.formBuilder.group({
-      description: ['', [Validators.required, Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.minLength(2), Validators.maxLength(150)]],
+      description: ['', [Validators.required, Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.minLength(2), Validators.maxLength(150)]],
       date: ['', Validators.pattern(InputValidatorHelper.getExactDate())]
     })
   }

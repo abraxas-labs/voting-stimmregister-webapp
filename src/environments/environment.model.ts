@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import {AuthenticationConfig, AuthorizationConfig, UserConfig} from '@abraxas/base-components';
+import { AuthenticationConfig, AuthorizationConfig, UserConfig } from '@abraxas/base-components';
 
 export interface Environment {
   production: boolean;
@@ -15,4 +15,6 @@ export interface Environment {
   userConfig: UserConfig;
   serviceUrl: string;
   restApiEndpoint: string;
+  maxEvoterSharePercentage: number;
+  thresholdEvoterSharePercentage: number;
 }

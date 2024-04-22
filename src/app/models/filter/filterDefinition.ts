@@ -15,6 +15,8 @@ export interface FilterDefinition {
   latestVersion?: FilterVersion;
   criteria: FilterCriteria[];
   versions: FilterVersion[];
+  tenantName: string;
+  tenantId: string;
 }
 
 export function newFilter(criteria: FilterCriteria[]): FilterDefinition {
@@ -24,5 +26,7 @@ export function newFilter(criteria: FilterCriteria[]): FilterDefinition {
     description: '',
     name: '',
     id: uuid.NIL.toString(),
+    tenantName: '',
+    tenantId: '',
   };
 }

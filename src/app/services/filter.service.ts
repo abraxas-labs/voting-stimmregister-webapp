@@ -102,6 +102,8 @@ export class FilterService {
       id: model.id!,
       name: model.name!,
       versions: this.mapVersions(model.versions!),
+      tenantName: model.tenantName!,
+      tenantId: model.tenantId!,
     };
   }
 

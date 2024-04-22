@@ -130,7 +130,7 @@
       "residentialDistrictCircleName": "Wohnviertel Name",
       "peopleCircleId": "Volkszählkreis Identifikator",
       "peopleCircleName": "Volkszählkreis Name",
-      "hasValidationErrors" : "Validierungsfehler",
+      "hasValidationErrors": "Validierungsfehler",
       "sendVotingCardsToDomainOfInfluenceReturnAddress": "Nicht zustellen",
       "eVoting": "E-Voting"
     },
@@ -153,17 +153,20 @@
   "filter-overview": {
     "title": "Filter Übersicht",
     "create-filter": "Filter erstellen",
-    "empty" : "Es sind keine Filter vorhanden.",
+    "empty": "Es sind keine Filter vorhanden.",
+    "my-filter": "Meine Filter",
+    "aggregate-filter": "Aggregierte Filter",
     "table": {
       "name": "Name",
       "description": "Beschreibung",
       "latestVersion": "Letzte Version",
       "latestVersionContent": "{{name}} per {{deadline}}",
-      "latestVersionCountContent": "{{count}} Personen"
+      "latestVersionCountContent": "{{count}} Personen",
+      "tenantName": "Ersteller (Mandant)"
     }
   },
-  "filter-version-popup" : {
-    "empty" : "Es sind keine Versionen vorhanden."
+  "filter-version-popup": {
+    "empty": "Es sind keine Versionen vorhanden."
   },
   "filter": {
     "loadVersion": "Version laden",
@@ -171,7 +174,7 @@
     "saveVersion": "Version erstellen",
     "edit": "Filter bearbeiten",
     "rename": "Umbenennen",
-    "deadline" : "Stichtag",
+    "deadline": "Stichtag",
     "version": "Version",
     "actuality": "Aktueller Stand",
     "newestVersionOfFilter": "aktuell"
@@ -224,7 +227,7 @@
     },
     "record-error-table": {
       "record": "Zeile",
-      "record_identifier" : "Identifikation",
+      "record_identifier": "Identifikation",
       "field": "Feld",
       "error": "Fehlermeldung"
     },
@@ -259,7 +262,27 @@
       "municipality": "Gemeinde",
       "origin": "Herkunftssystem"
     },
-    "notAvailable" : "n/a"
+    "notAvailable": "n/a"
+  },
+  "registration": {
+    "statistics": {
+      "title": "Statistik Anmeldeverfahren",
+      "empty": "Es sind keine Daten vorhanden.",
+      "result": "Anzahl Resultate: ",
+      "no-results": "Keine Resultate gefunden.",
+      "topLevelAuthorityName": "Kanton",
+      "table": {
+        "columns": {
+          "municipalityName": "Gemeinde",
+          "registrationsCount": "Anmeldungen",
+          "deregistrationCount": "Abmeldungen",
+          "totalEvoterCount": "Total E-Voter",
+          "totalVoterCount": "Total Stimmberechtigte",
+          "evoterShare": "Anteil E-Voter",
+          "evoterShareChart": "0 - 30 %"
+        }
+      }
+    }
   },
   "upload-data": {
     "fileValidationError": "Die ausgewählte Datei muss vom Typ {{ fileExt }} sein und darf nicht grössser als 600MB sein.",
@@ -311,7 +334,8 @@
   "navigation": {
     "search": "Personensuche",
     "filter": "Filter",
-    "data": "Daten"
+    "data": "Daten",
+    "registration": "Anmeldeverfahren"
   },
   "shared": {
     "loading": "Lade Daten…",
@@ -405,7 +429,7 @@
       "residentialDistrictCircleName": "Wohnviertel (Name)",
       "peopleCircleId": "Volkszählkreis (id)",
       "peopleCircleName": "Volkszählkreis (Name)",
-      "hasValidationErrors" :"Validierungsfehler",
+      "hasValidationErrors": "Validierungsfehler",
       "sendVotingCardsToDomainOfInfluenceReturnAddress": "Nicht zustellen",
       "actions": {
         "contains": ""

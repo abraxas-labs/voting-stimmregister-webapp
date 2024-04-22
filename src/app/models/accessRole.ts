@@ -12,4 +12,5 @@ export enum AccessRole {
   Exporter = 'Exporter',
   Manager = 'Manager',
   Reader = 'Reader',
+  EVotingStatisticsReader = 'EVotingStatisticsReader',
 }

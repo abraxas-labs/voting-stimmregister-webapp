@@ -5,6 +5,7 @@
  */
 
 import { Component } from "@angular/core";
+import { AccessRole } from "../../models/accessRole";
 
 @Component({
   selector: "app-main-layout",
@@ -12,6 +13,9 @@ import { Component } from "@angular/core";
   styleUrls: ["./main-layout.component.scss"]
 })
 export class MainLayoutComponent {
+
+  public readonly roles: typeof AccessRole = AccessRole;
+
   public isDetailSite() {
     return window.location.pathname.includes("person") || (window.location.pathname.includes("filter") && !window.location.pathname.includes("filters"));
   }
