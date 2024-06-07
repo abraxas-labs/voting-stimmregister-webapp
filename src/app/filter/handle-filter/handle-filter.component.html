@@ -9,7 +9,7 @@
       <bc-button *ngIf="!isNew && !isLoading"
         [variant]="'tertiary'"
         [label]="'shared.action.delete' | translate"
-        [color]="'error'"
+        [color]="'warn'"
         (buttonClick)="openDeletePopup()"
       ></bc-button>
       <bc-button *ngIf="!isNew && !isLoading"
@@ -34,12 +34,14 @@
         [label]="'handle-filter.name' | translate"
         [optionalText]="''"
         class="form__name"
+        subscriptSizing="dynamic"
       ></bc-text>
       <bc-text
         [formControlName]="'description'"
         [label]="'handle-filter.description' | translate"
         [optionalText]="''"
         class="form__description"
+        subscriptSizing="dynamic"
       ></bc-text>
     </form>
     <bc-divider></bc-divider>

@@ -7,10 +7,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { VersionColumn } from "./version-column";
 import { TableDataSource } from "@abraxas/base-components";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { FilterDefinition } from "../../../models/filter/filterDefinition";
 import { FilterVersion } from "../../../models/filter/filterVersion";
 import { Router } from "@angular/router";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-filter-version-popup',

@@ -5,14 +5,14 @@
  */
 
 import { Injectable, Injector } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateFn } from '@angular/router';
 import { Observable, from, of } from 'rxjs';
 import { concatMap, first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MultiGuard implements CanActivate {
+export class MultiGuard  {
   public constructor(public readonly injector: Injector) {}
   public canActivate(
     route: ActivatedRouteSnapshot,
@@ -20,7 +20,9 @@ export class MultiGuard implements CanActivate {
   ): Observable<boolean | UrlTree> {
     return from(route.data.guardList).pipe(
       concatMap((value: any) => {
-        const guard = this.injector.get<CanActivate>(value);
+        const guard = this.injector.get<{
+    canActivate: CanActivateFn;
+}>(value);
         const result = guard.canActivate(route, state);
         if (result instanceof Observable) {
           return result;

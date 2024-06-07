@@ -4,8 +4,8 @@
  * For license information see LICENSE file.
  */
 
-import {Component, EventEmitter, Inject, Output} from '@angular/core';
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-delete-popup',

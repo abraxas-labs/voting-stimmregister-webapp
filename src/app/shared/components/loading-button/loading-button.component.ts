@@ -22,10 +22,10 @@ export class LoadingButtonComponent {
   public label = '';
 
   @Input()
-  public color: 'primary' | 'basic' | 'error' = 'primary';
+  public color: 'primary' | 'warn' | undefined;
 
   @Input()
-  public variant: 'primary' | 'secondary' | 'tertiary' = 'primary';
+  public variant: 'primary' | 'secondary' | 'tertiary-tonal' | 'tertiary' = 'primary';
 
   @Input()
   public type: 'button' | 'submit' | 'reset' = 'button';

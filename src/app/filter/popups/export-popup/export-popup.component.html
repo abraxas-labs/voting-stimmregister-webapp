@@ -12,6 +12,7 @@
     [(ngModel)]="type"
     [required]="true"
     [disabled]="exporting"
+    subscriptSizing="dynamic"
   ></bc-dropdown>
   <div *ngIf="invalidPersonCount > 0" class="invalid-persons-warning">
     <bc-icon class="color-warning" icon="exclamation-triangle-o"></bc-icon>

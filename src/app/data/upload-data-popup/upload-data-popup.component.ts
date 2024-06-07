@@ -5,7 +5,6 @@
  */
 
 import { Component, ErrorHandler, EventEmitter, OnInit, Output } from "@angular/core";
-import { MatDialogRef } from "@angular/material/dialog";
 import { TranslateService } from "@ngx-translate/core";
 import { DropdownItem } from "@abraxas/base-components";
 import { ImportType } from "../../models/data/importType";
@@ -15,6 +14,7 @@ import { ImportSourceSystem } from "../../models/data/importSourceSystem";
 import { AccessRole } from "../../models/accessRole";
 import { RoleService } from "../../services/role.service";
 import { filterAsync } from "../../shared/helpers/array.helper";
+import { MatDialogRef } from "@angular/material/dialog";
 
 const typeOffset = 100;
 

@@ -3,6 +3,7 @@
   align-items: stretch;
   margin-bottom: 10px;
   margin-top: 10px;
+  flex-wrap: wrap;
 
   &-description {
     flex-grow: 1;
@@ -10,7 +11,7 @@
     max-width: 60%;
   }
 
-  bc-text.content-description {
+  bc-readonly.content-description {
     width: inherit;
   }
 

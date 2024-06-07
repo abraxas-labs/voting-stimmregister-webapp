@@ -7,8 +7,8 @@
 import { Component, Inject } from "@angular/core";
 import { DropdownItem } from "@abraxas/base-components";
 import { TranslateService } from "@ngx-translate/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { ExportService } from "../../../services/export.service";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 enum ExportType {
   CSV = "csv",

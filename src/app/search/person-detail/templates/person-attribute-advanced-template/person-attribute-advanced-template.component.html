@@ -1,8 +1,8 @@
 <div class="content">
-  <bc-text class="content-description" [readonly]="true" [appearance]="'compact'" [value]="'person.attribute-label.' + title | translate"></bc-text>
+  <bc-readonly class="content-description">{{'person.attribute-label.' + title | translate}}</bc-readonly>
   <div class="content-data" [class.content-error]="!valid">
-    <bc-text *ngIf="content" class="content-data-text" [readonly]="true" [appearance]="'compact'" [value]="content"></bc-text>
-    <bc-text *ngIf="!content" class="content-data-text" [readonly]="true" [appearance]="'compact'" [value]="'-'"></bc-text>
+    <bc-readonly *ngIf="content">{{content}}</bc-readonly>
+    <bc-readonly *ngIf="!content">-</bc-readonly>
     <bc-icon class="success" icon="check-circle" *ngIf="valid"></bc-icon>
     <bc-icon class="error" icon="exclamation-triangle-o" *ngIf="!valid"></bc-icon>
   </div>

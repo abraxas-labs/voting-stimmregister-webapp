@@ -16,7 +16,6 @@ import { GRPC_INTERCEPTORS, GrpcCoreModule, GrpcLoggerModule } from "@ngx-grpc/c
 import { GrpcWebClientModule } from "@ngx-grpc/grpc-web-client";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
-import { MatDialogModule } from "@angular/material/dialog";
 import { GlobalErrorHandler } from "./core/handlers/global.errorHandler";
 import { LoadingInterceptor } from "./core/interceptors/loading.interceptor";
 import { MainLayoutComponent } from "./layouts/main-layout/main-layout.component";
@@ -38,8 +37,6 @@ import {
 } from "@abraxas/base-components";
 import { BaseComponentsModule } from "./modules/base-components/base-components.module";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
 import { WebpackTranslateLoader } from "./services/webpack-translate-loader";
 import { GrpcAuthInterceptor } from "./core/interceptors/grpc-auth.interceptor";
 import { GrpcErrorToastInterceptor } from "./core/interceptors/grpc-error-toast.interceptor";
@@ -52,7 +49,6 @@ import { LoadingButtonComponent } from "./shared/components/loading-button/loadi
 import { IfHasRoleDirective } from "./shared/directives/if-has-role.directive";
 import { SearchOverviewComponent } from "./search/search-overview/search-overview.component";
 import { PersonTableComponent } from "./shared/components/person-table/person-table.component";
-import { MatTableModule } from "@angular/material/table";
 import { FilterOverviewComponent } from "./filter/filter-overview/filter-overview.component";
 import { DataOverviewComponent } from "./data/data-overview/data-overview.component";
 import { RegistrationStatisticsComponent } from "./registration/registration-statistics/registration-statistics.component";
@@ -80,7 +76,6 @@ import { FilterVersionPopupComponent } from "./filter/popups/filter-version-popu
 import { HandleFilterComponent } from "./filter/handle-filter/handle-filter.component";
 import { HandleVersionPopupComponent } from "./filter/popups/handle-version-popup/handle-version-popup.component";
 import { DeletePopupComponent } from "./shared/components/delete-popup/delete-popup.component";
-import { MatMenuModule } from "@angular/material/menu";
 import { ExportPopupComponent } from "./filter/popups/export-popup/export-popup.component";
 import { MatIconModule } from "@angular/material/icon";
 import { TranslatedPaginatorIntl } from "./shared/helpers/translatedPaginatorIntl";
@@ -103,6 +98,11 @@ import { PersonAddressComponent } from './search/person-detail/person-address/pe
 import { IfHasAnyRoleDirective } from "./shared/directives/if-has-any-role.directive";
 import { ENV_INJECTION_TOKEN, VotingLibModule } from "@abraxas/voting-lib";
 import { FilterTableComponent } from "./filter/filter-table/filter-table.component";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatTableModule } from "@angular/material/table";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatMenuModule } from "@angular/material/menu";
 
 @NgModule({
     imports: [
@@ -249,6 +249,12 @@ import { FilterTableComponent } from "./filter/filter-table/filter-table.compone
     {
       provide: PaginatorIntl,
       useClass: TranslatedPaginatorIntl
+    },
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        subscriptSizing: 'dynamic'
+      }
     },
     DecimalPipe,
     LocalDatePipe,

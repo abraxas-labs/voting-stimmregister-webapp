@@ -11,6 +11,7 @@
   align-items: stretch;
   margin-bottom: 10px;
   margin-top: 10px;
+  flex-wrap: wrap;
 
   &-description {
     flex-grow: 1;
@@ -18,7 +19,7 @@
     max-width: 60%;
   }
 
-  bc-text.content-description {
+  bc-readonly.content-description {
     width: inherit;
   }
 
@@ -29,7 +30,7 @@
     padding-left: 5px;
     padding-right: 5px;
     background-color: #e8f4ed;
-    display: table;
+    display: flex;
     align-items: center;
 
     .success,

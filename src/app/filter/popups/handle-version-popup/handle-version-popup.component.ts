@@ -5,13 +5,13 @@
  */
 
 import { Component, EventEmitter, Inject, Output } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { FilterDefinition } from "../../../models/filter/filterDefinition";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { InputValidatorHelper } from "../../../shared/helpers/input-validator.helper";
 import { FilterVersion } from "../../../models/filter/filterVersion";
 import { FilterService } from "../../../services/filter.service";
 import { ToastService } from "../../../services/toast.service";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 export interface HandleVersionPopupData {
   filter: FilterDefinition;

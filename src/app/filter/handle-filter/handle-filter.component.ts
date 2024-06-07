@@ -9,7 +9,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { FilterDefinition, newFilter } from "../../models/filter/filterDefinition";
 import { FilterService } from "../../services/filter.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { MatDialog } from "@angular/material/dialog";
 import { DeletePopupComponent } from "../../shared/components/delete-popup/delete-popup.component";
 import { InputValidatorHelper } from "src/app/shared/helpers/input-validator.helper";
 import { buildFilterDefaultCriteria } from "../../models/filter/filterCriteria";
@@ -18,6 +17,7 @@ import { TextComponent } from "@abraxas/base-components/lib/components/formfield
 import { ToastService } from "../../services/toast.service";
 import { PersonService } from "../../services/person.service";
 import { PersonSearchType } from "../../models/person/personSearchParameters";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-edit-filter',

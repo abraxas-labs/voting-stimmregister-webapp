@@ -18,13 +18,13 @@ import { LocalDatePipe } from "../../shared/pipes/localDate.pipe";
 import { ExportPopupComponent, ExportPopupData } from "../popups/export-popup/export-popup.component";
 import { FilterVersion } from "../../models/filter/filterVersion";
 import { FilterCriteria } from "../../models/filter/filterCriteria";
-import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
 import { RoleService } from "../../services/role.service";
 import { TranslateService } from "@ngx-translate/core";
 import { ToastService } from "../../services/toast.service";
 import { PersonSearchType } from "../../models/person/personSearchParameters";
 import { PersonTableComponent } from "../../shared/components/person-table/person-table.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-filter-detail',

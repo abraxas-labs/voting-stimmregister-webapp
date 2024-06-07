@@ -1,4 +1,4 @@
-# ✨ Changelog (`v1.79.2`)
+# ✨ Changelog (`v2.0.0`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v1.79.2
-Previous version ---- v1.79.1
+This version -------- v2.0.0
+Previous version ---- v1.79.2
 Initial version ----- v1.77.15
 Total commits ------- 1
 ```
+
+## [v2.0.0] - 2024-06-06
+
+BREAKING CHANGE: Angular 17 update
+
+### 🔄 Changed
+
+- angular 17 update
 
 ## [v1.79.2] - 2024-06-03
 

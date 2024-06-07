@@ -5,14 +5,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { AuthorizationService } from '@abraxas/base-components';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TenantGuard implements CanActivate {
+export class TenantGuard  {
   constructor(
     private readonly authorizationService: AuthorizationService,
     private readonly storage: OAuthStorage

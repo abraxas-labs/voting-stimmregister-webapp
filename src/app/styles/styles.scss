@@ -1,4 +1,4 @@
-@use '~normalize.css/normalize';
+@use '../../../node_modules/normalize.css/normalize.css';
 @use '@abraxas/voting-lib/style' as *;
 
 @import './layout';
@@ -11,6 +11,12 @@
 @include shared();
 @include overrides();
 
-.custom-dialog-container .mat-dialog-container {
+.custom-dialog-container .mat-mdc-dialog-container {
   padding: 0;
+}
+
+bc-readonly {
+  height: 35px;
+  align-content: center;
+  text-wrap: nowrap;
 }

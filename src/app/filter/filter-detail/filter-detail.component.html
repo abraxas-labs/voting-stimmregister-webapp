@@ -38,7 +38,7 @@
       </div>
       <div>
         <bc-button *ngIf="!isNewest && isManager" [variant]="'tertiary'" [label]="'filter.rename' | translate" (buttonClick)="openRenameVersionPopup()"></bc-button>
-        <bc-button *ngIf="!isNewest && isManager" [variant]="'tertiary'" [label]="'shared.action.delete' | translate" [color]="'error'"
+        <bc-button *ngIf="!isNewest && isManager" [variant]="'tertiary'" [label]="'shared.action.delete' | translate" [color]="'warn'"
                    (buttonClick)="openDeleteVersion()"></bc-button>
         <bc-button *ngIf="isManager" [variant]="'tertiary'" [disabled]="!isNewest" [label]="'filter.edit' | translate" (click)="editFilter()"></bc-button>
       </div>

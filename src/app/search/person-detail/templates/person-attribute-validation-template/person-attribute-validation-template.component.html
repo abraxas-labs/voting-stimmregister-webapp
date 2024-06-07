@@ -1,5 +1,5 @@
 <div class="content">
-  <bc-text class="content-description" [readonly]="true" [appearance]="'compact'" [value]="'person.attribute-label.'+title | translate"></bc-text>
+  <bc-readonly class="content-description">{{'person.attribute-label.'+title | translate}}</bc-readonly>
   <div class="content-data">
     <div #tooltip class="tooltip">
       <ul>
@@ -15,6 +15,6 @@
         [icon]="'exclamation-circle-o'"
       ></bc-icon>
     </span>
-    <bc-text [readonly]="true" [appearance]="'compact'" [value]="content || '-'"></bc-text>
+    <bc-readonly class="content-description">{{content || '-'}}</bc-readonly>
   </div>
 </div>

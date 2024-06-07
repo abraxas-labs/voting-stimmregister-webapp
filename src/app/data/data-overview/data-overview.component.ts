@@ -9,7 +9,6 @@ import {
   SegmentedControl
 } from "@abraxas/base-components/lib/components/formfields/segmented-control-group/segmented-control.model";
 import { TranslateService } from "@ngx-translate/core";
-import { MatDialog } from "@angular/material/dialog";
 import { UploadDataPopupComponent } from "../upload-data-popup/upload-data-popup.component";
 import { AccessRole } from "../../models/accessRole";
 import { Subscription } from "rxjs";
@@ -19,6 +18,7 @@ import { ImportSourceSystem } from "../../models/data/importSourceSystem";
 import { ImportSource } from "../../models/data/ImportSource";
 import { ImportStatisticService } from "src/app/services/import-statistic.service";
 import { ImportStatusSimple } from "../../models/data/ImportStatusSimple";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-data-overview',
