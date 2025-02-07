@@ -21,7 +21,10 @@ const accessTokenStorageField = 'access_token';
 export class GrpcAuthInterceptor implements GrpcInterceptor {
   constructor(private readonly authStorage: AuthStorageService) {}
 
-  public intercept<Q extends GrpcMessage, S extends GrpcMessage>(request: GrpcRequest<Q, S>, next: GrpcHandler): Observable<GrpcEvent<S>> {
+  public intercept<Q extends GrpcMessage, S extends GrpcMessage>(
+    request: GrpcRequest<Q, S>,
+    next: GrpcHandler
+  ): Observable<GrpcEvent<S>> {
     if (request.requestMetadata.has(authorizationKey)) {
       return next.handle(request);
     }

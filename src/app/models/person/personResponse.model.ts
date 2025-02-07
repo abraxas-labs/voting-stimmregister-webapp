@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import {Person} from "./person";
+import { Person } from './person';
 
 export interface PersonResponseModel {
   people: Person[];

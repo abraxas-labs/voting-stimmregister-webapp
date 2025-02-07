@@ -4,29 +4,26 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnDestroy } from "@angular/core";
-import {
-  SegmentedControl
-} from "@abraxas/base-components/lib/components/formfields/segmented-control-group/segmented-control.model";
-import { TranslateService } from "@ngx-translate/core";
-import { UploadDataPopupComponent } from "../upload-data-popup/upload-data-popup.component";
-import { AccessRole } from "../../models/accessRole";
-import { Subscription } from "rxjs";
-import { ImportStatistic } from "../../models/data/importStatistic.model";
-import { ImportType } from "../../models/data/importType";
-import { ImportSourceSystem } from "../../models/data/importSourceSystem";
-import { ImportSource } from "../../models/data/ImportSource";
-import { ImportStatisticService } from "src/app/services/import-statistic.service";
-import { ImportStatusSimple } from "../../models/data/ImportStatusSimple";
-import { MatDialog } from "@angular/material/dialog";
+import { Component, OnDestroy } from '@angular/core';
+import { SegmentedControl } from '@abraxas/base-components/lib/components/formfields/segmented-control-group/segmented-control.model';
+import { TranslateService } from '@ngx-translate/core';
+import { UploadDataPopupComponent } from '../upload-data-popup/upload-data-popup.component';
+import { AccessRole } from '../../models/accessRole';
+import { Subscription } from 'rxjs';
+import { ImportStatistic } from '../../models/data/importStatistic.model';
+import { ImportType } from '../../models/data/importType';
+import { ImportSourceSystem } from '../../models/data/importSourceSystem';
+import { ImportSource } from '../../models/data/ImportSource';
+import { ImportStatisticService } from 'src/app/services/import-statistic.service';
+import { ImportStatusSimple } from '../../models/data/ImportStatusSimple';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-data-overview',
   templateUrl: './data-overview.component.html',
-  styleUrls: ['./data-overview.component.scss']
+  styleUrls: ['./data-overview.component.scss'],
 })
 export class DataOverviewComponent implements OnDestroy {
-
   public readonly roles: typeof AccessRole = AccessRole;
   public readonly importTypes: typeof ImportType = ImportType;
   public readonly importSourceSystems: typeof ImportSourceSystem = ImportSourceSystem;
@@ -37,26 +34,21 @@ export class DataOverviewComponent implements OnDestroy {
     {
       value: ImportStatusSimple.IMPORT_STATUS_SIMPLE_ALL,
       displayText: this.translate.instant('data-overview.segments.all'),
-      disabled: false
+      disabled: false,
     },
     {
       value: ImportStatusSimple.IMPORT_STATUS_SIMPLE_FAILED,
       displayText: this.translate.instant('data-overview.segments.error'),
-      disabled: false
+      disabled: false,
     },
     {
       value: ImportStatusSimple.IMPORT_STATUS_SIMPLE_SUCCESS,
       displayText: this.translate.instant('data-overview.segments.success'),
-      disabled: false
-    }
+      disabled: false,
+    },
   ];
 
-  public columnsToDisplay: string[] = [
-    "record",
-    "record_identifier",
-    "field",
-    "error"
-  ]
+  public columnsToDisplay: string[] = ['record', 'recordIdentifier', 'field', 'error'];
   private sharedDataServiceSubscription: Subscription | undefined;
   private pollImportStatisticInterval?: number; // TODO: Replace polling with notification: VOTING-2854
   public selectedHistoryStatistic?: ImportStatistic;
@@ -66,8 +58,8 @@ export class DataOverviewComponent implements OnDestroy {
   constructor(
     private readonly importStatisticService: ImportStatisticService,
     private readonly translate: TranslateService,
-    private readonly dialog: MatDialog) {
-  }
+    private readonly dialog: MatDialog
+  ) {}
 
   public ngOnDestroy(): void {
     this.sharedDataServiceSubscription?.unsubscribe();
@@ -81,9 +73,9 @@ export class DataOverviewComponent implements OnDestroy {
     const dialog = this.dialog.open(UploadDataPopupComponent, {
       panelClass: 'custom-dialog-container',
       width: '465px',
-      autoFocus: 'dialog'
+      autoFocus: 'dialog',
     });
-    const popupComponent = dialog.componentInstance as UploadDataPopupComponent
+    const popupComponent = dialog.componentInstance as UploadDataPopupComponent;
     const uploadedEvent = popupComponent.uploaded.subscribe((value) => {
       this.importStatisticService.fetchImportStatitic.emit();
       if (!this.pollImportStatisticInterval) {

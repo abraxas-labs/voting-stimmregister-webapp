@@ -5,5 +5,8 @@
  */
 
 export class KeyValuePairModel {
-  constructor(public key: any, public value: any) {}
+  constructor(
+    public key: any,
+    public value: any
+  ) {}
 }

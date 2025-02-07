@@ -19,7 +19,10 @@ const languageKey = 'x-language';
 export class GrpcLanguageInterceptor implements GrpcInterceptor {
   constructor(private readonly languageService: LanguageService) {}
 
-  public intercept<Q extends GrpcMessage, S extends GrpcMessage>(request: GrpcRequest<Q, S>, next: GrpcHandler): Observable<GrpcEvent<S>> {
+  public intercept<Q extends GrpcMessage, S extends GrpcMessage>(
+    request: GrpcRequest<Q, S>,
+    next: GrpcHandler
+  ): Observable<GrpcEvent<S>> {
     request.requestMetadata.set(languageKey, this.languageService.currentLanguage);
     return next.handle(request);
   }

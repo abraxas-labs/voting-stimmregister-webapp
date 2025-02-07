@@ -4,17 +4,16 @@
  * For license information see LICENSE file.
  */
 
-import { Pipe, PipeTransform } from "@angular/core";
-import { DatePipe } from "@angular/common";
+import { Pipe, PipeTransform } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Pipe({
-  name: "localDate"
+  name: 'localDate',
 })
 export class LocalDatePipe implements PipeTransform {
-
-  private readonly datePipe: DatePipe = new DatePipe("de-CH");
+  private readonly datePipe: DatePipe = new DatePipe('de-CH');
 
   public transform(value: Date, includeTime: boolean = false): string {
-    return this.datePipe.transform(value, "dd.MM.yyyy" + (includeTime ? ' HH:mm' : '')) ?? '';
+    return this.datePipe.transform(value, 'dd.MM.yyyy' + (includeTime ? ' HH:mm' : '')) ?? '';
   }
 }

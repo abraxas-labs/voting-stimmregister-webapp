@@ -5,8 +5,8 @@
  */
 
 export interface AuditInfo {
-  created_at: Date;
-  created_by_name: string;
-  modified_at?: Date;
-  modified_by_name?: string;
+  createdAt: Date;
+  createdByName: string;
+  modifiedAt?: Date;
+  modifiedByName?: string;
 }

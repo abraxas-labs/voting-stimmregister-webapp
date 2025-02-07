@@ -85,9 +85,7 @@ export class RegistrationStatisticService {
     const statistic: RegistrationStatistic = {
       municipalityName: municipalityName,
       municipalityId: municipalityId,
-      deregistrationCount: registrationStatistic.evoterDeregistrationCount ?? 0,
       evoterShare: registrationStatistic.evoterShare ?? 0,
-      registrationsCount: registrationStatistic.evoterRegistrationCount ?? 0,
       totalEvoterCount: registrationStatistic.evoterTotalCount ?? 0,
       totalVoterCount: registrationStatistic.voterTotalCount ?? 0,
     };

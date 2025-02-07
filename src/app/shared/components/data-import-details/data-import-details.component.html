@@ -1,45 +1,47 @@
-<h5 class="mt-3">{{'data-overview.infos.title' | translate}}</h5>
-<div class="details" [class.processing-error]="statistic.processing_errors !== ''">
+<h5 class="mt-3">{{ 'data-overview.infos.title' | translate }}</h5>
+<div class="details" [class.processing-error]="statistic.processingErrors !== ''">
   <div>
-    <h5>{{'data-overview.infos.import' | translate}}</h5>
-    <span>{{statistic.audit_info.created_at | localDate}}</span>
+    <h5>{{ 'data-overview.infos.import' | translate }}</h5>
+    <span>{{ statistic.auditInfo.createdAt | localDate }}</span>
   </div>
   <div>
-    <h5>{{'data-overview.infos.importDueTo' | translate}}</h5>
-    <span>{{statistic.audit_info.created_by_name}}</span>
+    <h5>{{ 'data-overview.infos.importDueTo' | translate }}</h5>
+    <span>{{ statistic.auditInfo.createdByName }}</span>
   </div>
   <div>
-    <h5>{{'data-overview.infos.importTime' | translate}}</h5>
-    <span>{{statistic.total_elapsed_milliseconds}}</span>
+    <h5>{{ 'data-overview.infos.importTime' | translate }}</h5>
+    <span>{{ statistic.totalElapsedMilliseconds }}</span>
   </div>
   <div class="spacer"></div>
-  <ng-container *ngIf="statistic.processing_errors === ''; else processingError">
+  <ng-container *ngIf="statistic.processingErrors === ''; else processingError">
     <div>
-      <h5>{{'data-overview.infos.created' | translate}}</h5>
-      <span>{{statistic.datasets_count_created | number}}</span>
+      <h5>{{ 'data-overview.infos.created' | translate }}</h5>
+      <span>{{ statistic.datasetsCountCreated | number }}</span>
     </div>
     <div>
-      <h5>{{'data-overview.infos.updated' | translate}}</h5>
-      <span>{{statistic.datasets_count_updated | number}}</span>
+      <h5>{{ 'data-overview.infos.updated' | translate }}</h5>
+      <span>{{ statistic.datasetsCountUpdated | number }}</span>
     </div>
     <div>
-      <h5>{{'data-overview.infos.deleted' | translate}}</h5>
-      <span>{{statistic.datasets_count_deleted | number}}</span>
+      <h5>{{ 'data-overview.infos.deleted' | translate }}</h5>
+      <span>{{ statistic.datasetsCountDeleted | number }}</span>
     </div>
     <div>
-      <h5>{{'data-overview.infos.totalImported' | translate}}</h5>
-      <span>{{statistic.import_records_count_total | number}}</span>
+      <h5>{{ 'data-overview.infos.totalImported' | translate }}</h5>
+      <span>{{ statistic.importRecordsCountTotal | number }}</span>
     </div>
     <div>
-      <h5>{{'data-overview.infos.killedRecords' | translate}}</h5>
-      <span>{{statistic.record_validation_errors.length}}</span>
+      <h5>{{ 'data-overview.infos.killedRecords' | translate }}</h5>
+      <span>{{ statistic.recordValidationErrors.length }}</span>
     </div>
   </ng-container>
   <ng-template #processingError>
     <div class="processing-error-detail">
-      <h5>{{'data-overview.infos.processingError' | translate}}</h5>
-      <span *appIfHasRole="[roles.ImportObserver]">{{statistic.processing_errors}}</span>
-      <span *ngIf="statistic.processing_errors === 'default'">{{'data-overview.infos.errorDefaultMessage' | translate}}</span>
-     </div>
+      <h5>{{ 'data-overview.infos.processingError' | translate }}</h5>
+      <span *appIfHasRole="[roles.ImportObserver]">{{ statistic.processingErrors }}</span>
+      <span *ngIf="statistic.processingErrors === 'default'">{{
+        'data-overview.infos.errorDefaultMessage' | translate
+      }}</span>
+    </div>
   </ng-template>
 </div>

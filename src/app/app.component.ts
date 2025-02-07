@@ -4,11 +4,11 @@
  * For license information see LICENSE file.
  */
 
-import {AuthorizationService} from '@abraxas/base-components';
-import {OAuthService} from 'angular-oauth2-oidc';
-import {Component, OnInit} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {tap} from 'rxjs/operators';
+import { AuthorizationService } from '@abraxas/base-components';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',

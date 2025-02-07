@@ -4,9 +4,9 @@
  * For license information see LICENSE file.
  */
 
-import {ImportStatistic} from "./importStatistic.model";
+import { ImportStatistic } from './importStatistic.model';
 
 export interface ImportStatisticResponseModel {
-  totalCount: number,
-  importStatistics: ImportStatistic[],
+  totalCount: number;
+  importStatistics: ImportStatistic[];
 }

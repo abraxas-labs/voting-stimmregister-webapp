@@ -11,4 +11,3 @@ export enum VersionColumn {
   deadline = 'deadline',
   count = 'count',
 }
-

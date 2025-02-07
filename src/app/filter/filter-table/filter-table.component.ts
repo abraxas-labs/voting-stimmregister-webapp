@@ -33,7 +33,10 @@ export class FilterTableComponent {
     FilterColumn.TENANT_NAME,
   ];
 
-  constructor(private readonly router: Router, private readonly route: ActivatedRoute) {}
+  constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
+  ) {}
 
   public async openDetailView(filter: FilterDefinition): Promise<void> {
     await this.router.navigate([filter.id], { relativeTo: this.route });

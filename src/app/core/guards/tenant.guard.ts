@@ -12,7 +12,7 @@ import { AuthorizationService } from '@abraxas/base-components';
 @Injectable({
   providedIn: 'root',
 })
-export class TenantGuard  {
+export class TenantGuard {
   constructor(
     private readonly authorizationService: AuthorizationService,
     private readonly storage: OAuthStorage

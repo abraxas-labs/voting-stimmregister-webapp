@@ -1,4 +1,4 @@
-# ✨ Changelog (`v2.0.3`)
+# ✨ Changelog (`v3.4.0`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,63 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v2.0.3
-Previous version ---- v2.0.0
+This version -------- v3.4.0
+Previous version ---- v2.0.3
 Initial version ----- v1.77.15
-Total commits ------- 3
+Total commits ------- 8
 ```
+
+## [v3.4.0] - 2025-01-29
+
+### 🆕 Added
+
+- added STISTAT e-voting export
+
+## [v3.3.0] - 2025-01-29
+
+### 🆕 Added
+
+- add householder fields
+
+## [v3.2.0] - 2025-01-07
+
+### 🆕 Added
+
+- add robots meta tag to instruct crawlers to not index content
+- add X-Robots-Tag response header to instruct crawlers to not index content
+
+## [v3.1.1] - 2024-12-20
+
+### 🔄 Changed
+
+- align import models to naming conventions
+
+## [v3.1.0] - 2024-12-19
+
+### 🆕 Added
+
+- add sorting to import statistics
+
+## [v3.0.1] - 2024-12-19
+
+### 🔄 Changed
+
+- show labels for number filter fields
+
+## [v3.0.0] - 2024-11-15
+
+BREAKING CHANGE: update Angular to version 18
+
+### 🔄 Changed
+
+- update Angular to version 18
+- migrate to new build system
+
+## [v2.0.4] - 2024-09-22
+
+### ❌ Removed
+
+- remove e-voter registration count columns
 
 ## [v2.0.3] - 2024-09-03
 

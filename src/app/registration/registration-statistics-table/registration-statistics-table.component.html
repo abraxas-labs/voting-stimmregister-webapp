@@ -21,22 +21,6 @@
         {{ row[columns.MUNICIPALITY_NAME] }}
       </bc-data-cell>
     </ng-container>
-    <ng-container [columnDef]="columns.REGISTRATION_COUNT">
-      <bc-header-cell sort *headerCellDef>{{
-        'registration.statistics.table.columns.' + columns.REGISTRATION_COUNT | translate
-      }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row">
-        {{ row[columns.REGISTRATION_COUNT] | number: '1.0-2' }}
-      </bc-data-cell>
-    </ng-container>
-    <ng-container [columnDef]="columns.DEREGISTRATION_COUNT">
-      <bc-header-cell sort *headerCellDef>{{
-        'registration.statistics.table.columns.' + columns.DEREGISTRATION_COUNT | translate
-      }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row">
-        {{ row[columns.DEREGISTRATION_COUNT] | number: '1.0-2' }}
-      </bc-data-cell>
-    </ng-container>
     <ng-container [columnDef]="columns.TOTAL_EVOTER_COUNT">
       <bc-header-cell sort *headerCellDef>{{
         'registration.statistics.table.columns.' + columns.TOTAL_EVOTER_COUNT | translate
@@ -57,7 +41,9 @@
       <bc-header-cell sort *headerCellDef>{{
         'registration.statistics.table.columns.' + columns.EVOTER_SHARE | translate
       }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row"> {{ row[columns.EVOTER_SHARE] | number: '1.0-2' }} % </bc-data-cell>
+      <bc-data-cell *dataCellDef="let row">
+        {{ row[columns.EVOTER_SHARE] | number: '1.0-2' }} %
+      </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.EVOTER_SHARE_CHART">
       <bc-header-cell *headerCellDef>{{
@@ -69,7 +55,7 @@
             class="bar"
             [ngStyle]="{
               width: calculateBarWidth(row[columns.EVOTER_SHARE]) + '%',
-              'background-color': calculateBarColor(row[columns.EVOTER_SHARE])
+              'background-color': calculateBarColor(row[columns.EVOTER_SHARE]),
             }"
           ></div>
         </div>

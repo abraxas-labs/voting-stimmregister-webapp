@@ -4,9 +4,9 @@
  * For license information see LICENSE file.
  */
 
-import { FilterCriteria } from "./filterCriteria";
-import { FilterVersion } from "./filterVersion";
-import * as uuid from "uuid";
+import { FilterCriteria } from './filterCriteria';
+import { FilterVersion } from './filterVersion';
+import * as uuid from 'uuid';
 
 export interface FilterDefinition {
   id: string;

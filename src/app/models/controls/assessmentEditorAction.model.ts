@@ -7,5 +7,8 @@
 import { AssessmentActionType } from './assessmentActionType';
 
 export class AssessmentEditorActionModel {
-  constructor(public actionType: AssessmentActionType, public formValue?: any) {}
+  constructor(
+    public actionType: AssessmentActionType,
+    public formValue?: any
+  ) {}
 }

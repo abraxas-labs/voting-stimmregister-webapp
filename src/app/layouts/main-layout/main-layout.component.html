@@ -1,12 +1,12 @@
 <app-layout>
   <div *ngIf="!isDetailSite()">
-    <bc-nav-bar navigation
-                [alignItems]="'start'"
-                [backgroundColor]="'basic'">
-      <bc-nav-bar-item [link]="['/', '-' , 'search']">{{ 'navigation.search' | translate }}</bc-nav-bar-item>
-      <bc-nav-bar-item [link]="['/', '-' , 'filters']">{{ 'navigation.filter' | translate }}</bc-nav-bar-item>
-      <bc-nav-bar-item [link]="['/', '-' , 'data']">{{ 'navigation.data' | translate }}</bc-nav-bar-item>
-      <bc-nav-bar-item *appIfHasRole="[roles.EVotingStatisticsReader]" [link]="['/', '-' , 'registration']">{{ 'navigation.registration' | translate }}</bc-nav-bar-item>
+    <bc-nav-bar navigation [alignItems]="'start'" [backgroundColor]="'basic'">
+      <bc-nav-bar-item [link]="['/', '-', 'search']">{{ 'navigation.search' | translate }}</bc-nav-bar-item>
+      <bc-nav-bar-item [link]="['/', '-', 'filters']">{{ 'navigation.filter' | translate }}</bc-nav-bar-item>
+      <bc-nav-bar-item [link]="['/', '-', 'data']">{{ 'navigation.data' | translate }}</bc-nav-bar-item>
+      <bc-nav-bar-item *appIfHasRole="[roles.EVotingStatisticsReader]" [link]="['/', '-', 'registration']">{{
+        'navigation.registration' | translate
+      }}</bc-nav-bar-item>
     </bc-nav-bar>
     <bc-divider [orientation]="'horizontal'" class="divider"></bc-divider>
   </div>

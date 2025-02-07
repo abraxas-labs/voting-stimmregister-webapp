@@ -2,22 +2,25 @@
   <div class="header">
     <div class="header__title">
       <bc-icon class="cancel-icon" [icon]="'cancel'" (click)="navigateBack()"></bc-icon>
-      <p *ngIf="isNew">{{'handle-filter.new-title' | translate}}</p>
-      <p *ngIf="!isNew">{{'handle-filter.edit-title' | translate}}</p>
+      <p *ngIf="isNew">{{ 'handle-filter.new-title' | translate }}</p>
+      <p *ngIf="!isNew">{{ 'handle-filter.edit-title' | translate }}</p>
     </div>
     <div class="header__buttons">
-      <bc-button *ngIf="!isNew && !isLoading"
+      <bc-button
+        *ngIf="!isNew && !isLoading"
         [variant]="'tertiary'"
         [label]="'shared.action.delete' | translate"
         [color]="'warn'"
         (buttonClick)="openDeletePopup()"
       ></bc-button>
-      <bc-button *ngIf="!isNew && !isLoading"
+      <bc-button
+        *ngIf="!isNew && !isLoading"
         [variant]="'tertiary'"
         [label]="'shared.action.duplicate' | translate"
         (buttonClick)="duplicate()"
       ></bc-button>
-      <bc-button *ngIf="!isLoading"
+      <bc-button
+        *ngIf="!isLoading"
         [disabled]="!this.filterForm.valid"
         [variant]="'tertiary'"
         [label]="'shared.action.save' | translate"
@@ -46,12 +49,14 @@
     </form>
     <bc-divider></bc-divider>
     <div class="filter-container">
-      <h5>{{'handle-filter.criteriaTitle' | translate}}</h5>
-      <app-filtered-person-table *ngIf="filter"
-                                 [searchType]="searchTypeFilter"
-                                 [criteria]="filter.criteria"
-                                 (criteriaChange)="filter.criteria = $event"
-                                 (resetCriteria)="resetCriteria()"></app-filtered-person-table>
+      <h5>{{ 'handle-filter.criteriaTitle' | translate }}</h5>
+      <app-filtered-person-table
+        *ngIf="filter"
+        [searchType]="searchTypeFilter"
+        [criteria]="filter.criteria"
+        (criteriaChange)="filter.criteria = $event"
+        (resetCriteria)="resetCriteria()"
+      ></app-filtered-person-table>
     </div>
   </div>
 </div>

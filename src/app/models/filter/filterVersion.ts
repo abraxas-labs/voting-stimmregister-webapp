@@ -4,13 +4,13 @@
  * For license information see LICENSE file.
  */
 
-import {FilterCriteria} from "./filterCriteria";
-import { AuditInfo } from "../data/auditInfo";
+import { FilterCriteria } from './filterCriteria';
+import { AuditInfo } from '../data/auditInfo';
 
 export interface FilterVersion {
   id: string;
   name: string;
-  audit_info: AuditInfo;
+  auditInfo: AuditInfo;
   deadline: Date;
   count: number;
   countOfInvalidPersons: number;

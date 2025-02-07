@@ -4,21 +4,21 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from "@angular/core";
-import { MultipartFromDataHttpService } from "./http/multipart-from-data-http.service";
-import { ImportType } from "../models/data/importType";
-import { environment } from "../../environments/environment";
-import { ImportSourceSystem } from "../models/data/importSourceSystem";
+import { Injectable } from '@angular/core';
+import { MultipartFromDataHttpService } from './http/multipart-from-data-http.service';
+import { ImportType } from '../models/data/importType';
+import { environment } from '../../environments/environment';
+import { ImportSourceSystem } from '../models/data/importSourceSystem';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root',
 })
 export class DataService {
-  private readonly restApiUrl: string = "";
-  private readonly personLogantoEndpoint: string = "/import/loganto/persons";
-  private readonly personCobraEndpoint: string = "/import/cobra/persons";
-  private readonly personInnosolvEndpoint: string = "/import/innosolv/persons";
-  private readonly doiLogantoEndpoint: string = "/import/loganto/doi";
+  private readonly restApiUrl: string = '';
+  private readonly personLogantoEndpoint: string = '/import/loganto/persons';
+  private readonly personCobraEndpoint: string = '/import/cobra/persons';
+  private readonly personInnosolvEndpoint: string = '/import/innosolv/persons';
+  private readonly doiLogantoEndpoint: string = '/import/loganto/doi';
 
   constructor(private readonly http: MultipartFromDataHttpService) {
     this.restApiUrl = `${environment.restApiEndpoint}`;
@@ -41,9 +41,12 @@ export class DataService {
       }
     }
 
-    if (type === ImportType.IMPORT_TYPE_DOMAIN_OF_INFLUENCE && sourceSystem === ImportSourceSystem.IMPORT_SOURCE_SYSTEM_LOGANTO) {
+    if (
+      type === ImportType.IMPORT_TYPE_DOMAIN_OF_INFLUENCE &&
+      sourceSystem === ImportSourceSystem.IMPORT_SOURCE_SYSTEM_LOGANTO
+    ) {
       return this.restApiUrl + this.doiLogantoEndpoint;
     }
-    throw new Error("Invalid import selection");
+    throw new Error('Invalid import selection');
   }
 }

@@ -1,6 +1,6 @@
 {
-    "sonarlint.disableTelemetry": true,
-    "sonarlint.connectedMode.project": {
-        "projectKey": "voting.apps.voting.stimmregister.voting.stimmregister.webapp"
-    }
+  "sonarlint.disableTelemetry": true,
+  "sonarlint.connectedMode.project": {
+    "projectKey": "voting.apps.voting.stimmregister.voting.stimmregister.webapp"
+  }
 }

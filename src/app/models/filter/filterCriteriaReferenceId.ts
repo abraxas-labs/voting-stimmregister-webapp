@@ -69,5 +69,8 @@ export enum FilterCriteriaReferenceId {
   peopleCircleId = 'peopleCircleId',
   peopleCircleName = 'peopleCircleName',
   hasValidationErrors = 'hasValidationErrors',
-  sendVotingCardsToDomainOfInfluenceReturnAddress = 'sendVotingCardsToDomainOfInfluenceReturnAddress'
+  sendVotingCardsToDomainOfInfluenceReturnAddress = 'sendVotingCardsToDomainOfInfluenceReturnAddress',
+  isHouseholder = 'isHouseholder',
+  residenceBuildingId = 'residenceBuildingId',
+  residenceApartmentId = 'residenceApartmentId',
 }

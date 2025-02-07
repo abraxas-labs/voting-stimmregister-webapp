@@ -5,6 +5,6 @@
  */
 
 export interface FieldValidationError {
-  field_name: string,
-  errors: string[]
+  fieldName: string;
+  errors: string[];
 }

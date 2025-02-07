@@ -132,7 +132,10 @@
       "peopleCircleName": "Volkszählkreis Name",
       "hasValidationErrors": "Validierungsfehler",
       "sendVotingCardsToDomainOfInfluenceReturnAddress": "Nicht zustellen",
-      "eVoting": "E-Voting"
+      "eVoting": "E-Voting",
+      "isHouseholder": "Haushaltsvorstand",
+      "residenceBuildingId": "Gebäude Identifikator",
+      "residenceApartmentId": "Wohnung Identifikator"
     },
     "votingRight": {
       "right": "stimmberechtigt",
@@ -184,7 +187,8 @@
     "dropdown": {
       "title": "Art des Exports",
       "ech": "eCH-0045",
-      "csv": "CSV"
+      "csv": "CSV",
+      "stistat": "STISTAT E-Voting"
     },
     "invalid-persons-count": {
       "included": "{{count}} Personen im Export beinhalten invalide Daten.",
@@ -227,7 +231,7 @@
     },
     "record-error-table": {
       "record": "Zeile",
-      "record_identifier": "Identifikation",
+      "recordIdentifier": "Identifikation",
       "field": "Feld",
       "error": "Fehlermeldung"
     },
@@ -431,6 +435,9 @@
       "peopleCircleName": "Volkszählkreis (Name)",
       "hasValidationErrors": "Validierungsfehler",
       "sendVotingCardsToDomainOfInfluenceReturnAddress": "Nicht zustellen",
+      "isHouseholder": "Haushaltsvorstand",
+      "residenceBuildingId": "Gebäude (id)",
+      "residenceApartmentId": "Wohnung (id)",
       "actions": {
         "contains": ""
       }

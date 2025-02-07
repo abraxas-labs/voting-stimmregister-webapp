@@ -9,5 +9,5 @@ export enum HistoryColumn {
   DURATION = 'duration',
   PERSONS = 'persons',
   STATE = 'state',
-  ERROR = 'error'
+  ERROR = 'error',
 }

@@ -9,7 +9,12 @@
           [clearable]="false"
           [optionalText]="''"
           [width]="'200px'"
-          [error]="!(filterForm.controls[criteria.referenceId].valid || filterForm.controls[criteria.referenceId].pristine)"
+          [error]="
+            !(
+              filterForm.controls[criteria.referenceId].valid ||
+              filterForm.controls[criteria.referenceId].pristine
+            )
+          "
           [(ngModel)]="criteria.filterValue"
           [icon]="criteria.filterOperator"
           (filterChange)="filterChange($event, criteria)"
@@ -25,26 +30,46 @@
             [optionalText]="''"
             [width]="'200px'"
             [placeholder]="'756.xxxx.xxxx.xx'"
-            [error]="!(filterForm.controls[criteria.referenceId].valid || filterForm.controls[criteria.referenceId].pristine)"
+            [error]="
+              !(
+                filterForm.controls[criteria.referenceId].valid ||
+                filterForm.controls[criteria.referenceId].pristine
+              )
+            "
             [(ngModel)]="criteria.filterValue"
             subscriptSizing="dynamic"
           >
           </bc-text>
         </ng-template>
-        <mat-icon fontSet="abraxas-icons" fontIcon="icon-cancel" class="search-filter-input__cancel" (click)="deleteCriteria(criteria.referenceId)"></mat-icon>
+        <mat-icon
+          fontSet="abraxas-icons"
+          fontIcon="icon-cancel"
+          class="search-filter-input__cancel"
+          (click)="deleteCriteria(criteria.referenceId)"
+        ></mat-icon>
       </div>
       <div *ngIf="criteria.filterDataType === 'date'" class="search-filter-input">
         <bc-filter-date
           [formControlName]="criteria.referenceId"
           [label]="'shared.filter-labels.' + criteria.referenceId | translate"
           [optionalText]="''"
-          [error]="!(filterForm.controls[criteria.referenceId].valid || filterForm.controls[criteria.referenceId].pristine)"
+          [error]="
+            !(
+              filterForm.controls[criteria.referenceId].valid ||
+              filterForm.controls[criteria.referenceId].pristine
+            )
+          "
           [(ngModel)]="criteria.filterValue"
           [clearable]="false"
           (filterChange)="filterChange($event, criteria)"
           [operation]="criteria.filterOperator"
         ></bc-filter-date>
-        <mat-icon fontSet="abraxas-icons" fontIcon="icon-cancel" class="search-filter-input__cancel" (click)="deleteCriteria(criteria.referenceId)"></mat-icon>
+        <mat-icon
+          fontSet="abraxas-icons"
+          fontIcon="icon-cancel"
+          class="search-filter-input__cancel"
+          (click)="deleteCriteria(criteria.referenceId)"
+        ></mat-icon>
       </div>
       <div *ngIf="criteria.filterDataType === 'boolean'" class="search-filter-input__boolField">
         <bc-checkbox
@@ -52,13 +77,19 @@
           [label]="'shared.filter-labels.' + criteria.referenceId | translate"
           [(ngModel)]="criteria.filterValue"
         ></bc-checkbox>
-        <mat-icon fontSet="abraxas-icons" fontIcon="icon-cancel" class="search-filter-input__boolCancel"
-                  (click)="deleteCriteria(criteria.referenceId)"></mat-icon>
+        <mat-icon
+          fontSet="abraxas-icons"
+          fontIcon="icon-cancel"
+          class="search-filter-input__boolCancel"
+          (click)="deleteCriteria(criteria.referenceId)"
+        ></mat-icon>
       </div>
-      <div *ngIf="criteria.filterDataType === 'numeric' && !isFilterControl(criteria.referenceId)" class="search-filter-input">
+      <div
+        *ngIf="criteria.filterDataType === 'numeric' && !isFilterControl(criteria.referenceId)"
+        class="search-filter-input"
+      >
         <bc-filter-number
           [formControlName]="criteria.referenceId"
-          [appearance]="'inline'"
           [label]="'shared.filter-labels.' + criteria.referenceId | translate"
           [optionalText]="''"
           [required]="true"
@@ -68,12 +99,19 @@
           [operations]="numberFilterOperations"
           subscriptSizing="dynamic"
         ></bc-filter-number>
-        <mat-icon fontSet="abraxas-icons" fontIcon="icon-cancel" class="search-filter-input__cancel" (click)="deleteCriteria(criteria.referenceId)"></mat-icon>
+        <mat-icon
+          fontSet="abraxas-icons"
+          fontIcon="icon-cancel"
+          class="search-filter-input__cancel"
+          (click)="deleteCriteria(criteria.referenceId)"
+        ></mat-icon>
       </div>
-      <div *ngIf="criteria.filterDataType === 'numeric' && isFilterControl(criteria.referenceId)" class="search-filter-input">
+      <div
+        *ngIf="criteria.filterDataType === 'numeric' && isFilterControl(criteria.referenceId)"
+        class="search-filter-input"
+      >
         <bc-filter-number
           [formControlName]="criteria.referenceId"
-          [appearance]="'inline'"
           [label]="'shared.filter-labels.' + criteria.referenceId | translate"
           [optionalText]="''"
           [required]="true"
@@ -83,7 +121,12 @@
           [operation]="criteria.filterOperator"
           subscriptSizing="dynamic"
         ></bc-filter-number>
-        <mat-icon fontSet="abraxas-icons" fontIcon="icon-cancel" class="search-filter-input__cancel" (click)="deleteCriteria(criteria.referenceId)"></mat-icon>
+        <mat-icon
+          fontSet="abraxas-icons"
+          fontIcon="icon-cancel"
+          class="search-filter-input__cancel"
+          (click)="deleteCriteria(criteria.referenceId)"
+        ></mat-icon>
       </div>
       <div *ngIf="criteria.filterDataType === 'multiselect'" class="search-filter-input">
         <bc-dropdown
@@ -99,7 +142,12 @@
           subscriptSizing="dynamic"
         >
         </bc-dropdown>
-        <mat-icon fontSet="abraxas-icons" fontIcon="icon-cancel" class="search-filter-input__cancel" (click)="deleteCriteria(criteria.referenceId)"></mat-icon>
+        <mat-icon
+          fontSet="abraxas-icons"
+          fontIcon="icon-cancel"
+          class="search-filter-input__cancel"
+          (click)="deleteCriteria(criteria.referenceId)"
+        ></mat-icon>
       </div>
       <div *ngIf="criteria.filterDataType === 'select'" class="search-filter-input">
         <bc-dropdown
@@ -114,22 +162,30 @@
           [(ngModel)]="criteria.filterValue"
           subscriptSizing="dynamic"
         ></bc-dropdown>
-        <mat-icon fontSet="abraxas-icons" fontIcon="icon-cancel" class="search-filter-input__cancel" (click)="deleteCriteria(criteria.referenceId)"></mat-icon>
+        <mat-icon
+          fontSet="abraxas-icons"
+          fontIcon="icon-cancel"
+          class="search-filter-input__cancel"
+          (click)="deleteCriteria(criteria.referenceId)"
+        ></mat-icon>
       </div>
     </div>
-    <bc-button type="button" [variant]="'tertiary'" [label]="'handle-filter.addFilter' | translate" [matMenuTriggerFor]="menu"></bc-button>
+    <bc-button
+      type="button"
+      [variant]="'tertiary'"
+      [label]="'handle-filter.addFilter' | translate"
+      [matMenuTriggerFor]="menu"
+    ></bc-button>
     <mat-menu #menu>
       <div *ngFor="let item of selectableAttributes">
-        <div mat-menu-item (click)="addFilter(item.value)">{{'shared.filter-labels.' + item.value | translate}}</div>
+        <div mat-menu-item (click)="addFilter(item.value)">
+          {{ 'shared.filter-labels.' + item.value | translate }}
+        </div>
       </div>
     </mat-menu>
   </div>
   <div class="filter-container__actions">
-    <bc-button
-      [variant]="'tertiary'"
-      [label]="'shared.action.search' | translate"
-      type="submit"
-    ></bc-button>
+    <bc-button [variant]="'tertiary'" [label]="'shared.action.search' | translate" type="submit"></bc-button>
     <bc-button
       [variant]="'tertiary'"
       [label]="'shared.action.reset' | translate"

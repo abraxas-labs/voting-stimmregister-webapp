@@ -4,28 +4,27 @@
  * For license information see LICENSE file.
  */
 
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { FilterDefinition, newFilter } from "../../models/filter/filterDefinition";
-import { FilterService } from "../../services/filter.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { DeletePopupComponent } from "../../shared/components/delete-popup/delete-popup.component";
-import { InputValidatorHelper } from "src/app/shared/helpers/input-validator.helper";
-import { buildFilterDefaultCriteria } from "../../models/filter/filterCriteria";
-import { Subscription } from "rxjs";
-import { TextComponent } from "@abraxas/base-components/lib/components/formfields/text/text.component";
-import { ToastService } from "../../services/toast.service";
-import { PersonService } from "../../services/person.service";
-import { PersonSearchType } from "../../models/person/personSearchParameters";
-import { MatDialog } from "@angular/material/dialog";
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FilterDefinition, newFilter } from '../../models/filter/filterDefinition';
+import { FilterService } from '../../services/filter.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DeletePopupComponent } from '../../shared/components/delete-popup/delete-popup.component';
+import { InputValidatorHelper } from 'src/app/shared/helpers/input-validator.helper';
+import { buildFilterDefaultCriteria } from '../../models/filter/filterCriteria';
+import { Subscription } from 'rxjs';
+import { TextComponent } from '@abraxas/base-components/lib/components/formfields/text/text.component';
+import { ToastService } from '../../services/toast.service';
+import { PersonService } from '../../services/person.service';
+import { PersonSearchType } from '../../models/person/personSearchParameters';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-filter',
   templateUrl: './handle-filter.component.html',
-  styleUrls: ['./handle-filter.component.scss']
+  styleUrls: ['./handle-filter.component.scss'],
 })
 export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
-
   public readonly searchTypeFilter = PersonSearchType.Filter;
 
   public filterForm!: FormGroup;
@@ -44,15 +43,16 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     private readonly route: ActivatedRoute,
     private readonly dialog: MatDialog,
     private readonly changeDetectorRef: ChangeDetectorRef,
-    private readonly toast: ToastService,
-  ) {
-  }
+    private readonly toast: ToastService
+  ) {}
 
   private paramsSubscription = Subscription.EMPTY;
 
   public async ngOnInit(): Promise<void> {
     this.initForm();
-    this.paramsSubscription = this.route.params.subscribe(p => this.loadFilter(p.id, p.criteria, p.duplicated));
+    this.paramsSubscription = this.route.params.subscribe((p) =>
+      this.loadFilter(p.id, p.criteria, p.duplicated)
+    );
   }
 
   public ngOnDestroy(): void {
@@ -64,7 +64,7 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public async navigateBack(): Promise<void> {
-    await this.router.navigate([".."], { relativeTo: this.route });
+    await this.router.navigate(['..'], { relativeTo: this.route });
   }
 
   public async save(): Promise<void> {
@@ -77,7 +77,7 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
       const name = this.filterForm.value.name;
       const description = this.filterForm.value.description;
       const id = await this.filterService.save(this.filter.id, name, description, this.filter.criteria);
-      await this.router.navigate(["-", "filters", id]);
+      await this.router.navigate(['-', 'filters', id]);
       this.toast.success('shared.state.saved');
     } finally {
       this.isLoading = false;
@@ -92,7 +92,7 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isLoading = true;
     try {
       const id = await this.filterService.duplicate(this.filter.id);
-      await this.router.navigate(["-", "filters", id, 'edit', { duplicated: true }]);
+      await this.router.navigate(['-', 'filters', id, 'edit', { duplicated: true }]);
       this.toast.success('shared.action.duplicated');
     } finally {
       this.isLoading = false;
@@ -111,11 +111,11 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
       autoFocus: false,
       data: {
         context: 'filter',
-        contextValue: this.filter.name
-      }
-    })
+        contextValue: this.filter.name,
+      },
+    });
 
-    dialogRef.componentInstance.delete.subscribe(async() => {
+    dialogRef.componentInstance.delete.subscribe(async () => {
       dialogRef.componentInstance.isLoading = true;
       try {
         await this.filterService.delete(filterId);
@@ -125,7 +125,7 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
       } finally {
         dialogRef.componentInstance.isLoading = false;
       }
-    })
+    });
   }
 
   public resetCriteria(): void {
@@ -136,7 +136,11 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     this.filter.criteria = buildFilterDefaultCriteria();
   }
 
-  private async loadFilter(id: string | null, loadCriteria: string | null, duplicated: string | null): Promise<void> {
+  private async loadFilter(
+    id: string | null,
+    loadCriteria: string | null,
+    duplicated: string | null
+  ): Promise<void> {
     if (!id) {
       this.isNew = true;
       const criteria = !!loadCriteria
@@ -157,8 +161,24 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private initForm(): void {
     this.filterForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.minLength(2), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.minLength(2), Validators.maxLength(200)]]
-    })
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(InputValidatorHelper.getComplexSlText()),
+          Validators.minLength(2),
+          Validators.maxLength(100),
+        ],
+      ],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(InputValidatorHelper.getComplexSlText()),
+          Validators.minLength(2),
+          Validators.maxLength(200),
+        ],
+      ],
+    });
   }
 }

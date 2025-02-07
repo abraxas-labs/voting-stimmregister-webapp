@@ -4,35 +4,34 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { FilterService } from "../../services/filter.service";
-import { FilterDefinition } from "../../models/filter/filterDefinition";
-import { FilterVersionPopupComponent } from "../popups/filter-version-popup/filter-version-popup.component";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FilterService } from '../../services/filter.service';
+import { FilterDefinition } from '../../models/filter/filterDefinition';
+import { FilterVersionPopupComponent } from '../popups/filter-version-popup/filter-version-popup.component';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   HandleVersionPopupComponent,
-  HandleVersionPopupData
-} from "../popups/handle-version-popup/handle-version-popup.component";
-import { DeletePopupComponent } from "../../shared/components/delete-popup/delete-popup.component";
-import { LocalDatePipe } from "../../shared/pipes/localDate.pipe";
-import { ExportPopupComponent, ExportPopupData } from "../popups/export-popup/export-popup.component";
-import { FilterVersion } from "../../models/filter/filterVersion";
-import { FilterCriteria } from "../../models/filter/filterCriteria";
-import { Subscription } from "rxjs";
-import { RoleService } from "../../services/role.service";
-import { TranslateService } from "@ngx-translate/core";
-import { ToastService } from "../../services/toast.service";
-import { PersonSearchType } from "../../models/person/personSearchParameters";
-import { PersonTableComponent } from "../../shared/components/person-table/person-table.component";
-import { MatDialog } from "@angular/material/dialog";
+  HandleVersionPopupData,
+} from '../popups/handle-version-popup/handle-version-popup.component';
+import { DeletePopupComponent } from '../../shared/components/delete-popup/delete-popup.component';
+import { LocalDatePipe } from '../../shared/pipes/localDate.pipe';
+import { ExportPopupComponent, ExportPopupData } from '../popups/export-popup/export-popup.component';
+import { FilterVersion } from '../../models/filter/filterVersion';
+import { FilterCriteria } from '../../models/filter/filterCriteria';
+import { Subscription } from 'rxjs';
+import { RoleService } from '../../services/role.service';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastService } from '../../services/toast.service';
+import { PersonSearchType } from '../../models/person/personSearchParameters';
+import { PersonTableComponent } from '../../shared/components/person-table/person-table.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-filter-detail',
   templateUrl: './filter-detail.component.html',
-  styleUrls: ['./filter-detail.component.scss']
+  styleUrls: ['./filter-detail.component.scss'],
 })
 export class FilterDetailComponent implements OnInit, OnDestroy {
-
   public readonly searchTypeFilter = PersonSearchType.Filter;
 
   public isManager: boolean = false;
@@ -56,8 +55,11 @@ export class FilterDetailComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly toast: ToastService,
     private readonly translate: TranslateService,
-    private readonly localDate: LocalDatePipe) {
-    this.routerSubscription = this.route.paramMap.subscribe(p => this.loadData(p.get('id')!, p.get('version')));
+    private readonly localDate: LocalDatePipe
+  ) {
+    this.routerSubscription = this.route.paramMap.subscribe((p) =>
+      this.loadData(p.get('id')!, p.get('version'))
+    );
   }
 
   public async ngOnInit(): Promise<void> {
@@ -75,39 +77,41 @@ export class FilterDetailComponent implements OnInit, OnDestroy {
       width: '950px',
       autoFocus: false,
       data: {
-        filter: this.filter
-      }
-    })
+        filter: this.filter,
+      },
+    });
   }
 
   public openSaveVersionPopup(): void {
-    this.dialog.open(HandleVersionPopupComponent, {
-      panelClass: 'custom-dialog-container',
-      width: '400px',
-      autoFocus: false,
-      data: {
-        filter: this.filter,
-        countOfInvalidPersons: this.personTable?.invalidCount ?? 0,
-      } as HandleVersionPopupData,
-    }).componentInstance.saveEvent.subscribe(() => {
-      this.filterService.getSingle(this.filter.id)
-        .then(filter => this.filter = filter);
-    });
+    this.dialog
+      .open(HandleVersionPopupComponent, {
+        panelClass: 'custom-dialog-container',
+        width: '400px',
+        autoFocus: false,
+        data: {
+          filter: this.filter,
+          countOfInvalidPersons: this.personTable?.invalidCount ?? 0,
+        } as HandleVersionPopupData,
+      })
+      .componentInstance.saveEvent.subscribe(() => {
+        this.filterService.getSingle(this.filter.id).then((filter) => (this.filter = filter));
+      });
   }
 
   public openRenameVersionPopup(): void {
-    this.dialog.open(HandleVersionPopupComponent, {
-      panelClass: 'custom-dialog-container',
-      width: '400px',
-      autoFocus: false,
-      data: {
-        filter: this.filter,
-        version: this.version
-      } as HandleVersionPopupData,
-    }).componentInstance.saveEvent.subscribe(() => {
-      this.filterService.getSingle(this.filter.id)
-        .then(filter => this.filter = filter);
-    });
+    this.dialog
+      .open(HandleVersionPopupComponent, {
+        panelClass: 'custom-dialog-container',
+        width: '400px',
+        autoFocus: false,
+        data: {
+          filter: this.filter,
+          version: this.version,
+        } as HandleVersionPopupData,
+      })
+      .componentInstance.saveEvent.subscribe(() => {
+        this.filterService.getSingle(this.filter.id).then((filter) => (this.filter = filter));
+      });
   }
 
   public async editFilter(): Promise<void> {
@@ -121,13 +125,16 @@ export class FilterDetailComponent implements OnInit, OnDestroy {
       autoFocus: false,
       data: {
         context: 'version',
-        contextValue: this.version!.name
-          + ' '
-          + this.translate.instant('person-table.columns.versionOf', { date: this.localDate.transform(this.version!.audit_info.created_at) })
-      }
+        contextValue:
+          this.version!.name +
+          ' ' +
+          this.translate.instant('person-table.columns.versionOf', {
+            date: this.localDate.transform(this.version!.auditInfo.createdAt),
+          }),
+      },
     });
 
-    dialogRef.componentInstance.delete.subscribe(async() => {
+    dialogRef.componentInstance.delete.subscribe(async () => {
       dialogRef.componentInstance.isLoading = true;
       try {
         await this.filterService.deleteVersion(this.version!.id);
@@ -137,7 +144,7 @@ export class FilterDetailComponent implements OnInit, OnDestroy {
       } finally {
         dialogRef.componentInstance.isLoading = false;
       }
-    })
+    });
   }
 
   public openExportPopup(): void {
@@ -156,7 +163,7 @@ export class FilterDetailComponent implements OnInit, OnDestroy {
   private handleIfVersion(version: string | null): void {
     if (version) {
       this.isNewest = false;
-      this.version = this.filter.versions.find(v => v.id === version);
+      this.version = this.filter.versions.find((v) => v.id === version);
       this.criteria = this.version!.criteria;
     } else {
       this.criteria = this.filter.criteria;

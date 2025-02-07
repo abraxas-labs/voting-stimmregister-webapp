@@ -7,8 +7,6 @@
 export interface RegistrationStatistic {
   municipalityId?: number;
   municipalityName: string;
-  registrationsCount: number;
-  deregistrationCount: number;
   totalEvoterCount: number;
   totalVoterCount: number;
   evoterShare: number;

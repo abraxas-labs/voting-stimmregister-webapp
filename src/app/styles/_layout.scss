@@ -25,7 +25,7 @@
         margin: 0;
         padding: 1rem;
 
-        @media only screen and (max-width: 499px) {
+        @media only screen and (width <= 499px) {
           width: 100% !important;
         }
 
@@ -34,12 +34,12 @@
         }
       }
 
-      @media only screen and (max-width: 499px) {
+      @media only screen and (width <= 499px) {
         width: 93%;
       }
     }
 
-    @media only screen and (max-width: 499px) {
+    @media only screen and (width <= 499px) {
       width: 100%;
     }
   }

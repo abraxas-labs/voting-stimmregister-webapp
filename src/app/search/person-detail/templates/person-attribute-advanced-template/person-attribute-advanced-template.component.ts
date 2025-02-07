@@ -4,15 +4,14 @@
  * For license information see LICENSE file.
  */
 
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-person-attribute-advanced-template',
   templateUrl: './person-attribute-advanced-template.component.html',
-  styleUrls: ['./person-attribute-advanced-template.component.scss']
+  styleUrls: ['./person-attribute-advanced-template.component.scss'],
 })
 export class PersonAttributeAdvancedTemplateComponent {
-
   @Input()
   public title!: string;
 
@@ -21,5 +20,4 @@ export class PersonAttributeAdvancedTemplateComponent {
 
   @Input()
   public valid!: boolean;
-
 }

@@ -4,14 +4,14 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Inject, Output } from "@angular/core";
-import { FilterDefinition } from "../../../models/filter/filterDefinition";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { InputValidatorHelper } from "../../../shared/helpers/input-validator.helper";
-import { FilterVersion } from "../../../models/filter/filterVersion";
-import { FilterService } from "../../../services/filter.service";
-import { ToastService } from "../../../services/toast.service";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { FilterDefinition } from '../../../models/filter/filterDefinition';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { InputValidatorHelper } from '../../../shared/helpers/input-validator.helper';
+import { FilterVersion } from '../../../models/filter/filterVersion';
+import { FilterService } from '../../../services/filter.service';
+import { ToastService } from '../../../services/toast.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface HandleVersionPopupData {
   filter: FilterDefinition;
@@ -22,10 +22,9 @@ export interface HandleVersionPopupData {
 @Component({
   selector: 'app-handle-version-popup',
   templateUrl: './handle-version-popup.component.html',
-  styleUrls: ['./handle-version-popup.component.scss']
+  styleUrls: ['./handle-version-popup.component.scss'],
 })
 export class HandleVersionPopupComponent {
-
   public readonly isNew: boolean;
   public isLoading: boolean = false;
   public readonly version: FilterVersion;
@@ -42,21 +41,22 @@ export class HandleVersionPopupComponent {
     private readonly filterService: FilterService,
     private readonly formBuilder: FormBuilder,
     private readonly dialogRef: MatDialogRef<HandleVersionPopupComponent>,
-    private readonly toast: ToastService) {
+    private readonly toast: ToastService
+  ) {
     this.filter = data.filter;
     this.version = data.version ?? {
       count: 0,
       countOfInvalidPersons: data.countOfInvalidPersons ?? 0,
-      audit_info: {
-        created_by_name: '',
-        modified_by_name: undefined,
-        created_at: this.now,
-        modified_at: undefined,
+      auditInfo: {
+        createdByName: '',
+        modifiedByName: undefined,
+        createdAt: this.now,
+        modifiedAt: undefined,
       },
       criteria: [],
       deadline: new Date(),
       id: '',
-      name: ''
+      name: '',
     };
     this.isNew = data.version === undefined;
     this.versionForm = this.buildForm();
@@ -80,9 +80,17 @@ export class HandleVersionPopupComponent {
 
   private buildForm(): FormGroup {
     return this.formBuilder.group({
-      description: ['', [Validators.required, Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.minLength(2), Validators.maxLength(150)]],
-      date: ['', Validators.pattern(InputValidatorHelper.getExactDate())]
-    })
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(InputValidatorHelper.getComplexSlText()),
+          Validators.minLength(2),
+          Validators.maxLength(150),
+        ],
+      ],
+      date: ['', Validators.pattern(InputValidatorHelper.getExactDate())],
+    });
   }
 
   private async create(name: string, deadline: Date): Promise<void> {
@@ -95,7 +103,7 @@ export class HandleVersionPopupComponent {
       return;
     }
 
-    await this.filterService.renameVersion(this.version.id, name)
+    await this.filterService.renameVersion(this.version.id, name);
     await this.afterSave();
   }
 

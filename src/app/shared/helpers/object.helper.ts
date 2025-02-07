@@ -12,7 +12,7 @@ export class ObjectHelper {
   }
 
   public static touchFormGroup(form: FormGroup): void {
-    Object.keys(form.controls).forEach(key => {
+    Object.keys(form.controls).forEach((key) => {
       form.get(key)?.markAsTouched();
     });
   }

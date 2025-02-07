@@ -4,15 +4,15 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Input } from "@angular/core";
-import { ImportStatus } from "../../../models/data/importStatus";
+import { Component, Input } from '@angular/core';
+import { ImportStatus } from '../../../models/data/importStatus';
 
 type iconColor = 'basic' | 'error' | 'info' | 'success' | 'warning' | 'none';
 
 @Component({
-  selector: "app-data-import-status-icon",
-  templateUrl: "./data-import-status-icon.component.html",
-  styleUrls: ["./data-import-status-icon.component.scss"]
+  selector: 'app-data-import-status-icon',
+  templateUrl: './data-import-status-icon.component.html',
+  styleUrls: ['./data-import-status-icon.component.scss'],
 })
 export class DataImportStatusIconComponent {
   public color: iconColor = 'basic';

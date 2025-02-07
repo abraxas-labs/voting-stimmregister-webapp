@@ -1,6 +1,6 @@
 <div class="export-header">
   <bc-icon mat-dialog-close [icon]="'cancel'"></bc-icon>
-  <p>{{'export-filter.title' | translate}}</p>
+  <p>{{ 'export-filter.title' | translate }}</p>
 </div>
 <div class="content">
   <bc-dropdown
@@ -17,20 +17,27 @@
   <div *ngIf="invalidPersonCount > 0" class="invalid-persons-warning">
     <bc-icon class="color-warning" icon="exclamation-triangle-o"></bc-icon>
     <p>
-      {{ ('export-filter.invalid-persons-count.' + (type === exportTypes.ECH ? 'filtered' : 'included') + (invalidPersonCount === 1 ? '-single' : '')) | translate: {count: invalidPersonCount | number} }}
+      {{
+        'export-filter.invalid-persons-count.' +
+          (type === exportTypes.ECH ? 'filtered' : 'included') +
+          (invalidPersonCount === 1 ? '-single' : '') | translate: { count: invalidPersonCount | number }
+      }}
     </p>
   </div>
 </div>
 <div class="action-buttons">
   <ng-container *ngIf="!exporting; else spinner">
-    <bc-button mat-dialog-close
-               [label]="'shared.action.cancel' | translate"
-               [variant]="'tertiary'"></bc-button>
+    <bc-button
+      mat-dialog-close
+      [label]="'shared.action.cancel' | translate"
+      [variant]="'tertiary'"
+    ></bc-button>
     <bc-button
       [label]="'shared.action.export' | translate"
       [color]="'primary'"
       [variant]="'primary'"
-      (buttonClick)="export()"></bc-button>
+      (buttonClick)="export()"
+    ></bc-button>
   </ng-container>
   <ng-template #spinner>
     <bc-spinner></bc-spinner>

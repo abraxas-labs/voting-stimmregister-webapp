@@ -4,19 +4,18 @@
  * For license information see LICENSE file.
  */
 
-import {ErrorHandler, Injectable, Injector} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
-import {TranslateService} from '@ngx-translate/core';
-import {Observable} from 'rxjs';
-import {tap, take} from 'rxjs/operators';
-import {SnackbarService} from "@abraxas/voting-lib";
+import { ErrorHandler, Injectable, Injector } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
+import { tap, take } from 'rxjs/operators';
+import { SnackbarService } from '@abraxas/voting-lib';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
   // Error handling is important and needs to be loaded first.
   // Because of this we should manually inject the services with Injector.
-  constructor(private readonly injector: Injector) {
-  }
+  constructor(private readonly injector: Injector) {}
 
   public handleError(error: any): void {
     const translateService = this.injector.get<TranslateService>(TranslateService);
@@ -30,11 +29,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       this.addAlert(error.error.detail, translateService, snackbarService).subscribe();
     } else {
       // Client Error
-      this.addAlert(
-        "errors.generic.messageShort",
-        translateService,
-        snackbarService
-      ).subscribe();
+      this.addAlert('errors.generic.messageShort', translateService, snackbarService).subscribe();
       console.error(error.message);
     }
   }

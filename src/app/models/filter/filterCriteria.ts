@@ -4,8 +4,8 @@
  * For license information see LICENSE file.
  */
 
-import { FilterCriteriaReferenceId } from "./filterCriteriaReferenceId";
-import { FilterOperationId } from "@abraxas/base-components";
+import { FilterCriteriaReferenceId } from './filterCriteriaReferenceId';
+import { FilterOperationId } from '@abraxas/base-components';
 
 export interface FilterCriteria {
   id: string;
@@ -25,7 +25,7 @@ export function buildSearchDefaultCriteria(): FilterCriteria[] {
     newFilterCriteria(FilterCriteriaReferenceId.residenceAddressStreet),
     newFilterCriteria(FilterCriteriaReferenceId.residenceAddressHouseNumber),
     newFilterCriteria(FilterCriteriaReferenceId.residenceAddressZipCode),
-    newFilterCriteria(FilterCriteriaReferenceId.residenceAddressTown)
+    newFilterCriteria(FilterCriteriaReferenceId.residenceAddressTown),
   ];
 }
 
@@ -36,7 +36,7 @@ export function buildFilterDefaultCriteria(): FilterCriteria[] {
     newFilterCriteria(FilterCriteriaReferenceId.swissCitizenship),
     newFilterCriteria(FilterCriteriaReferenceId.restrictedVotingAndElectionRightFederation),
     newFilterCriteria(FilterCriteriaReferenceId.religion),
-    newFilterCriteria(FilterCriteriaReferenceId.municipalityId)
+    newFilterCriteria(FilterCriteriaReferenceId.municipalityId),
   ];
 }
 
@@ -44,35 +44,29 @@ export function newFilterCriteria(referenceId: FilterCriteriaReferenceId): Filte
   switch (referenceId) {
     case FilterCriteriaReferenceId.vn:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "string",
+        filterDataType: 'string',
         filterOperator: FilterOperationId.EQUALS,
-        filterValue: ""
+        filterValue: '',
       };
     case FilterCriteriaReferenceId.municipalityId:
+    case FilterCriteriaReferenceId.residenceBuildingId:
+    case FilterCriteriaReferenceId.residenceApartmentId:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "numeric",
+        filterDataType: 'numeric',
         filterOperator: FilterOperationId.EQUALS,
-        filterValue: ""
-      };
-    case FilterCriteriaReferenceId.restrictedVotingAndElectionRightFederation:
-      return {
-        id: "",
-        referenceId: referenceId,
-        filterDataType: "boolean",
-        filterOperator: FilterOperationId.EQUALS,
-        filterValue: false
+        filterValue: '',
       };
     case FilterCriteriaReferenceId.age:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "numeric",
+        filterDataType: 'numeric',
         filterOperator: FilterOperationId.GREATER_EQUAL,
-        filterValue: "18"
+        filterValue: '18',
       };
     // String without Additions
     case FilterCriteriaReferenceId.municipalityName:
@@ -120,40 +114,42 @@ export function newFilterCriteria(referenceId: FilterCriteriaReferenceId): Filte
     case FilterCriteriaReferenceId.peopleCircleId:
     case FilterCriteriaReferenceId.peopleCircleName:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "string",
+        filterDataType: 'string',
         filterOperator: FilterOperationId.CONTAINS,
-        filterValue: ""
+        filterValue: '',
       };
     case FilterCriteriaReferenceId.sex:
     case FilterCriteriaReferenceId.religion:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "multiselect",
+        filterDataType: 'multiselect',
         filterOperator: FilterOperationId.EQUALS,
-        filterValue: ""
+        filterValue: '',
       };
     case FilterCriteriaReferenceId.country:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "multiselect",
+        filterDataType: 'multiselect',
         filterOperator: FilterOperationId.EQUALS,
-        filterValue: ["CH"]
+        filterValue: ['CH'],
       };
     case FilterCriteriaReferenceId.eVoting:
     case FilterCriteriaReferenceId.dateOfBirthAdjusted:
     case FilterCriteriaReferenceId.moveInUnknown:
     case FilterCriteriaReferenceId.hasValidationErrors:
     case FilterCriteriaReferenceId.sendVotingCardsToDomainOfInfluenceReturnAddress:
+    case FilterCriteriaReferenceId.restrictedVotingAndElectionRightFederation:
+    case FilterCriteriaReferenceId.isHouseholder:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "boolean",
+        filterDataType: 'boolean',
         filterOperator: FilterOperationId.EQUALS,
-        filterValue: false
+        filterValue: false,
       };
     case FilterCriteriaReferenceId.dateOfBirth:
     case FilterCriteriaReferenceId.residencePermitValidFrom:
@@ -161,36 +157,36 @@ export function newFilterCriteria(referenceId: FilterCriteriaReferenceId): Filte
     case FilterCriteriaReferenceId.residenceEntryDate:
     case FilterCriteriaReferenceId.moveInArrivalDate:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "date",
+        filterDataType: 'date',
         filterOperator: FilterOperationId.EQUALS,
-        filterValue: ""
+        filterValue: '',
       };
     case FilterCriteriaReferenceId.typeOfResidence:
     case FilterCriteriaReferenceId.residencePermit:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "select",
+        filterDataType: 'select',
         filterOperator: FilterOperationId.EQUALS,
-        filterValue: ""
+        filterValue: '',
       };
     case FilterCriteriaReferenceId.swissCitizenship:
       return {
-        id: "",
+        id: '',
         referenceId: referenceId,
-        filterDataType: "select",
+        filterDataType: 'select',
         filterOperator: FilterOperationId.EQUALS,
-        filterValue: "1"
+        filterValue: '1',
       };
     default:
       return {
-        filterValue: "",
-        filterDataType: "",
+        filterValue: '',
+        filterDataType: '',
         filterOperator: FilterOperationId.CONTAINS,
-        id: "",
-        referenceId: ""
+        id: '',
+        referenceId: '',
       };
   }
 }

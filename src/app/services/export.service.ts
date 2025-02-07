@@ -4,12 +4,12 @@
  * For license information see LICENSE file.
  */
 
-import {Injectable} from '@angular/core';
-import {environment} from "../../environments/environment";
-import {FileDownloadService} from "@abraxas/voting-lib";
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { FileDownloadService } from '@abraxas/voting-lib';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ExportService {
   private readonly restApiUrl: string = '';
@@ -19,14 +19,14 @@ export class ExportService {
   }
 
   public exportCSV(filterId: string, versionId?: string): Promise<void> {
-    return this.fileDownloader.postDownloadFile(
-      this.restApiUrl + '/csv',
-      {filterId, versionId});
+    return this.fileDownloader.postDownloadFile(this.restApiUrl + '/csv', { filterId, versionId });
+  }
+
+  public exportStistat(filterId: string, versionId?: string): Promise<void> {
+    return this.fileDownloader.postDownloadFile(this.restApiUrl + '/stistat', { filterId, versionId });
   }
 
   public exportEch0045(filterId: string, versionId?: string): Promise<void> {
-    return this.fileDownloader.postDownloadFile(
-      this.restApiUrl + '/ech-0045',
-      {filterId, versionId});
+    return this.fileDownloader.postDownloadFile(this.restApiUrl + '/ech-0045', { filterId, versionId });
   }
 }

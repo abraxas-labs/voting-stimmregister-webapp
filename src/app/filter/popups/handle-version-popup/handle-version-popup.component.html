@@ -1,10 +1,10 @@
 <div class="header">
   <bc-icon mat-dialog-close [icon]="'cancel'"></bc-icon>
-  <p *ngIf="isNew">{{'filter-version.createVersion.title' | translate}}</p>
-  <p *ngIf="!isNew">{{'filter-version.editVersion' | translate}}</p>
+  <p *ngIf="isNew">{{ 'filter-version.createVersion.title' | translate }}</p>
+  <p *ngIf="!isNew">{{ 'filter-version.editVersion' | translate }}</p>
 </div>
 <div class="form-container" [formGroup]="versionForm">
-  <h5 *ngIf="isNew">{{'filter-version.createVersion.info' | translate}}</h5>
+  <h5 *ngIf="isNew">{{ 'filter-version.createVersion.info' | translate }}</h5>
   <bc-text
     [formControlName]="'description'"
     [label]="'filter-version.description' | translate"
@@ -24,17 +24,23 @@
   <div *ngIf="version.countOfInvalidPersons > 0 && isNew" class="invalid-persons-warning">
     <bc-icon class="color-warning" icon="exclamation-triangle-o"></bc-icon>
     <p>
-      {{ ('filter-version.createVersion.invalidPersons.' + (version.countOfInvalidPersons === 1 ? 'single' : 'multiple')) | translate: {count: version.countOfInvalidPersons | number} }}
+      {{
+        'filter-version.createVersion.invalidPersons.' +
+          (version.countOfInvalidPersons === 1 ? 'single' : 'multiple')
+          | translate: { count: version.countOfInvalidPersons | number }
+      }}
     </p>
   </div>
 </div>
 <div class="action-buttons">
-  <bc-button *ngIf="!isLoading"
+  <bc-button
+    *ngIf="!isLoading"
     [variant]="'tertiary'"
     [label]="'shared.action.cancel' | translate"
     mat-dialog-close
   ></bc-button>
-  <bc-button *ngIf="!isLoading; else spinner"
+  <bc-button
+    *ngIf="!isLoading; else spinner"
     [disabled]="!versionForm.valid"
     [variant]="'primary'"
     [label]="'shared.action.save' | translate"

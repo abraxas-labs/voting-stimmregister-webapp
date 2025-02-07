@@ -4,19 +4,20 @@
  * For license information see LICENSE file.
  */
 
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {firstValueFrom} from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MultipartFromDataHttpService {
-  constructor(private readonly http: HttpClient) {
-  }
+  constructor(private readonly http: HttpClient) {}
 
   public async post<TData, TResponse>(url: string, data: TData, file?: File): Promise<TResponse> {
-    return firstValueFrom(this.http.post<TResponse>(url, MultipartFromDataHttpService.buildFormData(data, file)));
+    return firstValueFrom(
+      this.http.post<TResponse>(url, MultipartFromDataHttpService.buildFormData(data, file))
+    );
   }
 
   private static buildFormData(data: any, file?: File): FormData {
@@ -30,5 +31,4 @@ export class MultipartFromDataHttpService {
 
     return formData;
   }
-
 }

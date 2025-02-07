@@ -4,12 +4,12 @@
  * For license information see LICENSE file.
  */
 
-import { FilterCriteria } from "../filter/filterCriteria";
+import { FilterCriteria } from '../filter/filterCriteria';
 
 export enum PersonSearchType {
   Unspecified = 0,
   Person = 1,
-  Filter = 2
+  Filter = 2,
 }
 
 export interface PersonSearchParameters {

@@ -4,13 +4,13 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { FilterCriteria } from "../../../models/filter/filterCriteria";
-import { PersonSearchType } from "../../../models/person/personSearchParameters";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FilterCriteria } from '../../../models/filter/filterCriteria';
+import { PersonSearchType } from '../../../models/person/personSearchParameters';
 
 @Component({
   selector: 'app-filtered-person-table',
-  templateUrl: './filtered-person-table.component.html'
+  templateUrl: './filtered-person-table.component.html',
 })
 export class FilteredPersonTableComponent {
   public currentCriteria: FilterCriteria[] = [];
@@ -57,7 +57,7 @@ export class FilteredPersonTableComponent {
     this.criteriaChange.emit(this.currentCriteria);
   }
 
-  public onCriteriaChanged(criteria: FilterCriteria[]){
+  public onCriteriaChanged(criteria: FilterCriteria[]) {
     this.currentCriteria = criteria;
     this.criteriaChange.emit(this.currentCriteria);
   }

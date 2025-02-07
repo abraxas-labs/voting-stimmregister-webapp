@@ -15,70 +15,89 @@ import {
   PersonServiceGetByFilterVersionIdRequest,
   PersonServiceGetLastUsedParametersRequest,
   PersonServiceGetSingleRequest,
-  PersonServiceGetSingleResponse
-} from "@abraxas/voting-stimmregister-proto";
-import { Injectable } from "@angular/core";
-import { lastValueFrom } from "rxjs";
-import { Person, PersonWithDomainOfInfluences } from "../models/person/person";
-import { FilterCriteria } from "../models/filter/filterCriteria";
-import { PersonResponseModel } from "../models/person/personResponse.model";
-import { DomainOfInfluence } from "../models/domainOfInfluence/domainOfInfluence";
-import { FilterService } from "./filter.service";
-import { PersonSearchParameters, PersonSearchType } from "../models/person/personSearchParameters";
+  PersonServiceGetSingleResponse,
+} from '@abraxas/voting-stimmregister-proto';
+import { Injectable } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { Person, PersonWithDomainOfInfluences } from '../models/person/person';
+import { FilterCriteria } from '../models/filter/filterCriteria';
+import { PersonResponseModel } from '../models/person/personResponse.model';
+import { DomainOfInfluence } from '../models/domainOfInfluence/domainOfInfluence';
+import { FilterService } from './filter.service';
+import { PersonSearchParameters, PersonSearchType } from '../models/person/personSearchParameters';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PersonService {
+  constructor(private readonly client: PersonServiceClient) {}
 
-  constructor(private readonly client: PersonServiceClient) {
-  }
-
-  public async getLastUsedParameters(searchType: PersonSearchType, includeEmpty: boolean = true): Promise<PersonSearchParameters> {
-    return lastValueFrom(this.client.getLastUsedParameters(new PersonServiceGetLastUsedParametersRequest({ searchType: searchType as any as PersonSearchTypeProto })))
-      .then(x => ({
-        searchType: x.searchType! as any as PersonSearchType,
-        pageSize: x.pageInfo?.pageSize ?? 20,
-        pageIndex: x.pageInfo?.pageIndex ?? 0,
-        criteria: FilterService.mapFilterCriteria(includeEmpty ? x.criteria : x.criteria?.filter(c => c.filterValue !== '')),
-      }));
+  public async getLastUsedParameters(
+    searchType: PersonSearchType,
+    includeEmpty: boolean = true
+  ): Promise<PersonSearchParameters> {
+    return lastValueFrom(
+      this.client.getLastUsedParameters(
+        new PersonServiceGetLastUsedParametersRequest({
+          searchType: searchType as any as PersonSearchTypeProto,
+        })
+      )
+    ).then((x) => ({
+      searchType: x.searchType! as any as PersonSearchType,
+      pageSize: x.pageInfo?.pageSize ?? 20,
+      pageIndex: x.pageInfo?.pageIndex ?? 0,
+      criteria: FilterService.mapFilterCriteria(
+        includeEmpty ? x.criteria : x.criteria?.filter((c) => c.filterValue !== '')
+      ),
+    }));
   }
 
   public async getAll(params: PersonSearchParameters): Promise<PersonResponseModel> {
-    return lastValueFrom(this.client
-      .getAll(
-        this.mapToPersonGetAllRequest(params.pageIndex, params.pageSize, params.searchType, params.criteria),
-      ))
-      .then(x => this.mapPersonsFromResponse(x));
+    return lastValueFrom(
+      this.client.getAll(
+        this.mapToPersonGetAllRequest(params.pageIndex, params.pageSize, params.searchType, params.criteria)
+      )
+    ).then((x) => this.mapPersonsFromResponse(x));
   }
 
-  public async getByFilterVersionId(filterVersionId: string, pageIndex: number, pageSize: number) : Promise<PersonResponseModel> {
-    return lastValueFrom(this.client
-      .getByFilterVersionId(
+  public async getByFilterVersionId(
+    filterVersionId: string,
+    pageIndex: number,
+    pageSize: number
+  ): Promise<PersonResponseModel> {
+    return lastValueFrom(
+      this.client.getByFilterVersionId(
         this.mapToPersonGetByFilterVersionIdRequest(pageIndex, pageSize, filterVersionId)
-      ))
-      .then(x => this.mapPersonsFromResponse(x));
+      )
+    ).then((x) => this.mapPersonsFromResponse(x));
   }
 
   public async getSingle(registerId: string): Promise<PersonWithDomainOfInfluences> {
-    return lastValueFrom(this.client
-      .getSingle(
-        this.mapToPersonGetSingleRequest(registerId),
-      ))
-      .then(p => this.mapPersonFromSingleResponse(p));
+    return lastValueFrom(this.client.getSingle(this.mapToPersonGetSingleRequest(registerId))).then((p) =>
+      this.mapPersonFromSingleResponse(p)
+    );
   }
 
-  private mapToPersonGetAllRequest(index: number, size: number, searchType: PersonSearchType, criteria: FilterCriteria[]): PersonServiceGetAllRequest {
+  private mapToPersonGetAllRequest(
+    index: number,
+    size: number,
+    searchType: PersonSearchType,
+    criteria: FilterCriteria[]
+  ): PersonServiceGetAllRequest {
     const result = new PersonServiceGetAllRequest();
     result.searchType = searchType as any as PersonSearchTypeProto;
     result.paging = new PagingModel();
     result.paging.pageSize = size;
-    result.paging.pageIndex = index
+    result.paging.pageIndex = index;
     result.criteria = FilterService.mapToFilterCriteria(criteria);
     return result;
   }
 
-  private mapToPersonGetByFilterVersionIdRequest(index: number, size: number, filterVersionId: string) : PersonServiceGetByFilterVersionIdRequest {
+  private mapToPersonGetByFilterVersionIdRequest(
+    index: number,
+    size: number,
+    filterVersionId: string
+  ): PersonServiceGetByFilterVersionIdRequest {
     const result = new PersonServiceGetByFilterVersionIdRequest();
     result.paging = new PagingModel();
     result.paging.pageSize = size;
@@ -97,18 +116,18 @@ export class PersonService {
     const people: Person[] = [];
     getPersonsResponse.people?.forEach((person: PersonModel) => {
       people.push(this.mapPerson(person));
-    })
+    });
     return {
       totalCount: getPersonsResponse.totalCount!,
       invalidPersonsCount: getPersonsResponse.invalidPersonsCount!,
-      people: people
+      people: people,
     };
   }
 
   private mapPersonFromSingleResponse(person: PersonServiceGetSingleResponse): PersonWithDomainOfInfluences {
     return {
       ...this.mapPerson(person.latest!),
-      domainOfInfluences: person.latestDomainOfInfluences?.map(d => this.mapDomainOfInfluence(d)) ?? [],
+      domainOfInfluences: person.latestDomainOfInfluences?.map((d) => this.mapDomainOfInfluence(d)) ?? [],
     };
   }
 
@@ -127,8 +146,15 @@ export class PersonService {
       contactAddressLine5: person.contactAddressLine5,
       contactAddressLine6: person.contactAddressLine6,
       contactAddressLine7: person.contactAddressLine7,
-      contactAddressLines: [person.contactAddressLine1 ?? "", person.contactAddressLine2 ?? "", person.contactAddressLine3 ?? "", person.contactAddressLine4 ?? "", person.contactAddressLine5 ?? "", person.contactAddressLine6 ?? "", person.contactAddressLine7 ?? ""]
-        .filter(x => x !== ""),
+      contactAddressLines: [
+        person.contactAddressLine1 ?? '',
+        person.contactAddressLine2 ?? '',
+        person.contactAddressLine3 ?? '',
+        person.contactAddressLine4 ?? '',
+        person.contactAddressLine5 ?? '',
+        person.contactAddressLine6 ?? '',
+        person.contactAddressLine7 ?? '',
+      ].filter((x) => x !== ''),
       contactAddressExtensionLine1: person.contactAddressExtensionLine1,
       contactAddressExtensionLine2: person.contactAddressExtensionLine2,
       contactAddressLocality: person.contactAddressLocality,
@@ -183,8 +209,12 @@ export class PersonService {
       registerId: person.registerId!,
       countryNameShort: person.countryNameShort,
       isSwissAbroad: person.isSwissAbroad === true,
-      sendVotingCardsToDomainOfInfluenceReturnAddress: person.sendVotingCardsToDomainOfInfluenceReturnAddress === true,
-    }
+      sendVotingCardsToDomainOfInfluenceReturnAddress:
+        person.sendVotingCardsToDomainOfInfluenceReturnAddress === true,
+      isHouseholder: person.isHouseholder === true,
+      residenceBuildingId: person.residenceBuildingId,
+      residenceApartmentId: person.residenceApartmentId
+    };
     return person1;
   }
 

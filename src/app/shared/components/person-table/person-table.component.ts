@@ -4,23 +4,22 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
-import { Person } from "../../../models/person/person";
-import { PageEvent } from "@abraxas/base-components";
-import { ActivatedRoute, Router } from "@angular/router";
-import { PersonColumn } from "./person-column";
-import { PersonService } from "../../../services/person.service";
-import { BehaviorSubject } from "rxjs";
-import { FilterCriteria } from "../../../models/filter/filterCriteria";
-import { PersonSearchType } from "../../../models/person/personSearchParameters";
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Person } from '../../../models/person/person';
+import { PageEvent } from '@abraxas/base-components';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PersonColumn } from './person-column';
+import { PersonService } from '../../../services/person.service';
+import { BehaviorSubject } from 'rxjs';
+import { FilterCriteria } from '../../../models/filter/filterCriteria';
+import { PersonSearchType } from '../../../models/person/personSearchParameters';
 
 @Component({
-  selector: "app-person-table",
-  templateUrl: "./person-table.component.html",
-  styleUrls: ["./person-table.component.scss"],
+  selector: 'app-person-table',
+  templateUrl: './person-table.component.html',
+  styleUrls: ['./person-table.component.scss'],
 })
 export class PersonTableComponent implements OnChanges {
-
   @Input()
   public searchType: PersonSearchType = PersonSearchType.Person;
 
@@ -57,7 +56,7 @@ export class PersonTableComponent implements OnChanges {
     PersonColumn.locality,
     PersonColumn.residence,
     PersonColumn.source,
-    PersonColumn.isVotingAllowed
+    PersonColumn.isVotingAllowed,
   ];
 
   public totalCount: number = 0;
@@ -70,27 +69,26 @@ export class PersonTableComponent implements OnChanges {
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private readonly personService: PersonService,
-  ) {
-  }
+    private readonly personService: PersonService
+  ) {}
 
   public async openDetailView(registerId: string): Promise<void> {
-    await this.router.navigate(["person", registerId], { relativeTo: this.route });
+    await this.router.navigate(['person', registerId], { relativeTo: this.route });
   }
 
   public async ngOnChanges(changes: SimpleChanges): Promise<void> {
-
     // do not load people if the pageIndex/size is the only input that changed
     // and it is equal to the last loaded page index/size
     // this can happen if a page is selected and there is also a binding
     // on the pageIndex/size.
     // the setter cannot be used to trigger the people load,
     // since then it would always trigger twice (once for page index and once for criteria)
-    const pageIndexChangedButSameValue = changes["pageIndex"] !== undefined
-      && changes["pageIndex"].currentValue === this.lastLoadedPageIndex;
-    const pageSizeChangedButSameValue = changes["pageSize"] !== undefined
-      && changes["pageSize"].currentValue === this.lastLoadedPageSize;
-    const pageChangesButSameValues = (pageIndexChangedButSameValue ? 1 : 0) + (pageSizeChangedButSameValue ? 1 : 0);
+    const pageIndexChangedButSameValue =
+      changes['pageIndex'] !== undefined && changes['pageIndex'].currentValue === this.lastLoadedPageIndex;
+    const pageSizeChangedButSameValue =
+      changes['pageSize'] !== undefined && changes['pageSize'].currentValue === this.lastLoadedPageSize;
+    const pageChangesButSameValues =
+      (pageIndexChangedButSameValue ? 1 : 0) + (pageSizeChangedButSameValue ? 1 : 0);
     if (Object.keys(changes).length === pageChangesButSameValues) {
       return;
     }
@@ -112,7 +110,12 @@ export class PersonTableComponent implements OnChanges {
     try {
       const { people, totalCount, invalidPersonsCount } = !!this.filterVersionId
         ? await this.personService.getByFilterVersionId(this.filterVersionId, this.pageIndex, this.pageSize)
-        : await this.personService.getAll({ searchType: this.searchType, criteria: this.criteria ?? [], pageIndex: this.pageIndex, pageSize: this.pageSize});
+        : await this.personService.getAll({
+            searchType: this.searchType,
+            criteria: this.criteria ?? [],
+            pageIndex: this.pageIndex,
+            pageSize: this.pageSize,
+          });
 
       this.datasource.next(people);
       this.totalCount = totalCount;

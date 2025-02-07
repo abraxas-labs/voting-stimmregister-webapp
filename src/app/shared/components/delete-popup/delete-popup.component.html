@@ -1,20 +1,25 @@
 <div class="header">
   <bc-icon mat-dialog-close [icon]="'cancel'"></bc-icon>
-  <p>{{'shared.popups.delete.title' | translate}}{{data.contextValue}}</p>
+  <p>{{ 'shared.popups.delete.title' | translate }}{{ data.contextValue }}</p>
 </div>
 <div class="delete-container">
   <div class="delete-container__context">
     <bc-icon [icon]="'warning'" [error]="true"></bc-icon>
-    <p class="delete-container__context__value">{{'shared.popups.delete.context.' + data.context | translate}}</p>
+    <p class="delete-container__context__value">
+      {{ 'shared.popups.delete.context.' + data.context | translate }}
+    </p>
   </div>
-  <p class="delete-container__value">{{data.contextValue}}</p>
+  <p class="delete-container__value">{{ data.contextValue }}</p>
 </div>
 <div class="action-buttons">
-  <bc-button *ngIf="!isLoading"
-    mat-dialog-close [variant]="'tertiary'"
+  <bc-button
+    *ngIf="!isLoading"
+    mat-dialog-close
+    [variant]="'tertiary'"
     [label]="'shared.action.cancel' | translate"
   ></bc-button>
-  <bc-button *ngIf="!isLoading; else spinner"
+  <bc-button
+    *ngIf="!isLoading; else spinner"
     [variant]="'primary'"
     [label]="'shared.action.delete' | translate"
     (buttonClick)="this.delete.emit()"

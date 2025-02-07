@@ -4,12 +4,12 @@
  * For license information see LICENSE file.
  */
 
-import { Component, ErrorHandler, OnInit } from "@angular/core";
-import { FilterService } from "../../services/filter.service";
-import { FilterDefinition } from "../../models/filter/filterDefinition";
-import { ActivatedRoute, Router } from "@angular/router";
-import { RoleService } from "src/app/services/role.service";
-import { AuthorizationService, Tenant } from "@abraxas/base-components";
+import { Component, ErrorHandler, OnInit } from '@angular/core';
+import { FilterService } from '../../services/filter.service';
+import { FilterDefinition } from '../../models/filter/filterDefinition';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RoleService } from 'src/app/services/role.service';
+import { AuthorizationService, Tenant } from '@abraxas/base-components';
 
 @Component({
   selector: 'app-filter-overview',
@@ -41,14 +41,14 @@ export class FilterOverviewComponent implements OnInit {
     this.filterService
       .getAll()
       .then((filters) => {
-        this.myFilters = filters.filter((f) => (f.tenantId === tenant.id));
-        this.aggregateFilters = filters.filter((f) => (f.tenantId !== tenant.id));
+        this.myFilters = filters.filter((f) => f.tenantId === tenant.id);
+        this.aggregateFilters = filters.filter((f) => f.tenantId !== tenant.id);
         this.loaded = true;
       })
       .catch((e) => this.errorHandler.handleError(e));
   }
 
   public async openCreateView(): Promise<void> {
-    await this.router.navigate(['new'], {relativeTo: this.route});
+    await this.router.navigate(['new'], { relativeTo: this.route });
   }
 }

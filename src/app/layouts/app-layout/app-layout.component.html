@@ -13,10 +13,14 @@
       [customLogoPath]="customLogo ?? ''"
       (tenantChanged)="reload()"
     >
-      <vo-lib-environment-chip></vo-lib-environment-chip>    
+      <vo-lib-environment-chip></vo-lib-environment-chip>
     </bc-app-header-bar-iam>
     <ng-template #nonIamHeader>
-      <bc-app-header-bar [link]="['/']" [title]="'misc.application-title.default' | translate" logo="VO"></bc-app-header-bar>
+      <bc-app-header-bar
+        [link]="['/']"
+        [title]="'misc.application-title.default' | translate"
+        logo="VO"
+      ></bc-app-header-bar>
     </ng-template>
     <ng-content select="[navigation]"></ng-content>
   </header>
@@ -40,7 +44,7 @@
 </div>
 
 <ng-template #notAuthenticated>
-  <div class="no-permissions-container" *ngIf="!loading; else appLoading" style="margin: 1rem;">
+  <div class="no-permissions-container" *ngIf="!loading; else appLoading" style="margin: 1rem">
     <p translate>misc.no-permissions</p>
     <div>
       <bc-button (buttonClick)="reload()" [label]="'misc.reload' | translate"></bc-button>

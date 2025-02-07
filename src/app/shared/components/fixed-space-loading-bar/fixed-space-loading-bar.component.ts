@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 // A fixed space loading bar component which
 // always uses the same height, no matter
@@ -13,7 +13,7 @@ import { Component, Input } from "@angular/core";
 @Component({
   selector: 'app-fixed-space-loading-bar',
   templateUrl: './fixed-space-loading-bar.component.html',
-  styleUrls: ['./fixed-space-loading-bar.component.scss']
+  styleUrls: ['./fixed-space-loading-bar.component.scss'],
 })
 export class FixedSpaceLoadingBarComponent {
   @Input()

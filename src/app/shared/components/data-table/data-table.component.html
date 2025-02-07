@@ -1,48 +1,60 @@
 <div [hidden]="totalCount === 0">
-  <bc-table [dataSource]="datasource" [fixed]="false" *ngIf="totalCount !== 0">
+  <bc-table
+    sort
+    [sortActive]="[
+      {id: columns.LATESTUPDATE, direction: 'desc'}
+    ]"
+    [dataSource]="datasource" 
+    [fixed]="false">
     <ng-container [columnDef]="columns.SOURCE">
-      <bc-header-cell *headerCellDef>{{'data-table.columns.source' | translate}}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let column">
-        {{('data-overview.source-system.' + column.source_system) | translate}}
+      <bc-header-cell *headerCellDef>
+        <div class="bc-header-label">
+          {{ 'data-table.columns.source' | translate }}
+        </div>
+      </bc-header-cell>
+      <bc-data-cell *dataCellDef="let row">
+        {{ 'data-overview.source-system.' + row[columns.SOURCE] | translate }}
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.MUNICIPALITY">
-      <bc-header-cell *headerCellDef>{{'data-table.columns.municipality' | translate}}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let column">
-        <span *ngIf="!column.municipality_id; else municipality">{{'data-table.notAvailable' | translate}}</span>
-        <ng-template #municipality>{{column.municipality_name}} ({{column.municipality_id}})</ng-template>
+      <bc-header-cell sort *headerCellDef>{{ 'data-table.columns.municipality' | translate }}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let row">
+        <span *ngIf="!row.municipalityId; else municipality">{{
+          'data-table.notAvailable' | translate
+        }}</span>
+        <ng-template #municipality>{{ row[columns.MUNICIPALITY] }} ({{ row.municipalityId }})</ng-template>
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.LATESTUPDATE">
-      <bc-header-cell *headerCellDef>{{'data-table.columns.latestUpdate' | translate}}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let column">
-        {{column.audit_info.modified_at | localDate: true}}
+      <bc-header-cell sort *headerCellDef>{{ 'data-table.columns.latestUpdate' | translate }}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let row">
+        {{ row.auditInfo.modifiedAt | localDate: true }}
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.DURATION">
-      <bc-header-cell *headerCellDef>{{'data-table.columns.duration' | translate}}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let column">
-        {{column.total_elapsed_milliseconds}}
+      <bc-header-cell sort *headerCellDef>{{ 'data-table.columns.duration' | translate }}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let row">
+        {{ row[columns.DURATION] }}
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.CREATEDBY">
-      <bc-header-cell *headerCellDef>{{'data-table.columns.uploadedBy' | translate}}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let column">
-        {{column.audit_info.created_by_name}}
+      <bc-header-cell sort *headerCellDef>{{ 'data-table.columns.uploadedBy' | translate }}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let row">
+        {{ row.auditInfo.createdByName }}
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.RECORDS">
-      <bc-header-cell *headerCellDef>{{'data-table.columns.records' | translate}}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let column">
+      <bc-header-cell sort *headerCellDef>{{ 'data-table.columns.records' | translate }}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let row">
         <div class="people-container">
-          {{column.import_records_count_total | number}}
+          {{ row[columns.RECORDS] | number }}
         </div>
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.STATE">
-      <bc-header-cell *headerCellDef>{{'data-table.columns.state' | translate}}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let column">
-        <app-data-import-status-icon [status]="column.import_status"></app-data-import-status-icon>
+      <bc-header-cell sort *headerCellDef>{{ 'data-table.columns.state' | translate }}</bc-header-cell>
+      <bc-data-cell *dataCellDef="let row">
+        <app-data-import-status-icon [status]="row[columns.STATE]"></app-data-import-status-icon>
       </bc-data-cell>
     </ng-container>
     <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
@@ -55,14 +67,14 @@
   </bc-table>
   <bc-paginator
     showFirstLastButtons
-    (page)="paginatorListener($event)"
     [length]="pagination.length"
     [pageSize]="pagination.pageSize"
-    [pageSizeOptions]="[5, 10, 20, 50, 100]">
+    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+  >
   </bc-paginator>
 </div>
 <div *ngIf="totalCount === 0">
   <div>
-    <p class="empty-text">{{'data-table.no-data' | translate}}</p>
+    <p class="empty-text">{{ 'data-table.no-data' | translate }}</p>
   </div>
 </div>

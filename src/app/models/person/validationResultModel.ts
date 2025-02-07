@@ -5,5 +5,5 @@
  */
 
 export interface ValidationResultModel {
-    messages?: string[];
+  messages?: string[];
 }

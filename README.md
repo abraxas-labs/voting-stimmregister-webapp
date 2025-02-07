@@ -8,7 +8,7 @@ The documentation for this system is part of the supplied source code.
 
 ## Changelog
 
-Detailed explanations of the changes per release can be found in  [CHANGELOG.md](./CHANGELOG.md).
+Detailed explanations of the changes per release can be found in [CHANGELOG.md](./CHANGELOG.md).
 
 ## Code of Conduct
 

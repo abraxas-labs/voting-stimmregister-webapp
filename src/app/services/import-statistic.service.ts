@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable, Output } from "@angular/core";
+import { Injectable, Output } from '@angular/core';
 import {
   FieldValidationErrorModel,
   GetImportStatisticHistoryRequest,
@@ -15,27 +15,26 @@ import {
   ListImportStatisticsRequest,
   ListImportStatisticsResponse,
   PagingModel,
-  RecordValidationErrorModel
-} from "@abraxas/voting-stimmregister-proto";
-import { lastValueFrom } from "rxjs";
-import { ImportStatisticResponseModel } from "../models/data/importStatisticResponse.model";
-import { ImportStatistic } from "../models/data/importStatistic.model";
-import { RecordValidationError } from "../models/data/recordValidationError.model";
-import { FieldValidationError } from "../models/data/fieldValidationError.model";
-import { ImportType } from "../models/data/importType";
-import { ImportStatusSimple } from "../models/data/ImportStatusSimple";
-import { ImportSourceSystem } from "../models/data/importSourceSystem";
+  RecordValidationErrorModel,
+} from '@abraxas/voting-stimmregister-proto';
+import { lastValueFrom } from 'rxjs';
+import { ImportStatisticResponseModel } from '../models/data/importStatisticResponse.model';
+import { ImportStatistic } from '../models/data/importStatistic.model';
+import { RecordValidationError } from '../models/data/recordValidationError.model';
+import { FieldValidationError } from '../models/data/fieldValidationError.model';
+import { ImportType } from '../models/data/importType';
+import { ImportStatusSimple } from '../models/data/ImportStatusSimple';
+import { ImportSourceSystem } from '../models/data/importSourceSystem';
 import { EventEmitter } from '@angular/core';
-import { AuditInfoService } from "./audit-info.service";
+import { AuditInfoService } from './audit-info.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImportStatisticService {
   @Output() public fetchImportStatitic: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private readonly client: ImportStatisticServiceClient) {
-  }
+  constructor(private readonly client: ImportStatisticServiceClient) {}
 
   public async getListOfImports(
     type: ImportType,
@@ -43,9 +42,13 @@ export class ImportStatisticService {
     source: ImportSource,
     state: ImportStatusSimple,
     pageIndex: number,
-    pageSize: number): Promise<ImportStatisticResponseModel> {
-
-    return lastValueFrom(this.client.list(this.mapToListImportStatisticRequest(pageIndex, pageSize, type, sourceSystem, source, state))).then(l => this.mapToImportStatisticList(l));
+    pageSize: number
+  ): Promise<ImportStatisticResponseModel> {
+    return lastValueFrom(
+      this.client.list(
+        this.mapToListImportStatisticRequest(pageIndex, pageSize, type, sourceSystem, source, state)
+      )
+    ).then((l) => this.mapToImportStatisticList(l));
   }
 
   public async getHistoryOfImport(
@@ -53,20 +56,26 @@ export class ImportStatisticService {
     sourceSystem: ImportSourceSystem,
     municipalityId: number,
     pageIndex: number,
-    pageSize: number): Promise<ImportStatisticResponseModel> {
-      
-    const request = this.mapToImportStatisticHistoryRequest(pageIndex, pageSize, type, sourceSystem, municipalityId);
-    return lastValueFrom(this.client.getHistory(request)).then(h => this.mapToImportStatisticHistory(h));
+    pageSize: number
+  ): Promise<ImportStatisticResponseModel> {
+    const request = this.mapToImportStatisticHistoryRequest(
+      pageIndex,
+      pageSize,
+      type,
+      sourceSystem,
+      municipalityId
+    );
+    return lastValueFrom(this.client.getHistory(request)).then((h) => this.mapToImportStatisticHistory(h));
   }
 
   private mapToListImportStatisticRequest(
     index: number,
-    size: number, 
+    size: number,
     type: ImportType,
     sourceSystem: ImportSourceSystem,
     source: ImportSource,
-    state: ImportStatusSimple): ListImportStatisticsRequest {
-
+    state: ImportStatusSimple
+  ): ListImportStatisticsRequest {
     const req = new ListImportStatisticsRequest();
     req.paging = new PagingModel();
     req.paging.pageIndex = index;
@@ -78,11 +87,13 @@ export class ImportStatisticService {
     return req;
   }
 
-  private mapToImportStatisticList(listImportStatisticResponse: ListImportStatisticsResponse): ImportStatisticResponseModel {
+  private mapToImportStatisticList(
+    listImportStatisticResponse: ListImportStatisticsResponse
+  ): ImportStatisticResponseModel {
     return {
       totalCount: listImportStatisticResponse.totalCount!,
-      importStatistics: this.mapToImportStatistics(listImportStatisticResponse.importStatistics!)
-    }
+      importStatistics: this.mapToImportStatistics(listImportStatisticResponse.importStatistics!),
+    };
   }
 
   private mapToImportStatisticHistoryRequest(
@@ -90,8 +101,8 @@ export class ImportStatisticService {
     size: number,
     type: ImportType,
     sourceSystem: ImportSourceSystem,
-    municipalityId: number): GetImportStatisticHistoryRequest {
-
+    municipalityId: number
+  ): GetImportStatisticHistoryRequest {
     const req = new GetImportStatisticHistoryRequest();
     req.paging = new PagingModel();
     req.paging.pageIndex = index;
@@ -102,72 +113,78 @@ export class ImportStatisticService {
     return req;
   }
 
-  private mapToImportStatisticHistory(importStatisticHistoryResponse: GetImportStatisticHistoryResponse): ImportStatisticResponseModel {
+  private mapToImportStatisticHistory(
+    importStatisticHistoryResponse: GetImportStatisticHistoryResponse
+  ): ImportStatisticResponseModel {
     return {
       totalCount: importStatisticHistoryResponse.totalCount!,
-      importStatistics: this.mapToImportStatistics(importStatisticHistoryResponse.importStatistics!)
-    }
+      importStatistics: this.mapToImportStatistics(importStatisticHistoryResponse.importStatistics!),
+    };
   }
 
   private mapToImportStatistics(importStatistics: ImportStatisticModel[]): ImportStatistic[] {
     const statistics: ImportStatistic[] = [];
-    importStatistics.forEach(statisticsModels => {
+    importStatistics.forEach((statisticsModels) => {
       const statistic: ImportStatistic = {
-        datasets_count_created: statisticsModels.datasetsCountCreated!,
-        datasets_count_deleted: statisticsModels.datasetsCountDeleted!,
-        datasets_count_updated: statisticsModels.datasetsCountUpdated!,
-        entities_with_validation_errors: statisticsModels.entitiesWithValidationErrors!,
-        finished_date: statisticsModels.finishedDate?.toDate()!,
-        has_validation_errors: statisticsModels.hasValidationErrors!,
+        datasetsCountCreated: statisticsModels.datasetsCountCreated!,
+        datasetsCountDeleted: statisticsModels.datasetsCountDeleted!,
+        datasetsCountUpdated: statisticsModels.datasetsCountUpdated!,
+        entitiesWithValidationErrors: statisticsModels.entitiesWithValidationErrors!,
+        finishedDate: statisticsModels.finishedDate?.toDate()!,
+        hasValidationErrors: statisticsModels.hasValidationErrors!,
         id: statisticsModels.id!,
-        import_status: statisticsModels.importStatus!,
-        import_type: statisticsModels.importType!,
-        import_records_count_total: statisticsModels.importRecordsCountTotal!,
-        municipality_id: statisticsModels.municipalityId!,
-        municipality_name: statisticsModels.municipalityName!,
-        processing_errors: statisticsModels.processingErrors!,
-        record_numbers_with_validation_errors: statisticsModels.recordNumbersWithValidationErrors!,
-        record_validation_errors: this.mapToRecordValidationErrorModels(statisticsModels.recordValidationErrors!),
-        source_system: statisticsModels.sourceSystem!,
-        total_elapsed_milliseconds: this.mapToElapsedTime(statisticsModels.totalElapsedMilliseconds!),
-        audit_info: AuditInfoService.map(statisticsModels.auditInfo!),
-      }
+        importStatus: statisticsModels.importStatus!,
+        importType: statisticsModels.importType!,
+        importRecordsCountTotal: statisticsModels.importRecordsCountTotal!,
+        municipalityId: statisticsModels.municipalityId!,
+        municipalityName: statisticsModels.municipalityName!,
+        processingErrors: statisticsModels.processingErrors!,
+        recordNumbersWithValidationErrors: statisticsModels.recordNumbersWithValidationErrors!,
+        recordValidationErrors: this.mapToRecordValidationErrorModels(
+          statisticsModels.recordValidationErrors!
+        ),
+        sourceSystem: statisticsModels.sourceSystem!,
+        totalElapsedMilliseconds: this.mapToElapsedTime(statisticsModels.totalElapsedMilliseconds!),
+        auditInfo: AuditInfoService.map(statisticsModels.auditInfo!),
+      };
       statistics.push(statistic);
-    })
+    });
     return statistics;
   }
 
-  private mapToRecordValidationErrorModels(recordValidationErrorModels: RecordValidationErrorModel[]): RecordValidationError[] {
+  private mapToRecordValidationErrorModels(
+    recordValidationErrorModels: RecordValidationErrorModel[]
+  ): RecordValidationError[] {
     const recordValidationErrors: RecordValidationError[] = [];
-    recordValidationErrorModels.forEach(recordValidationErrorModel => {
+    recordValidationErrorModels.forEach((recordValidationErrorModel) => {
       const recordValidationError: RecordValidationError = {
         field: this.mapToFieldValidationErrorModel(recordValidationErrorModel.fields!),
-        record_identifier: recordValidationErrorModel.recordIdentifier!,
-        record_number: recordValidationErrorModel.recordNumber!
-      }
+        recordIdentifier: recordValidationErrorModel.recordIdentifier!,
+        recordNumber: recordValidationErrorModel.recordNumber!,
+      };
       recordValidationErrors.push(recordValidationError);
-    })
+    });
     return recordValidationErrors;
   }
 
   private mapToFieldValidationErrorModel(fileds: FieldValidationErrorModel[]): FieldValidationError[] {
     const fieldValidationErrorModels: FieldValidationError[] = [];
-    fileds.forEach(field => {
+    fileds.forEach((field) => {
       const fielValidationError: FieldValidationError = {
         errors: field.errors!,
-        field_name: field.fieldName!
-      }
+        fieldName: field.fieldName!,
+      };
       fieldValidationErrorModels.push(fielValidationError);
-    })
+    });
     return fieldValidationErrorModels;
   }
 
   private mapToElapsedTime(milliseconds: string): string {
-    let seconds = Number.parseInt(milliseconds.split(".")[0]) / 1000;
+    let seconds = Number.parseInt(milliseconds.split('.')[0]) / 1000;
     const date = new Date(0, 0, 0, 0, 0, seconds);
     if (date.getSeconds() === 0) {
       date.setSeconds(1);
     }
-    return date.getHours() + "h:" + date.getMinutes() + "m:" + date.getSeconds() + "s";
+    return date.getHours() + 'h:' + date.getMinutes() + 'm:' + date.getSeconds() + 's';
   }
 }

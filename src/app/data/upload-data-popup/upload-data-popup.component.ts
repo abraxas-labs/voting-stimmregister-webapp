@@ -4,17 +4,17 @@
  * For license information see LICENSE file.
  */
 
-import { Component, ErrorHandler, EventEmitter, OnInit, Output } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
-import { DropdownItem } from "@abraxas/base-components";
-import { ImportType } from "../../models/data/importType";
-import { DataService } from "../../services/data.service";
-import { ToastService } from "../../services/toast.service";
-import { ImportSourceSystem } from "../../models/data/importSourceSystem";
-import { AccessRole } from "../../models/accessRole";
-import { RoleService } from "../../services/role.service";
-import { filterAsync } from "../../shared/helpers/array.helper";
-import { MatDialogRef } from "@angular/material/dialog";
+import { Component, ErrorHandler, EventEmitter, OnInit, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { DropdownItem } from '@abraxas/base-components';
+import { ImportType } from '../../models/data/importType';
+import { DataService } from '../../services/data.service';
+import { ToastService } from '../../services/toast.service';
+import { ImportSourceSystem } from '../../models/data/importSourceSystem';
+import { AccessRole } from '../../models/accessRole';
+import { RoleService } from '../../services/role.service';
+import { filterAsync } from '../../shared/helpers/array.helper';
+import { MatDialogRef } from '@angular/material/dialog';
 
 const typeOffset = 100;
 
@@ -25,7 +25,7 @@ interface DropdownItemWithRole extends DropdownItem {
 @Component({
   selector: 'app-upload-data-popup',
   templateUrl: './upload-data-popup.component.html',
-  styleUrls: ['./upload-data-popup.component.scss']
+  styleUrls: ['./upload-data-popup.component.scss'],
 })
 export class UploadDataPopupComponent implements OnInit {
   private readonly maxUploadFileSize: number = 600 * 1024 * 1024; // 600MB
@@ -54,18 +54,22 @@ export class UploadDataPopupComponent implements OnInit {
       disabled: false,
     },
     {
-      id: '' + (ImportType.IMPORT_TYPE_DOMAIN_OF_INFLUENCE * typeOffset + ImportSourceSystem.IMPORT_SOURCE_SYSTEM_LOGANTO),
+      id:
+        '' +
+        (ImportType.IMPORT_TYPE_DOMAIN_OF_INFLUENCE * typeOffset +
+          ImportSourceSystem.IMPORT_SOURCE_SYSTEM_LOGANTO),
       displayValue: this.translate.instant('upload-data.dropdown.doiLoganto'),
       disabled: false,
       role: AccessRole.ApiImporter,
     },
     {
-      id: '' + (ImportType.IMPORT_TYPE_PERSON * typeOffset + ImportSourceSystem.IMPORT_SOURCE_SYSTEM_INNOSOLV),
+      id:
+        '' + (ImportType.IMPORT_TYPE_PERSON * typeOffset + ImportSourceSystem.IMPORT_SOURCE_SYSTEM_INNOSOLV),
       displayValue: this.translate.instant('upload-data.dropdown.innosolvPersons'),
       disabled: false,
       role: AccessRole.ApiImporter,
-    }
-  ]
+    },
+  ];
 
   @Output() public uploaded: EventEmitter<any> = new EventEmitter();
 
@@ -75,13 +79,13 @@ export class UploadDataPopupComponent implements OnInit {
     private readonly errorHandler: ErrorHandler,
     private readonly dialogRef: MatDialogRef<UploadDataPopupComponent>,
     private readonly role: RoleService,
-    private readonly toastService: ToastService) {
-  }
+    private readonly toastService: ToastService
+  ) {}
 
   public async ngOnInit(): Promise<void> {
-    this.uploadTypes = await filterAsync(this.uploadTypes, ut => ut.role === undefined
-      ? Promise.resolve(true)
-      : this.role.hasAnyRoles(ut.role));
+    this.uploadTypes = await filterAsync(this.uploadTypes, (ut) =>
+      ut.role === undefined ? Promise.resolve(true) : this.role.hasAnyRoles(ut.role)
+    );
     this.selectedTypeSystemId = this.uploadTypes[0].id;
     this.updateSelectedTypeSystem(this.selectedTypeSystemId);
   }
@@ -96,13 +100,16 @@ export class UploadDataPopupComponent implements OnInit {
       this.uploadFile?.push(this.file);
     }
 
-    this.isFileValidForUpload = this.file != null && this.file.type === this.allowedFileType && this.file.size < this.maxUploadFileSize;
+    this.isFileValidForUpload =
+      this.file != null && this.file.type === this.allowedFileType && this.file.size < this.maxUploadFileSize;
   }
 
   public async upload(): Promise<void> {
-    if (this.selectedImportType === undefined
-      || this.selectedImportSourceSystem === undefined
-      || !this.file) {
+    if (
+      this.selectedImportType === undefined ||
+      this.selectedImportSourceSystem === undefined ||
+      !this.file
+    ) {
       return;
     }
 

@@ -4,13 +4,13 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { AuthenticationService, AuthorizationService, SnackbarComponent } from "@abraxas/base-components";
-import { TranslateService } from "@ngx-translate/core";
-import * as moment from "moment";
-import "moment/locale/de";
-import { SnackbarService, ThemeService } from "@abraxas/voting-lib";
-import { firstValueFrom, Subscription } from "rxjs";
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AuthenticationService, AuthorizationService, SnackbarComponent } from '@abraxas/base-components';
+import { TranslateService } from '@ngx-translate/core';
+import * as moment from 'moment';
+import 'moment/locale/de';
+import { SnackbarService, ThemeService } from '@abraxas/voting-lib';
+import { firstValueFrom, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -36,9 +36,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     snackbarService: SnackbarService,
     private readonly translations: TranslateService,
     private readonly authentication: AuthenticationService,
-    private readonly authorization: AuthorizationService,
+    private readonly authorization: AuthorizationService
   ) {
-    const snackbarSubscription = snackbarService.message$.subscribe(m => {
+    const snackbarSubscription = snackbarService.message$.subscribe((m) => {
       if (!this.snackbarComponent) {
         return;
       }
@@ -49,10 +49,10 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(snackbarSubscription);
 
-    const themeSubscription = themeService.theme$.subscribe(theme => this.onThemeChange(theme));
+    const themeSubscription = themeService.theme$.subscribe((theme) => this.onThemeChange(theme));
     this.subscriptions.push(themeSubscription);
 
-    const logoSubscription = themeService.logo$.subscribe(logo => (this.customLogo = logo));
+    const logoSubscription = themeService.logo$.subscribe((logo) => (this.customLogo = logo));
     this.subscriptions.push(logoSubscription);
   }
 
@@ -101,7 +101,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.appTitle = await firstValueFrom(this.translations.get('misc.application-title.' + theme.toLowerCase()));
+    this.appTitle = await firstValueFrom(
+      this.translations.get('misc.application-title.' + theme.toLowerCase())
+    );
     this.theme = theme;
   }
 }

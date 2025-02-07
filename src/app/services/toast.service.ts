@@ -12,7 +12,10 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(private readonly snackBar: MatSnackBar, private readonly i18n: TranslateService) {}
+  constructor(
+    private readonly snackBar: MatSnackBar,
+    private readonly i18n: TranslateService
+  ) {}
 
   public success(message: string): void {
     this.show(message);

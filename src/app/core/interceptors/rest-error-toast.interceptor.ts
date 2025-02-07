@@ -4,13 +4,19 @@
  * For license information see LICENSE file.
  */
 
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {lastValueFrom, Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import {environment} from '../../../environments/environment';
-import {ToastService} from '../../services/toast.service';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { lastValueFrom, Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { ToastService } from '../../services/toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +24,10 @@ import {ToastService} from '../../services/toast.service';
 export class RestErrorToastInterceptor implements HttpInterceptor {
   private readonly restApiEndpoint = environment.serviceUrl;
 
-  constructor(private readonly toast: ToastService, private readonly i18n: TranslateService) {
-  }
+  constructor(
+    private readonly toast: ToastService,
+    private readonly i18n: TranslateService
+  ) {}
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!req.url.includes(this.restApiEndpoint)) {
@@ -30,7 +38,7 @@ export class RestErrorToastInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         const problem = err.error as HttpProblemDetails;
         return this.handleRestError(problem);
-      }),
+      })
     );
   }
 

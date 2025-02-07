@@ -1,40 +1,40 @@
 <div class="header">
   <bc-icon mat-dialog-close [icon]="'cancel'" class="pointer"></bc-icon>
-  <p>{{'filter-version.selectVersion' | translate}}</p>
+  <p>{{ 'filter-version.selectVersion' | translate }}</p>
 </div>
 <div class="table">
   <div *ngIf="datasource.data.length === 0">
-    {{'filter-version-popup.empty' | translate}}
+    {{ 'filter-version-popup.empty' | translate }}
   </div>
   <bc-table [dataSource]="datasource" [fixed]="false" *ngIf="datasource.data.length !== 0">
     <ng-container [columnDef]="columns.name">
-      <bc-header-cell *headerCellDef>{{'filter-version.description' | translate}}</bc-header-cell>
+      <bc-header-cell *headerCellDef>{{ 'filter-version.description' | translate }}</bc-header-cell>
       <bc-data-cell *dataCellDef="let version">
-        {{version.name}}
+        {{ version.name }}
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.created">
-      <bc-header-cell *headerCellDef>{{'filter-version.createdDate' | translate}}</bc-header-cell>
+      <bc-header-cell *headerCellDef>{{ 'filter-version.createdDate' | translate }}</bc-header-cell>
       <bc-data-cell *dataCellDef="let version">
-        {{version.audit_info.created_at | localDate: true}}
+        {{ version.auditInfo.createdAt | localDate: true }}
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.creator">
-      <bc-header-cell *headerCellDef>{{'filter-version.creator' | translate}}</bc-header-cell>
+      <bc-header-cell *headerCellDef>{{ 'filter-version.creator' | translate }}</bc-header-cell>
       <bc-data-cell *dataCellDef="let version">
-        {{version.audit_info.created_by_name}}
+        {{ version.auditInfo.createdByName }}
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.deadline">
-      <bc-header-cell *headerCellDef>{{'filter-version.deadline' | translate}}</bc-header-cell>
+      <bc-header-cell *headerCellDef>{{ 'filter-version.deadline' | translate }}</bc-header-cell>
       <bc-data-cell *dataCellDef="let version">
-        {{version.deadline | localDate}}
+        {{ version.deadline | localDate }}
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.count">
-      <bc-header-cell *headerCellDef>{{'filter-version.persons' | translate}}</bc-header-cell>
+      <bc-header-cell *headerCellDef>{{ 'filter-version.persons' | translate }}</bc-header-cell>
       <bc-data-cell *dataCellDef="let version">
-        {{version.count | number}}
+        {{ version.count | number }}
       </bc-data-cell>
     </ng-container>
 

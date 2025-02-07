@@ -7,5 +7,5 @@
 export enum Sex {
   'männlich' = 1,
   'weiblich' = 2,
-  'unbestimmt' = 3
+  'unbestimmt' = 3,
 }

@@ -4,33 +4,31 @@
  * For license information see LICENSE file.
  */
 
-import { Component, ErrorHandler, EventEmitter, Input, Output } from "@angular/core";
-import { PageEvent } from "@abraxas/base-components";
-import { HistoryColumn } from "./history-column";
-import { ImportStatisticService } from "../../../services/import-statistic.service";
-import { ImportStatistic } from "../../../models/data/importStatistic.model";
-import { BehaviorSubject } from "rxjs";
+import { Component, ErrorHandler, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { PageEvent, PaginatorComponent, TableDataSource } from '@abraxas/base-components';
+import { HistoryColumn } from './history-column';
+import { ImportStatisticService } from '../../../services/import-statistic.service';
+import { ImportStatistic } from '../../../models/data/importStatistic.model';
 
 @Component({
-  selector: "app-history-table",
-  templateUrl: "./history-table.component.html",
-  styleUrls: ["./history-table.component.scss"]
+  selector: 'app-history-table',
+  templateUrl: './history-table.component.html',
+  styleUrls: ['./history-table.component.scss'],
 })
 export class HistoryTableComponent {
-
   public columns = HistoryColumn;
   public columnsToDisplay: string[] = [
     HistoryColumn.LATESTUPDATE,
     HistoryColumn.DURATION,
     HistoryColumn.PERSONS,
-    HistoryColumn.STATE
+    HistoryColumn.STATE,
   ];
 
   public hasDetail: boolean = false;
   public isLoading: boolean = false;
 
   public totalCount: number = 0;
-  public datasource = new BehaviorSubject<ImportStatistic[]>([]);
+  public datasource = new TableDataSource<ImportStatistic>();
 
   public pagination: PageEvent = {
     length: 0,
@@ -44,6 +42,7 @@ export class HistoryTableComponent {
   @Input()
   public set importStatistic(importStats: ImportStatistic | undefined) {
     this.importStats = importStats;
+    this.datasource.paginator = this.paginator;
     this.loadData();
   }
 
@@ -53,10 +52,13 @@ export class HistoryTableComponent {
   @Output()
   private selectedStatisticChange = new EventEmitter<ImportStatistic>();
 
+  @ViewChild(PaginatorComponent, { static: true })
+  public paginator!: PaginatorComponent;
+
   constructor(
     private readonly importStatisticService: ImportStatisticService,
-    private readonly errorHandler: ErrorHandler) {
-  }
+    private readonly errorHandler: ErrorHandler
+  ) {}
 
   public selectHistory(row: ImportStatistic) {
     if (row.id === this.selectedStatistic?.id) {
@@ -69,7 +71,7 @@ export class HistoryTableComponent {
 
   private async loadData(): Promise<void> {
     if (this.importStats === undefined) {
-      this.datasource.next([]);
+      this.datasource = new TableDataSource();
       this.totalCount = 0;
       this.hasDetail = false;
       return;
@@ -78,13 +80,14 @@ export class HistoryTableComponent {
     this.isLoading = true;
     try {
       const response = await this.importStatisticService.getHistoryOfImport(
-        this.importStats.import_type,
-        this.importStats.source_system,
-        this.importStats.municipality_id,
+        this.importStats.importType,
+        this.importStats.sourceSystem,
+        this.importStats.municipalityId,
         this.pagination.pageIndex,
-        this.pagination.pageSize);
-        
-      this.datasource.next(response.importStatistics);
+        this.pagination.pageSize
+      );
+
+      this.datasource.data = response.importStatistics;
       this.totalCount = response.totalCount;
       this.pagination.length = this.totalCount;
       this.hasDetail = true;
@@ -93,10 +96,5 @@ export class HistoryTableComponent {
     } finally {
       this.isLoading = false;
     }
-  }
-
-  paginatorListener(page: PageEvent) {
-    this.pagination = page;
-    this.loadData();
   }
 }

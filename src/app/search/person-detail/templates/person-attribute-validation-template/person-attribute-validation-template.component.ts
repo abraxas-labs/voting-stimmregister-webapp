@@ -5,15 +5,14 @@
  */
 
 import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { createPopper } from "@popperjs/core";
+import { createPopper } from '@popperjs/core';
 
 @Component({
   selector: 'app-person-attribute-validation-template',
   templateUrl: './person-attribute-validation-template.component.html',
-  styleUrls: ['./person-attribute-validation-template.component.scss']
+  styleUrls: ['./person-attribute-validation-template.component.scss'],
 })
 export class PersonAttributeValidationTemplateComponent implements AfterViewInit {
-
   @Input()
   public title!: string;
 
@@ -35,8 +34,16 @@ export class PersonAttributeValidationTemplateComponent implements AfterViewInit
     if (this.validationIcon && this.tooltip?.nativeElement && this.arrow?.nativeElement) {
       const showEvents = ['mouseenter', 'focus'];
       const hideEvents = ['mouseleave', 'blur'];
-      showEvents.forEach(event => this.validationIcon.nativeElement.addEventListener(event, () => { this.showTooltip() }));
-      hideEvents.forEach(event => this.validationIcon.nativeElement.addEventListener(event, () => { this.hideTooltip() }));
+      showEvents.forEach((event) =>
+        this.validationIcon.nativeElement.addEventListener(event, () => {
+          this.showTooltip();
+        })
+      );
+      hideEvents.forEach((event) =>
+        this.validationIcon.nativeElement.addEventListener(event, () => {
+          this.hideTooltip();
+        })
+      );
 
       const arrowRef = this.arrow.nativeElement;
       if (!!arrowRef) {
@@ -74,7 +81,7 @@ export class PersonAttributeValidationTemplateComponent implements AfterViewInit
     const validationIcon: Element = this.validationIcon.nativeElement;
     const tooltip: any = this.tooltip.nativeElement;
     this.popperInstance = createPopper(validationIcon, tooltip, {
-      placement: "top",
+      placement: 'top',
       modifiers: [
         {
           name: 'flip',
@@ -95,8 +102,7 @@ export class PersonAttributeValidationTemplateComponent implements AfterViewInit
           },
         },
       ],
-    }
-    );
+    });
   }
 
   destroyPopper() {
@@ -105,5 +111,4 @@ export class PersonAttributeValidationTemplateComponent implements AfterViewInit
       this.popperInstance = null;
     }
   }
-
 }

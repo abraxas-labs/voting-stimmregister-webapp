@@ -4,10 +4,10 @@
  * For license information see LICENSE file.
  */
 
-import { ValidationResultModel } from "./validationResultModel";
-import { ImportSourceSystem } from "../data/importSourceSystem";
-import { DomainOfInfluence } from "../domainOfInfluence/domainOfInfluence";
-import { Sex } from "./sex";
+import { ValidationResultModel } from './validationResultModel';
+import { ImportSourceSystem } from '../data/importSourceSystem';
+import { DomainOfInfluence } from '../domainOfInfluence/domainOfInfluence';
+import { Sex } from './sex';
 
 export interface Person {
   registerId: string;
@@ -79,6 +79,9 @@ export interface Person {
   countryNameShort?: string;
   isSwissAbroad: boolean;
   sendVotingCardsToDomainOfInfluenceReturnAddress: boolean;
+  isHouseholder: boolean;
+  residenceBuildingId?: number;
+  residenceApartmentId?: number;
 }
 
 export interface PersonWithDomainOfInfluences extends Person {

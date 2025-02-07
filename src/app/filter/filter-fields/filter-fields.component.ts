@@ -4,29 +4,28 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
-import { FilterCriteria, newFilterCriteria } from "../../models/filter/filterCriteria";
-import { FilterCriteriaReferenceId } from "../../models/filter/filterCriteriaReferenceId";
-import { KeyValuePairModel } from "../../models/keyValuePair.model";
-import { Router } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { InputValidatorHelper } from "../../shared/helpers/input-validator.helper";
-import { FilterChange, FilterOperation, FilterOperationId } from "@abraxas/base-components";
-import { RoleService } from "src/app/services/role.service";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FilterCriteria, newFilterCriteria } from '../../models/filter/filterCriteria';
+import { FilterCriteriaReferenceId } from '../../models/filter/filterCriteriaReferenceId';
+import { KeyValuePairModel } from '../../models/keyValuePair.model';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { InputValidatorHelper } from '../../shared/helpers/input-validator.helper';
+import { FilterChange, FilterOperation, FilterOperationId } from '@abraxas/base-components';
+import { RoleService } from 'src/app/services/role.service';
 
 @Component({
   selector: 'app-filter-fields',
   templateUrl: './filter-fields.component.html',
-  styleUrls: ['./filter-fields.component.scss']
+  styleUrls: ['./filter-fields.component.scss'],
 })
 export class FilterFieldsComponent implements OnInit, OnChanges {
-
   protected readonly numberFilterOperations: FilterOperation[] = [
     {
       id: FilterOperationId.EQUALS,
       label: FilterOperationId.EQUALS,
       icon: FilterOperationId.EQUALS,
-    }
+    },
   ];
 
   @Input()
@@ -48,19 +47,21 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
   public selectableAttributes: KeyValuePairModel[] = [];
   public filterForm: FormGroup = new FormGroup({});
 
-  constructor(private readonly formBuilder: FormBuilder,
-              private readonly router: Router,
-              private readonly roleService: RoleService) {
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router,
+    private readonly roleService: RoleService
+  ) {
     this.buildForm();
   }
 
   public async ngOnInit(): Promise<void> {
     this.isManager = await this.roleService.isManager();
     this.updateAttributes();
-    
+
     // VOTING-3928: convert string value to a boolean in order for checkboxes to initialize properly
     this.criteria.forEach((criteria: FilterCriteria) => {
-      if(criteria.filterDataType === 'boolean') {
+      if (criteria.filterDataType === 'boolean') {
         criteria.filterValue = criteria.filterValue === 'true';
       }
     });
@@ -107,82 +108,244 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
   }
 
   public deleteCriteria(referenceId: string) {
-    this.criteria = this.criteria.filter(c => c.referenceId !== referenceId);
+    this.criteria = this.criteria.filter((c) => c.referenceId !== referenceId);
     this.criteriaChange.emit(this.criteria);
   }
 
   private updateAttributes(): void {
-    const usedReferenceIds = this.criteria.map(x => x.referenceId);
+    const usedReferenceIds = this.criteria.map((x) => x.referenceId);
     this.selectableAttributes = Object.values(FilterCriteriaReferenceId)
-      .filter(x => !usedReferenceIds.includes(x))
+      .filter((x) => !usedReferenceIds.includes(x))
       .map((refId, i) => new KeyValuePairModel(i, refId));
   }
 
   private buildForm(): void {
     this.filterForm = this.formBuilder.group({
       [FilterCriteriaReferenceId.vn]: ['', [Validators.pattern('^756\\.?\\d{4}\\.?\\d{4}\\.?\\d{2}$')]],
-      [FilterCriteriaReferenceId.municipalityId]: ['', [Validators.pattern(InputValidatorHelper.getNumeric()), Validators.max(9999)]],
+      [FilterCriteriaReferenceId.municipalityId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getNumeric()), Validators.max(9999)],
+      ],
       [FilterCriteriaReferenceId.restrictedVotingAndElectionRightFederation]: [],
-      [FilterCriteriaReferenceId.age]: ['18', [Validators.pattern(InputValidatorHelper.getNumeric()), Validators.max(150)]],
+      [FilterCriteriaReferenceId.age]: [
+        '18',
+        [Validators.pattern(InputValidatorHelper.getNumeric()), Validators.max(150)],
+      ],
       [FilterCriteriaReferenceId.swissCitizenship]: ['1'],
-      [FilterCriteriaReferenceId.municipalityName]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.officialName]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.firstName]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)]],
+      [FilterCriteriaReferenceId.municipalityName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.officialName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.firstName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
       [FilterCriteriaReferenceId.religion]: [],
       [FilterCriteriaReferenceId.country]: [],
       [FilterCriteriaReferenceId.eVoting]: [],
       [FilterCriteriaReferenceId.sex]: [''],
-      [FilterCriteriaReferenceId.dateOfBirth]: ['', [Validators.pattern(InputValidatorHelper.getExactDate())]],
+      [FilterCriteriaReferenceId.dateOfBirth]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getExactDate())],
+      ],
       [FilterCriteriaReferenceId.dateOfBirthAdjusted]: [''],
-      [FilterCriteriaReferenceId.originalName]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.allianceName]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.aliasName]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.otherName]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.callName]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)]],
+      [FilterCriteriaReferenceId.originalName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.allianceName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.aliasName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.otherName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.callName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
       [FilterCriteriaReferenceId.typeOfResidence]: [''],
-      [FilterCriteriaReferenceId.originName1_7]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.originOnCanton1_7]: ['', [Validators.pattern(InputValidatorHelper.getAlpha()), Validators.maxLength(2)]],
+      [FilterCriteriaReferenceId.originName1_7]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.originOnCanton1_7]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getAlpha()), Validators.maxLength(2)],
+      ],
       [FilterCriteriaReferenceId.residencePermit]: [],
-      [FilterCriteriaReferenceId.residencePermitValidFrom]: ['', [Validators.pattern(InputValidatorHelper.getExactDate())]],
-      [FilterCriteriaReferenceId.residencePermitValidTill]: ['', [Validators.pattern(InputValidatorHelper.getExactDate())]],
-      [FilterCriteriaReferenceId.residenceEntryDate]: ['', [Validators.pattern(InputValidatorHelper.getExactDate())]],
-      [FilterCriteriaReferenceId.contactAddressExtensionLine1]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.contactAddressExtensionLine2]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.contactAddressStreet]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.contactAddressHouseNumber]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(20)]],
-      [FilterCriteriaReferenceId.contactAddressPostOfficeBoxText]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(20)]],
-      [FilterCriteriaReferenceId.contactAddressLine1_7]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.contactAddressTown]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.contactAddressLocality]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.contactAddressZipCode]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(20)]],
-      [FilterCriteriaReferenceId.residenceAddressExtensionLine1]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.residenceAddressExtensionLine2]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.residenceAddressStreet]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.residenceAddressHouseNumber]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(20)]],
-      [FilterCriteriaReferenceId.residenceAddressPostOfficeBoxText]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(20)]],
-      [FilterCriteriaReferenceId.residenceAddressTown]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.residenceAddressZipCode]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(20)]],
-      [FilterCriteriaReferenceId.moveInArrivalDate]: ['', [Validators.pattern(InputValidatorHelper.getExactDate())]],
-      [FilterCriteriaReferenceId.moveInMunicipalityName]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.moveInCantonAbbreviation]: ['', [Validators.pattern(InputValidatorHelper.getAlpha()), Validators.maxLength(2)]],
-      [FilterCriteriaReferenceId.moveInComesFrom]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.moveInCountryNameShort]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)]],
+      [FilterCriteriaReferenceId.residencePermitValidFrom]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getExactDate())],
+      ],
+      [FilterCriteriaReferenceId.residencePermitValidTill]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getExactDate())],
+      ],
+      [FilterCriteriaReferenceId.residenceEntryDate]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getExactDate())],
+      ],
+      [FilterCriteriaReferenceId.contactAddressExtensionLine1]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.contactAddressExtensionLine2]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.contactAddressStreet]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.contactAddressHouseNumber]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(20)],
+      ],
+      [FilterCriteriaReferenceId.contactAddressPostOfficeBoxText]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(20)],
+      ],
+      [FilterCriteriaReferenceId.contactAddressLine1_7]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.contactAddressTown]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.contactAddressLocality]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.contactAddressZipCode]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(20)],
+      ],
+      [FilterCriteriaReferenceId.residenceAddressExtensionLine1]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.residenceAddressExtensionLine2]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.residenceAddressStreet]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.residenceAddressHouseNumber]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(20)],
+      ],
+      [FilterCriteriaReferenceId.residenceAddressPostOfficeBoxText]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(20)],
+      ],
+      [FilterCriteriaReferenceId.residenceAddressTown]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.residenceAddressZipCode]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(20)],
+      ],
+      [FilterCriteriaReferenceId.moveInArrivalDate]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getExactDate())],
+      ],
+      [FilterCriteriaReferenceId.moveInMunicipalityName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.moveInCantonAbbreviation]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getAlpha()), Validators.maxLength(2)],
+      ],
+      [FilterCriteriaReferenceId.moveInComesFrom]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.moveInCountryNameShort]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)],
+      ],
       [FilterCriteriaReferenceId.moveInUnknown]: [''],
-      [FilterCriteriaReferenceId.politicalCircleId]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)]],
-      [FilterCriteriaReferenceId.politicalCircleName]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.catholicCircleId]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)]],
-      [FilterCriteriaReferenceId.catholicCircleName]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.evangelicCircleId]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)]],
-      [FilterCriteriaReferenceId.evangelicCircleName]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.schoolCircleId]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)]],
-      [FilterCriteriaReferenceId.schoolCircleName]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.trafficCircleId]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)]],
-      [FilterCriteriaReferenceId.trafficCircleName]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.residentialDistrictCircleId]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)]],
-      [FilterCriteriaReferenceId.residentialDistrictCircleName]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
-      [FilterCriteriaReferenceId.peopleCircleId]: ['', [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)]],
-      [FilterCriteriaReferenceId.peopleCircleName]: ['', [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)]],
+      [FilterCriteriaReferenceId.politicalCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.politicalCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.catholicCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+      ],
+      [FilterCriteriaReferenceId.catholicCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.evangelicCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+      ],
+      [FilterCriteriaReferenceId.evangelicCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.schoolCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+      ],
+      [FilterCriteriaReferenceId.schoolCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.trafficCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+      ],
+      [FilterCriteriaReferenceId.trafficCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.residentialDistrictCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+      ],
+      [FilterCriteriaReferenceId.residentialDistrictCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.peopleCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+      ],
+      [FilterCriteriaReferenceId.peopleCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
       [FilterCriteriaReferenceId.sendVotingCardsToDomainOfInfluenceReturnAddress]: [''],
+      [FilterCriteriaReferenceId.isHouseholder]: [''],
+      [FilterCriteriaReferenceId.residenceBuildingId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getNumeric()), Validators.min(1), Validators.max(999999999)],
+      ],
+      [FilterCriteriaReferenceId.residenceApartmentId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getNumeric()), Validators.min(1), Validators.max(999)],
+      ],
       [FilterCriteriaReferenceId.hasValidationErrors]: [''],
     });
   }

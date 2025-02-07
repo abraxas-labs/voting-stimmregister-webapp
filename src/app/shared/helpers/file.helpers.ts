@@ -21,7 +21,7 @@ export class FileHelpers {
       byteArrays.push(byteArray);
     }
 
-    return new Blob(byteArrays, {type: contentType});
+    return new Blob(byteArrays, { type: contentType });
   }
 
   public static getFileExtension(fileName: string): string {

@@ -15,7 +15,8 @@ import { AccessRole } from '../models/accessRole';
 export class RoleService {
   constructor(
     private readonly roles: IamRoleService,
-    private readonly auth: AuthorizationService) {}
+    private readonly auth: AuthorizationService
+  ) {}
 
   public get isReaderOrManager$(): Observable<boolean> {
     return this.roles.hasRole([AccessRole.Reader, AccessRole.Manager]);
@@ -63,6 +64,6 @@ export class RoleService {
 
   public async hasAnyRoles(...roles: AccessRole[]): Promise<boolean> {
     let authRoles = await this.auth.getRoles();
-    return roles.filter(r => authRoles.includes(r)).length > 0;
+    return roles.filter((r) => authRoles.includes(r)).length > 0;
   }
 }

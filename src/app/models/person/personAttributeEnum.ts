@@ -57,6 +57,9 @@ export enum PersonAttributeEnum {
   moveInCountryNameShort = 'moveInCountryNameShort',
   moveInUnknown = 'moveInUnknown',
   hasValidationErrors = 'hasValidationErrors',
-  sendVotingCardsToDomainOfInfluenceReturnAddress = "sendVotingCardsToDomainOfInfluenceReturnAddress",
-  eVoting = 'eVoting'
+  sendVotingCardsToDomainOfInfluenceReturnAddress = 'sendVotingCardsToDomainOfInfluenceReturnAddress',
+  eVoting = 'eVoting',
+  isHouseholder = 'isHouseholder',
+  residenceBuildingId = 'residenceBuildingId',
+  residenceApartmentId = 'residenceApartmentId'
 }

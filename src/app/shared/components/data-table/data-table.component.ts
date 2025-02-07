@@ -14,24 +14,28 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-} from "@angular/core";
-import { PageEvent } from "@abraxas/base-components";
-import { DataColumn } from "./data-column";
-import { ImportType } from "../../../models/data/importType";
-import { ImportStatistic } from "../../../models/data/importStatistic.model";
-import { ImportStatisticService } from "../../../services/import-statistic.service";
-import { ImportStatusSimple } from "../../../models/data/ImportStatusSimple";
-import { ImportSourceSystem } from "../../../models/data/importSourceSystem";
-import { ImportSource } from "../../../models/data/ImportSource";
-import { BehaviorSubject, Subscription } from "rxjs";
+  ViewChild
+} from '@angular/core';
+import { 
+  PageEvent, 
+  PaginatorComponent,
+  SortDirective,
+  TableDataSource } from '@abraxas/base-components';
+import { TableColumn } from './data-table.data';
+import { ImportType } from '../../../models/data/importType';
+import { ImportStatistic } from '../../../models/data/importStatistic.model';
+import { ImportStatisticService } from '../../../services/import-statistic.service';
+import { ImportStatusSimple } from '../../../models/data/ImportStatusSimple';
+import { ImportSourceSystem } from '../../../models/data/importSourceSystem';
+import { ImportSource } from '../../../models/data/ImportSource';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss']
+  styleUrls: ['./data-table.component.scss'],
 })
 export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
-
   @Input()
   public type!: ImportType;
 
@@ -50,21 +54,27 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
   @Output()
   public selectedRowChange = new EventEmitter<ImportStatistic | undefined>();
 
-  public columns = DataColumn;
+  @ViewChild(PaginatorComponent, { static: true })
+  public paginator!: PaginatorComponent;
+
+  @ViewChild(SortDirective, { static: true })
+  public sort!: SortDirective;
+
+  public columns = TableColumn;
   public columnsToDisplay: string[] = [
-    DataColumn.SOURCE,
-    DataColumn.MUNICIPALITY,
-    DataColumn.CREATEDBY,
-    DataColumn.LATESTUPDATE,
-    DataColumn.DURATION,
-    DataColumn.RECORDS,
-    DataColumn.STATE,
+    TableColumn.SOURCE,
+    TableColumn.MUNICIPALITY,
+    TableColumn.CREATEDBY,
+    TableColumn.LATESTUPDATE,
+    TableColumn.DURATION,
+    TableColumn.RECORDS,
+    TableColumn.STATE,
   ];
 
   private fetchImportStatiticSubscription: Subscription | undefined;
 
   public totalCount: number = 0;
-  public datasource = new BehaviorSubject<ImportStatistic[]>([]);
+  public datasource = new TableDataSource<ImportStatistic>();
 
   public pagination: PageEvent = {
     length: 0,
@@ -75,14 +85,29 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private readonly errorHandler: ErrorHandler,
-    private readonly importStatisticService: ImportStatisticService) {
-  }
+    private readonly importStatisticService: ImportStatisticService
+  ) {}
 
   public ngOnInit(): void {
     this.loadData();
     this.fetchImportStatiticSubscription = this.importStatisticService.fetchImportStatitic.subscribe(() => {
       this.loadData();
     });
+
+    const dataAccessor = (data: ImportStatistic, filterId: string) => {
+      if (filterId === TableColumn.LATESTUPDATE) {
+        return data.auditInfo.modifiedAt ?? '';
+      }
+      else if(filterId === TableColumn.CREATEDBY) {
+        return data.auditInfo.createdByName ?? '';
+      }
+
+      return (data as Record<string, any>)[filterId];
+    };
+
+    this.datasource.paginator = this.paginator;
+    this.datasource.sort = this.sort;
+    this.datasource.sortingDataAccessor = dataAccessor;
   }
 
   public ngOnDestroy() {
@@ -98,16 +123,17 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    try{
+    try {
       const response = await this.importStatisticService.getListOfImports(
         this.type,
         this.sourceSystem,
         this.source,
         this.state,
         this.pagination.pageIndex,
-        this.pagination.pageSize );
+        this.pagination.pageSize
+      );
 
-      this.datasource.next(response.importStatistics);
+      this.datasource.data = response.importStatistics;
       this.totalCount = response.totalCount;
       this.pagination.length = this.totalCount;
     } catch (e) {
@@ -118,10 +144,5 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
   public selectRow(importStatistic: ImportStatistic): void {
     this.selectedRow = importStatistic;
     this.selectedRowChange.emit(importStatistic);
-  }
-
-  paginatorListener(page: PageEvent) {
-    this.pagination = page;
-    this.loadData();
   }
 }

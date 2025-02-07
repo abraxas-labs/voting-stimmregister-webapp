@@ -13,7 +13,7 @@ import {
   TableDataSource,
 } from '@abraxas/base-components';
 import { RegistrationStatisticsTableColumn } from './registration-statistics-table.data';
-import { RegistrationStatisticService } from "../../services/registration-statistic.service";
+import { RegistrationStatisticService } from '../../services/registration-statistic.service';
 import { RegistrationStatistic } from '../../models/registration/registrationStatistic';
 import { environment } from '../../../environments/environment';
 
@@ -36,8 +36,6 @@ export class RegistrationStatisticsTableComponent implements OnInit {
   public columns = RegistrationStatisticsTableColumn;
   public columnsToDisplay: string[] = [
     RegistrationStatisticsTableColumn.MUNICIPALITY_NAME,
-    RegistrationStatisticsTableColumn.REGISTRATION_COUNT,
-    RegistrationStatisticsTableColumn.DEREGISTRATION_COUNT,
     RegistrationStatisticsTableColumn.TOTAL_EVOTER_COUNT,
     RegistrationStatisticsTableColumn.TOTAL_VOTER_COUNT,
     RegistrationStatisticsTableColumn.EVOTER_SHARE,
@@ -50,7 +48,7 @@ export class RegistrationStatisticsTableComponent implements OnInit {
   public dataSource = new TableDataSource<RegistrationStatistic>();
   public operation = FilterOperationId;
 
-  constructor( private readonly registrationStatisticService: RegistrationStatisticService ) {}
+  constructor(private readonly registrationStatisticService: RegistrationStatisticService) {}
 
   public async ngOnInit(): Promise<void> {
     await this.loadRegistrationStatistics();
@@ -71,10 +69,13 @@ export class RegistrationStatisticsTableComponent implements OnInit {
   private async loadRegistrationStatistics(): Promise<void> {
     this.loading = true;
     try {
-      const registrationStatisticResponse = await this.registrationStatisticService.listRegistrationStatistics();
+      const registrationStatisticResponse =
+        await this.registrationStatisticService.listRegistrationStatistics();
       this.dataSource.data = registrationStatisticResponse.registrationStatistics;
       this.totalCount = registrationStatisticResponse.totalCount;
-      this.municipalityFilterItems = registrationStatisticResponse.registrationStatistics.map(row => row.municipalityName)
+      this.municipalityFilterItems = registrationStatisticResponse.registrationStatistics.map(
+        (row) => row.municipalityName
+      );
     } finally {
       this.loading = false;
     }

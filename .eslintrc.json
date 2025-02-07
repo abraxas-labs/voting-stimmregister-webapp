@@ -1,21 +1,12 @@
 {
   "root": true,
-  "plugins": [
-    "license-header"
-  ],
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "plugins": ["license-header"],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -39,19 +30,12 @@
             "type": "attribute"
           }
         ],
-        "license-header/header": [
-          "error",
-          "license-header.js"
-        ]
+        "license-header/header": ["error", "license-header.js"]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
   ]

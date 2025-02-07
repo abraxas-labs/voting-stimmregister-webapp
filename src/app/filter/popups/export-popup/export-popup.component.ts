@@ -4,15 +4,16 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Inject } from "@angular/core";
-import { DropdownItem } from "@abraxas/base-components";
-import { TranslateService } from "@ngx-translate/core";
-import { ExportService } from "../../../services/export.service";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Component, Inject } from '@angular/core';
+import { DropdownItem } from '@abraxas/base-components';
+import { TranslateService } from '@ngx-translate/core';
+import { ExportService } from '../../../services/export.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 enum ExportType {
-  CSV = "csv",
-  ECH = "ech"
+  CSV = 'csv',
+  ECH = 'ech',
+  STISTAT = 'stistat'
 }
 
 export interface ExportPopupData {
@@ -22,9 +23,9 @@ export interface ExportPopupData {
 }
 
 @Component({
-  selector: "app-export-popup",
-  templateUrl: "./export-popup.component.html",
-  styleUrls: ["./export-popup.component.scss"]
+  selector: 'app-export-popup',
+  templateUrl: './export-popup.component.html',
+  styleUrls: ['./export-popup.component.scss'],
 })
 export class ExportPopupComponent {
   public readonly exportTypes: typeof ExportType = ExportType;
@@ -32,14 +33,19 @@ export class ExportPopupComponent {
   public types: DropdownItem[] = [
     {
       id: ExportType.ECH,
-      displayValue: this.translate.instant("export-filter.dropdown.ech"),
-      disabled: false
+      displayValue: this.translate.instant('export-filter.dropdown.ech'),
+      disabled: false,
     },
     {
       id: ExportType.CSV,
-      displayValue: this.translate.instant("export-filter.dropdown.csv"),
-      disabled: false
-    }
+      displayValue: this.translate.instant('export-filter.dropdown.csv'),
+      disabled: false,
+    },
+    {
+      id: ExportType.STISTAT,
+      displayValue: this.translate.instant('export-filter.dropdown.stistat'),
+      disabled: false,
+    },
   ];
 
   public readonly invalidPersonCount: number;
@@ -50,7 +56,8 @@ export class ExportPopupComponent {
     @Inject(MAT_DIALOG_DATA) private readonly dialogData: ExportPopupData,
     private readonly dialog: MatDialogRef<ExportPopupComponent>,
     private readonly translate: TranslateService,
-    private readonly exportService: ExportService) {
+    private readonly exportService: ExportService
+  ) {
     this.invalidPersonCount = dialogData.invalidPersonCount;
   }
 
@@ -63,6 +70,9 @@ export class ExportPopupComponent {
           break;
         case ExportType.ECH:
           await this.exportService.exportEch0045(this.dialogData.filterId, this.dialogData.versionId);
+          break;
+        case ExportType.STISTAT:
+          await this.exportService.exportStistat(this.dialogData.filterId, this.dialogData.versionId);
           break;
       }
       this.dialog.close();

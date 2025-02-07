@@ -2,24 +2,43 @@
   <div class="header">
     <div class="header__title">
       <bc-icon class="cancel-icon pointer" [icon]="'arrow-left'" [routerLink]="backLink"></bc-icon>
-      <p>{{filter.name}}</p>
+      <p>{{ filter.name }}</p>
     </div>
     <div class="header__buttons">
-      <bc-button *ngIf="!isNewest" [variant]="'tertiary'" [label]="'filter.loadNewestVersion' | translate" (buttonClick)="getBackToFilter()"></bc-button>
-      <bc-button [variant]="'tertiary'" [disabled]="filter.versions.length === 0" [label]="'filter.loadVersion' | translate"
-                 (buttonClick)="openVersionPopup()"></bc-button>
-      <bc-button *ngIf="isNewest && isManager" [variant]="'tertiary'" [label]="'filter.saveVersion' | translate" (buttonClick)="openSaveVersionPopup()"></bc-button>
-      <bc-button *ngIf="isExporter" [variant]="'tertiary'" [label]="'shared.action.export' | translate" (buttonClick)="openExportPopup()"></bc-button>
+      <bc-button
+        *ngIf="!isNewest"
+        [variant]="'tertiary'"
+        [label]="'filter.loadNewestVersion' | translate"
+        (buttonClick)="getBackToFilter()"
+      ></bc-button>
+      <bc-button
+        [variant]="'tertiary'"
+        [disabled]="filter.versions.length === 0"
+        [label]="'filter.loadVersion' | translate"
+        (buttonClick)="openVersionPopup()"
+      ></bc-button>
+      <bc-button
+        *ngIf="isNewest && isManager"
+        [variant]="'tertiary'"
+        [label]="'filter.saveVersion' | translate"
+        (buttonClick)="openSaveVersionPopup()"
+      ></bc-button>
+      <bc-button
+        *ngIf="isExporter"
+        [variant]="'tertiary'"
+        [label]="'shared.action.export' | translate"
+        (buttonClick)="openExportPopup()"
+      ></bc-button>
     </div>
   </div>
   <bc-divider></bc-divider>
   <div [class.version]="!isNewest">
     <div class="info">
       <div>
-        <p>{{filter.description}}</p>
+        <p>{{ filter.description }}</p>
         <div *ngIf="version; else actuality" class="version-deadline">
           <span class="label">{{ 'filter.deadline' | translate }}</span>
-          <p>{{version.deadline | localDate}}</p>
+          <p>{{ version.deadline | localDate }}</p>
         </div>
         <ng-template #actuality>
           <span class="label">{{ 'filter.actuality' | translate }}</span>
@@ -29,7 +48,7 @@
         <span class="label">{{ 'filter.version' | translate }}</span>
         <span class="value">{{ version.name }}</span>
         <span class="label">{{ 'shared.action.createdAt' | translate }}</span>
-        <span class="value">{{ version.audit_info.created_at | localDate: true }}</span>
+        <span class="value">{{ version.auditInfo.createdAt | localDate: true }}</span>
       </div>
     </div>
     <div class="filters">
@@ -37,17 +56,35 @@
         <app-filter-criteria *ngFor="let criteria of criteria" [criteria]="criteria"></app-filter-criteria>
       </div>
       <div>
-        <bc-button *ngIf="!isNewest && isManager" [variant]="'tertiary'" [label]="'filter.rename' | translate" (buttonClick)="openRenameVersionPopup()"></bc-button>
-        <bc-button *ngIf="!isNewest && isManager" [variant]="'tertiary'" [label]="'shared.action.delete' | translate" [color]="'warn'"
-                   (buttonClick)="openDeleteVersion()"></bc-button>
-        <bc-button *ngIf="isManager" [variant]="'tertiary'" [disabled]="!isNewest" [label]="'filter.edit' | translate" (click)="editFilter()"></bc-button>
+        <bc-button
+          *ngIf="!isNewest && isManager"
+          [variant]="'tertiary'"
+          [label]="'filter.rename' | translate"
+          (buttonClick)="openRenameVersionPopup()"
+        ></bc-button>
+        <bc-button
+          *ngIf="!isNewest && isManager"
+          [variant]="'tertiary'"
+          [label]="'shared.action.delete' | translate"
+          [color]="'warn'"
+          (buttonClick)="openDeleteVersion()"
+        ></bc-button>
+        <bc-button
+          *ngIf="isManager"
+          [variant]="'tertiary'"
+          [disabled]="!isNewest"
+          [label]="'filter.edit' | translate"
+          (click)="editFilter()"
+        ></bc-button>
       </div>
     </div>
   </div>
   <bc-divider></bc-divider>
   <div class="table">
-    <app-person-table [criteria]="criteria"
-                      [searchType]="searchTypeFilter"
-                      [filterVersionId]="this.version?.id"></app-person-table>
+    <app-person-table
+      [criteria]="criteria"
+      [searchType]="searchTypeFilter"
+      [filterVersionId]="this.version?.id"
+    ></app-person-table>
   </div>
 </div>
