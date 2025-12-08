@@ -10,6 +10,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-labeled-spinner',
   templateUrl: './labeled-spinner.component.html',
   styleUrls: ['./labeled-spinner.component.scss'],
+  standalone: false,
 })
 export class LabeledSpinnerComponent {
   @Input()

@@ -35,6 +35,8 @@
     "scss/dollar-variable-colon-newline-after": "always-multi-line",
     "scss/dollar-variable-colon-space-after": "always-single-line",
     "scss/double-slash-comment-whitespace-inside": null,
-    "scss/no-duplicate-dollar-variables": true
+    "scss/no-duplicate-dollar-variables": true,
+    "declaration-property-value-no-unknown": null,
+    "scss/declaration-property-value-no-unknown": true
   }
 }

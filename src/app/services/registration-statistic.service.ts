@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Injectable, Output, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
   ListRegistrationStatisticRequest,
@@ -21,12 +21,10 @@ import { RegistrationStatisticResponseModel } from '../models/registration/regis
   providedIn: 'root',
 })
 export class RegistrationStatisticService {
-  @Output() public fetchRegistrationStatitic: EventEmitter<any> = new EventEmitter<any>();
+  private readonly client = inject(RegistrationStatisticServiceClient);
+  private readonly translate = inject(TranslateService);
 
-  constructor(
-    private readonly client: RegistrationStatisticServiceClient,
-    private readonly translate: TranslateService
-  ) {}
+  @Output() public fetchRegistrationStatitic: EventEmitter<any> = new EventEmitter<any>();
 
   public async listRegistrationStatistics(): Promise<RegistrationStatisticResponseModel> {
     return lastValueFrom(this.client.list(this.mapToListRegistrationStatisticRequest())).then((l) =>

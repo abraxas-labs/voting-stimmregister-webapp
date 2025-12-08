@@ -11,6 +11,7 @@ import { PersonSearchType } from '../../../models/person/personSearchParameters'
 @Component({
   selector: 'app-filtered-person-table',
   templateUrl: './filtered-person-table.component.html',
+  standalone: false,
 })
 export class FilteredPersonTableComponent {
   public currentCriteria: FilterCriteria[] = [];

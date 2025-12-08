@@ -4,7 +4,16 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { FilterCriteria, newFilterCriteria } from '../../models/filter/filterCriteria';
 import { FilterCriteriaReferenceId } from '../../models/filter/filterCriteriaReferenceId';
 import { KeyValuePairModel } from '../../models/keyValuePair.model';
@@ -18,8 +27,13 @@ import { RoleService } from 'src/app/services/role.service';
   selector: 'app-filter-fields',
   templateUrl: './filter-fields.component.html',
   styleUrls: ['./filter-fields.component.scss'],
+  standalone: false,
 })
 export class FilterFieldsComponent implements OnInit, OnChanges {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly roleService = inject(RoleService);
+
   protected readonly numberFilterOperations: FilterOperation[] = [
     {
       id: FilterOperationId.EQUALS,
@@ -47,11 +61,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
   public selectableAttributes: KeyValuePairModel[] = [];
   public filterForm: FormGroup = new FormGroup({});
 
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly router: Router,
-    private readonly roleService: RoleService
-  ) {
+  constructor() {
     this.buildForm();
   }
 
@@ -180,7 +190,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.originOnCanton1_7]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getAlpha()), Validators.maxLength(2)],
+        [Validators.pattern(InputValidatorHelper.getAlpha()), Validators.maxLength(20)],
       ],
       [FilterCriteriaReferenceId.residencePermit]: [],
       [FilterCriteriaReferenceId.residencePermitValidFrom]: [
@@ -269,7 +279,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.moveInCantonAbbreviation]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getAlpha()), Validators.maxLength(2)],
+        [Validators.pattern(InputValidatorHelper.getAlpha()), Validators.maxLength(20)],
       ],
       [FilterCriteriaReferenceId.moveInComesFrom]: [
         '',
@@ -290,7 +300,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.catholicCircleId]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
       ],
       [FilterCriteriaReferenceId.catholicCircleName]: [
         '',
@@ -298,7 +308,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.evangelicCircleId]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
       ],
       [FilterCriteriaReferenceId.evangelicCircleName]: [
         '',
@@ -306,7 +316,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.schoolCircleId]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
       ],
       [FilterCriteriaReferenceId.schoolCircleName]: [
         '',
@@ -314,7 +324,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.trafficCircleId]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
       ],
       [FilterCriteriaReferenceId.trafficCircleName]: [
         '',
@@ -322,7 +332,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.residentialDistrictCircleId]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
       ],
       [FilterCriteriaReferenceId.residentialDistrictCircleName]: [
         '',
@@ -330,7 +340,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.peopleCircleId]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(7)],
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
       ],
       [FilterCriteriaReferenceId.peopleCircleName]: [
         '',

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { RoleService } from 'src/app/services/role.service';
 
@@ -12,7 +12,7 @@ import { RoleService } from 'src/app/services/role.service';
   providedIn: 'root',
 })
 export class RoleGuard {
-  constructor(private readonly roleService: RoleService) {}
+  private readonly roleService = inject(RoleService);
 
   public async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     if (route.data.role) {

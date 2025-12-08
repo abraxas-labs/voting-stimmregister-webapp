@@ -14,6 +14,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-fixed-space-loading-bar',
   templateUrl: './fixed-space-loading-bar.component.html',
   styleUrls: ['./fixed-space-loading-bar.component.scss'],
+  standalone: false,
 })
 export class FixedSpaceLoadingBarComponent {
   @Input()

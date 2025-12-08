@@ -10,6 +10,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-person-attribute-advanced-template',
   templateUrl: './person-attribute-advanced-template.component.html',
   styleUrls: ['./person-attribute-advanced-template.component.scss'],
+  standalone: false,
 })
 export class PersonAttributeAdvancedTemplateComponent {
   @Input()

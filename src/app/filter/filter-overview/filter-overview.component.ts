@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, ErrorHandler, OnInit } from '@angular/core';
+import { Component, ErrorHandler, OnInit, inject } from '@angular/core';
 import { FilterService } from '../../services/filter.service';
 import { FilterDefinition } from '../../models/filter/filterDefinition';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,21 +15,20 @@ import { AuthorizationService, Tenant } from '@abraxas/base-components';
   selector: 'app-filter-overview',
   templateUrl: './filter-overview.component.html',
   styleUrls: ['./filter-overview.component.scss'],
+  standalone: false,
 })
 export class FilterOverviewComponent implements OnInit {
+  private readonly filterService = inject(FilterService);
+  private readonly roleService = inject(RoleService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly errorHandler = inject(ErrorHandler);
+  private readonly authorization = inject(AuthorizationService);
+
   public isManager: boolean = false;
   public loaded: boolean = false;
   public myFilters: FilterDefinition[] = [];
   public aggregateFilters: FilterDefinition[] = [];
-
-  constructor(
-    private readonly filterService: FilterService,
-    private readonly roleService: RoleService,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly errorHandler: ErrorHandler,
-    private readonly authorization: AuthorizationService
-  ) {}
 
   public async ngOnInit(): Promise<void> {
     const tenant = await this.authorization.getActiveTenant();

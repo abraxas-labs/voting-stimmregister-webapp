@@ -2,9 +2,10 @@
   <bc-readonly class="content-description">{{ 'person.attribute-label.eVoting' | translate }}</bc-readonly>
   <div class="content-data" [class.content-error]="!eVotingFlag" subscriptSizing="dynamic">
     <bc-readonly class="content-data-text">{{ 'eVoting.' + eVotingFlag | translate }}</bc-readonly>
-    <bc-icon class="success" icon="check-circle" *ngIf="eVotingFlag; else error"></bc-icon>
-    <ng-template #error>
+    @if (eVotingFlag) {
+      <bc-icon class="success" icon="check-circle"></bc-icon>
+    } @else {
       <div class="error"></div>
-    </ng-template>
+    }
   </div>
 </div>

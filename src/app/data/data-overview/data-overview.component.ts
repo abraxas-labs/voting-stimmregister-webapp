@@ -4,8 +4,8 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnDestroy } from '@angular/core';
-import { SegmentedControl } from '@abraxas/base-components/lib/components/formfields/segmented-control-group/segmented-control.model';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { SegmentedControl } from '@abraxas/base-components';
 import { TranslateService } from '@ngx-translate/core';
 import { UploadDataPopupComponent } from '../upload-data-popup/upload-data-popup.component';
 import { AccessRole } from '../../models/accessRole';
@@ -22,13 +22,20 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-data-overview',
   templateUrl: './data-overview.component.html',
   styleUrls: ['./data-overview.component.scss'],
+  standalone: false,
 })
-export class DataOverviewComponent implements OnDestroy {
+export class DataOverviewComponent implements OnInit, OnDestroy {
+  private readonly importStatisticService = inject(ImportStatisticService);
+  private readonly translate = inject(TranslateService);
+  private readonly dialog = inject(MatDialog);
+
   public readonly roles: typeof AccessRole = AccessRole;
   public readonly importTypes: typeof ImportType = ImportType;
   public readonly importSourceSystems: typeof ImportSourceSystem = ImportSourceSystem;
   public readonly importSource: typeof ImportSource = ImportSource;
   public readonly importStatusSimple: typeof ImportStatusSimple = ImportStatusSimple;
+
+  public supportedSourceSystems: ImportSourceSystem[] = [];
 
   public segments: SegmentedControl[] = [
     {
@@ -55,11 +62,9 @@ export class DataOverviewComponent implements OnDestroy {
   public selectedDetailStatistic?: ImportStatistic;
   public filter: ImportStatusSimple = ImportStatusSimple.IMPORT_STATUS_SIMPLE_ALL;
 
-  constructor(
-    private readonly importStatisticService: ImportStatisticService,
-    private readonly translate: TranslateService,
-    private readonly dialog: MatDialog
-  ) {}
+  public async ngOnInit(): Promise<void> {
+    this.supportedSourceSystems = await this.importStatisticService.getSupportedSourceSystems();
+  }
 
   public ngOnDestroy(): void {
     this.sharedDataServiceSubscription?.unsubscribe();
@@ -74,6 +79,9 @@ export class DataOverviewComponent implements OnDestroy {
       panelClass: 'custom-dialog-container',
       width: '465px',
       autoFocus: 'dialog',
+      data: {
+        supportedSourceSystems: this.supportedSourceSystems,
+      },
     });
     const popupComponent = dialog.componentInstance as UploadDataPopupComponent;
     const uploadedEvent = popupComponent.uploaded.subscribe((value) => {

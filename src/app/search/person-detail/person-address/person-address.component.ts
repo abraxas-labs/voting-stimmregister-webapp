@@ -4,15 +4,26 @@
  * For license information see LICENSE file.
  */
 
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { Person } from '../../../models/person/person';
 
 @Component({
   selector: 'app-person-address',
   templateUrl: './person-address.component.html',
   styleUrls: ['./person-address.component.scss'],
+  standalone: false,
 })
 export class PersonAddressComponent implements AfterViewInit {
+  private readonly cd = inject(ChangeDetectorRef);
+
   @ViewChild('address')
   public addressComponent?: ElementRef;
 
@@ -20,8 +31,6 @@ export class PersonAddressComponent implements AfterViewInit {
   public person!: Person;
 
   public addressText: string = '';
-
-  constructor(private readonly cd: ChangeDetectorRef) {}
 
   public ngAfterViewInit(): void {
     this.addressText = this.addressComponent!.nativeElement.innerText ?? '';

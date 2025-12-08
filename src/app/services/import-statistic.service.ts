@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable, Output } from '@angular/core';
+import { EventEmitter, inject, Injectable, Output } from '@angular/core';
 import {
   FieldValidationErrorModel,
   GetImportStatisticHistoryRequest,
@@ -17,7 +17,7 @@ import {
   PagingModel,
   RecordValidationErrorModel,
 } from '@abraxas/voting-stimmregister-proto';
-import { lastValueFrom } from 'rxjs';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { ImportStatisticResponseModel } from '../models/data/importStatisticResponse.model';
 import { ImportStatistic } from '../models/data/importStatistic.model';
 import { RecordValidationError } from '../models/data/recordValidationError.model';
@@ -25,16 +25,16 @@ import { FieldValidationError } from '../models/data/fieldValidationError.model'
 import { ImportType } from '../models/data/importType';
 import { ImportStatusSimple } from '../models/data/ImportStatusSimple';
 import { ImportSourceSystem } from '../models/data/importSourceSystem';
-import { EventEmitter } from '@angular/core';
 import { AuditInfoService } from './audit-info.service';
+import { Empty } from '@ngx-grpc/well-known-types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImportStatisticService {
-  @Output() public fetchImportStatitic: EventEmitter<any> = new EventEmitter<any>();
+  private readonly client = inject(ImportStatisticServiceClient);
 
-  constructor(private readonly client: ImportStatisticServiceClient) {}
+  @Output() public fetchImportStatitic: EventEmitter<any> = new EventEmitter<any>();
 
   public async getListOfImports(
     type: ImportType,
@@ -66,6 +66,11 @@ export class ImportStatisticService {
       municipalityId
     );
     return lastValueFrom(this.client.getHistory(request)).then((h) => this.mapToImportStatisticHistory(h));
+  }
+
+  public async getSupportedSourceSystems(): Promise<ImportSourceSystem[]> {
+    let response = firstValueFrom(this.client.getSupportedSourceSystems(new Empty()));
+    return (await response).sourceSystems!;
   }
 
   private mapToListImportStatisticRequest(

@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FilterDefinition } from '../models/filter/filterDefinition';
 import {
   FilterCriteriaModel,
@@ -38,7 +38,7 @@ import { FilterOperationId } from '@abraxas/base-components';
   providedIn: 'root',
 })
 export class FilterService {
-  constructor(private readonly client: FilterServiceClient) {}
+  private readonly client = inject(FilterServiceClient);
 
   public async getAll(): Promise<FilterDefinition[]> {
     return lastValueFrom(this.client.getAll(new FilterServiceGetAllRequest())).then((f) =>

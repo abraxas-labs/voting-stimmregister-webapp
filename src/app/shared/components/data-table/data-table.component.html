@@ -1,11 +1,10 @@
 <div [hidden]="totalCount === 0">
   <bc-table
     sort
-    [sortActive]="[
-      {id: columns.LATESTUPDATE, direction: 'desc'}
-    ]"
-    [dataSource]="datasource" 
-    [fixed]="false">
+    [sortActive]="[{ id: columns.LATESTUPDATE, direction: 'desc' }]"
+    [dataSource]="datasource"
+    [fixed]="false"
+  >
     <ng-container [columnDef]="columns.SOURCE">
       <bc-header-cell *headerCellDef>
         <div class="bc-header-label">
@@ -19,10 +18,11 @@
     <ng-container [columnDef]="columns.MUNICIPALITY">
       <bc-header-cell sort *headerCellDef>{{ 'data-table.columns.municipality' | translate }}</bc-header-cell>
       <bc-data-cell *dataCellDef="let row">
-        <span *ngIf="!row.municipalityId; else municipality">{{
-          'data-table.notAvailable' | translate
-        }}</span>
-        <ng-template #municipality>{{ row[columns.MUNICIPALITY] }} ({{ row.municipalityId }})</ng-template>
+        @if (!row.municipalityId) {
+          <span>{{ 'data-table.notAvailable' | translate }}</span>
+        } @else {
+          {{ row[columns.MUNICIPALITY] }} ({{ row.municipalityId }})
+        }
       </bc-data-cell>
     </ng-container>
     <ng-container [columnDef]="columns.LATESTUPDATE">
@@ -73,8 +73,10 @@
   >
   </bc-paginator>
 </div>
-<div *ngIf="totalCount === 0">
+@if (totalCount === 0) {
   <div>
-    <p class="empty-text">{{ 'data-table.no-data' | translate }}</p>
+    <div>
+      <p class="empty-text">{{ 'data-table.no-data' | translate }}</p>
+    </div>
   </div>
-</div>
+}

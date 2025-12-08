@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { FilterService } from '../../services/filter.service';
 import { FilterDefinition } from '../../models/filter/filterDefinition';
 import { FilterVersionPopupComponent } from '../popups/filter-version-popup/filter-version-popup.component';
@@ -30,8 +30,18 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-filter-detail',
   templateUrl: './filter-detail.component.html',
   styleUrls: ['./filter-detail.component.scss'],
+  standalone: false,
 })
 export class FilterDetailComponent implements OnInit, OnDestroy {
+  private readonly filterService = inject(FilterService);
+  private readonly dialog = inject(MatDialog);
+  private readonly roleService = inject(RoleService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly toast = inject(ToastService);
+  private readonly translate = inject(TranslateService);
+  private readonly localDate = inject(LocalDatePipe);
+
   public readonly searchTypeFilter = PersonSearchType.Filter;
 
   public isManager: boolean = false;
@@ -47,16 +57,7 @@ export class FilterDetailComponent implements OnInit, OnDestroy {
 
   private readonly routerSubscription: Subscription;
 
-  constructor(
-    private readonly filterService: FilterService,
-    private readonly dialog: MatDialog,
-    private readonly roleService: RoleService,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly toast: ToastService,
-    private readonly translate: TranslateService,
-    private readonly localDate: LocalDatePipe
-  ) {
+  constructor() {
     this.routerSubscription = this.route.paramMap.subscribe((p) =>
       this.loadData(p.get('id')!, p.get('version'))
     );

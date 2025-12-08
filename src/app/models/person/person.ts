@@ -30,6 +30,7 @@ export interface Person {
   restrictedVotingAndElectionRightFederation?: boolean;
   country?: string;
   eVoting?: boolean;
+  eVotingEmail?: string;
   municipalityName?: string;
   municipalityId: number;
   typeOfResidence: string;

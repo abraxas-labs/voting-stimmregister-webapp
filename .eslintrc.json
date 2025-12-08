@@ -30,7 +30,8 @@
             "type": "attribute"
           }
         ],
-        "license-header/header": ["error", "license-header.js"]
+        "license-header/header": ["error", "license-header.js"],
+        "@angular-eslint/prefer-standalone": "off"
       }
     },
     {

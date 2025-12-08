@@ -4,15 +4,16 @@
  * For license information see LICENSE file.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { DropdownItem } from '@abraxas/base-components';
 import { TranslateService } from '@ngx-translate/core';
 
 @Pipe({
   name: 'translationsDropdownItems',
+  standalone: false,
 })
 export class TranslationsDropdownItemsPipe implements PipeTransform {
-  constructor(private readonly i18n: TranslateService) {}
+  private readonly i18n = inject(TranslateService);
 
   public transform(i18nGroup: string): DropdownItem[] {
     const items = this.i18n.instant(i18nGroup) as Record<string, string>;

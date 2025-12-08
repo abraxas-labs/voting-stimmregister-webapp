@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, inject } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
@@ -19,7 +19,8 @@ import { concatMap, first } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class MultiGuard {
-  public constructor(public readonly injector: Injector) {}
+  public readonly injector = inject(Injector);
+
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<GuardResult> {
     return from(route.data.guardList).pipe(
       concatMap((value: any) => {

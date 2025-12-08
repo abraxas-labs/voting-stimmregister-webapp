@@ -4,17 +4,22 @@
   </bc-card-header>
   <bc-card-content>
     <div class="address-content" #address>
-      <ng-container *ngIf="person.contactAddressLines.length === 0; else addressLines">
+      @if (person.contactAddressLines.length === 0) {
         {{ person.firstName }} {{ person.officialName }}<br />
-        {{ person.contactAddressStreet }} {{ person.contactAddressHouseNumber
-        }}<br *ngIf="person.contactAddressStreet && person.contactAddressHouseNumber" />
-        {{ person.contactAddressPostOfficeBoxText }} {{ person.contactAddressPostOfficeBoxNumber
-        }}<br *ngIf="person.contactAddressPostOfficeBoxText || person.contactAddressPostOfficeBoxNumber" />
+        {{ person.contactAddressStreet }} {{ person.contactAddressHouseNumber }}
+        @if (person.contactAddressStreet && person.contactAddressHouseNumber) {
+          <br />
+        }
+        {{ person.contactAddressPostOfficeBoxText }} {{ person.contactAddressPostOfficeBoxNumber }}
+        @if (person.contactAddressPostOfficeBoxText || person.contactAddressPostOfficeBoxNumber) {
+          <br />
+        }
         {{ person.contactAddressZipCode }} {{ person.contactAddressTown }}
-      </ng-container>
-      <ng-template #addressLines>
-        <ng-container *ngFor="let line of person.contactAddressLines"> {{ line }} <br /> </ng-container>
-      </ng-template>
+      } @else {
+        @for (line of person.contactAddressLines; track line) {
+          {{ line }} <br />
+        }
+      }
     </div>
     <bc-divider></bc-divider>
     <div class="address-copy">

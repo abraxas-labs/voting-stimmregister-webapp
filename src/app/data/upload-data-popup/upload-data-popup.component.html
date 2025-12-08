@@ -16,13 +16,14 @@
     (ngModelChange)="updateSelectedTypeSystem($event)"
     subscriptSizing="dynamic"
   ></bc-dropdown>
-  <bc-alert-bar
-    *ngIf="file && !isFileValidForUpload"
-    [color]="'error'"
-    [message]="'upload-data.fileValidationError' | translate: { fileExt: allowedFileExtension }"
-    [displayDismissAction]="false"
-  >
-  </bc-alert-bar>
+  @if (fileData && !isFileValidForUpload) {
+    <bc-alert-bar
+      [color]="'error'"
+      [message]="'upload-data.fileValidationError' | translate: { fileExt: allowedFileExtension }"
+      [displayDismissAction]="false"
+    >
+    </bc-alert-bar>
+  }
   <bc-file-input
     [tabIndex]="2"
     [label]="'upload-data.explore' | translate"
@@ -30,12 +31,13 @@
     [accept]="allowedFileExtension"
     [multiple]="false"
     [type]="'button'"
-    [(value)]="uploadFile"
-    (valueChange)="updateFile($event)"
+    [maxFileSize]="maxUploadFileSize"
+    [(value)]="uploadFileData"
+    (valueChange)="updateFileData($event)"
   ></bc-file-input>
 </div>
 <div class="action-buttons">
-  <ng-container *ngIf="!uploading; else spinner">
+  @if (!uploading) {
     <bc-button
       mat-dialog-close
       [label]="'shared.action.cancel' | translate"
@@ -48,8 +50,7 @@
       [disabled]="!isFileValidForUpload"
       (buttonClick)="upload()"
     ></bc-button>
-  </ng-container>
-  <ng-template #spinner>
+  } @else {
     <bc-spinner></bc-spinner>
-  </ng-template>
+  }
 </div>

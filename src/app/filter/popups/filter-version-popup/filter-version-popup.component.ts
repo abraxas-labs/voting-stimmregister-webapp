@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { VersionColumn } from './version-column';
 import { TableDataSource } from '@abraxas/base-components';
 import { FilterDefinition } from '../../../models/filter/filterDefinition';
@@ -16,8 +16,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   selector: 'app-filter-version-popup',
   templateUrl: './filter-version-popup.component.html',
   styleUrls: ['./filter-version-popup.component.scss'],
+  standalone: false,
 })
 export class FilterVersionPopupComponent implements OnInit {
+  public readonly data = inject(MAT_DIALOG_DATA);
+  private readonly router = inject(Router);
+  private dialogRef = inject<MatDialogRef<FilterVersionPopupComponent>>(MatDialogRef);
+
   private filter!: FilterDefinition;
 
   public columns = VersionColumn;
@@ -30,12 +35,8 @@ export class FilterVersionPopupComponent implements OnInit {
   ];
   public datasource = new TableDataSource<FilterVersion>();
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private readonly router: Router,
-    private dialogRef: MatDialogRef<FilterVersionPopupComponent>
-  ) {
-    this.filter = data.filter;
+  constructor() {
+    this.filter = this.data.filter;
   }
 
   ngOnInit(): void {

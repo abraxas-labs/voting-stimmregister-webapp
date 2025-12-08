@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
   FilterDirective,
   FilterOperationId,
@@ -21,8 +21,11 @@ import { environment } from '../../../environments/environment';
   selector: 'app-registration-statistics-table',
   templateUrl: './registration-statistics-table.component.html',
   styleUrls: ['./registration-statistics-table.component.scss'],
+  standalone: false,
 })
 export class RegistrationStatisticsTableComponent implements OnInit {
+  private readonly registrationStatisticService = inject(RegistrationStatisticService);
+
   @ViewChild(FilterDirective, { static: true })
   public filter!: FilterDirective;
 
@@ -47,8 +50,6 @@ export class RegistrationStatisticsTableComponent implements OnInit {
   public totalCount: number = 0;
   public dataSource = new TableDataSource<RegistrationStatistic>();
   public operation = FilterOperationId;
-
-  constructor(private readonly registrationStatisticService: RegistrationStatisticService) {}
 
   public async ngOnInit(): Promise<void> {
     await this.loadRegistrationStatistics();

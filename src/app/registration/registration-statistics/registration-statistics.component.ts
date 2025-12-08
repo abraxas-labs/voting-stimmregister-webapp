@@ -10,5 +10,6 @@ import { Component } from '@angular/core';
   selector: 'app-registration-statistics',
   templateUrl: './registration-statistics.component.html',
   styleUrls: ['./registration-statistics.component.scss'],
+  standalone: false,
 })
 export class RegistrationStatisticsComponent {}

@@ -12,6 +12,7 @@ import { ImportStatistic } from '../../../models/data/importStatistic.model';
   selector: 'app-data-import-details',
   templateUrl: './data-import-details.component.html',
   styleUrls: ['./data-import-details.component.scss'],
+  standalone: false,
 })
 export class DataImportDetailsComponent {
   @Input()

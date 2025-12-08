@@ -10,6 +10,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-person-attribute-evoting-template',
   templateUrl: './person-attribute-evoting-template.component.html',
   styleUrls: ['./person-attribute-evoting-template.component.scss'],
+  standalone: false,
 })
 export class PersonAttributeEVotingTemplateComponent {
   @Input()

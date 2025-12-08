@@ -2,13 +2,14 @@
   <div class="search-title">
     <h5>{{ 'person-search.title' | translate }}</h5>
   </div>
-  <app-filtered-person-table
-    *ngIf="params"
-    [criteria]="params.criteria"
-    [searchType]="searchTypePerson"
-    [canSaveFilter]="true"
-    [(pageSize)]="params.pageSize"
-    [(pageIndex)]="params.pageIndex"
-    (resetCriteria)="resetCriteria()"
-  ></app-filtered-person-table>
+  @if (params) {
+    <app-filtered-person-table
+      [criteria]="params.criteria"
+      [searchType]="searchTypePerson"
+      [canSaveFilter]="true"
+      [(pageSize)]="params.pageSize"
+      [(pageIndex)]="params.pageIndex"
+      (resetCriteria)="resetCriteria()"
+    ></app-filtered-person-table>
+  }
 </div>

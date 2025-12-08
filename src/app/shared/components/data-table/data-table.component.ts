@@ -14,13 +14,10 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  inject,
 } from '@angular/core';
-import { 
-  PageEvent, 
-  PaginatorComponent,
-  SortDirective,
-  TableDataSource } from '@abraxas/base-components';
+import { PageEvent, PaginatorComponent, SortDirective, TableDataSource } from '@abraxas/base-components';
 import { TableColumn } from './data-table.data';
 import { ImportType } from '../../../models/data/importType';
 import { ImportStatistic } from '../../../models/data/importStatistic.model';
@@ -34,8 +31,12 @@ import { Subscription } from 'rxjs';
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
+  standalone: false,
 })
 export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
+  private readonly errorHandler = inject(ErrorHandler);
+  private readonly importStatisticService = inject(ImportStatisticService);
+
   @Input()
   public type!: ImportType;
 
@@ -83,11 +84,6 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     previousPageIndex: 0,
   };
 
-  constructor(
-    private readonly errorHandler: ErrorHandler,
-    private readonly importStatisticService: ImportStatisticService
-  ) {}
-
   public ngOnInit(): void {
     this.loadData();
     this.fetchImportStatiticSubscription = this.importStatisticService.fetchImportStatitic.subscribe(() => {
@@ -97,8 +93,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     const dataAccessor = (data: ImportStatistic, filterId: string) => {
       if (filterId === TableColumn.LATESTUPDATE) {
         return data.auditInfo.modifiedAt ?? '';
-      }
-      else if(filterId === TableColumn.CREATEDBY) {
+      } else if (filterId === TableColumn.CREATEDBY) {
         return data.auditInfo.createdByName ?? '';
       }
 

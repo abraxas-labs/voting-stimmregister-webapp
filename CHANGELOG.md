@@ -1,4 +1,4 @@
-# ✨ Changelog (`v3.4.0`)
+# ✨ Changelog (`v3.10.2`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,71 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v3.4.0
-Previous version ---- v2.0.3
+This version -------- v3.10.2
+Previous version ---- v3.4.0
 Initial version ----- v1.77.15
-Total commits ------- 8
+Total commits ------- 10
 ```
+
+## [v3.10.2] - 2025-11-20
+
+### 🔄 Changed
+
+- update base components and angular lib
+
+## [v3.10.1] - 2025-10-22
+
+### 🔄 Changed
+
+- angular and base components update
+
+## [v3.10.0] - 2025-10-21
+
+### 🆕 Added
+
+- add new import source system for cobra-tg.
+- add new setting to configure supported import source systems per canton.
+
+### 🔄 Changed
+
+- updated import statistics overview to only show supported import source systems.
+- updated import pop-up to only show supported import source systems.
+
+## [v3.9.0] - 2025-10-14
+
+### 🆕 Added
+
+- add e-voting email
+
+## [v3.8.1] - 2025-08-29
+
+### 🔄 Changed
+
+- fixed upload size limit for import files
+
+## [v3.8.0] - 2025-07-11
+
+### 🔄 Changed
+
+- bump BC version
+
+## [v3.6.0] - 2025-04-02
+
+### 🆕 Added
+
+- add option to add multiple values in a string filter
+
+## [v3.5.1] - 2025-03-12
+
+### 🔄 Changed
+
+- remove deprecated card layout and change checkbox subscript size dynamic
+
+## [v3.5.0] - 2025-03-04
+
+### 🔄 Changed
+
+- angular 19 update
 
 ## [v3.4.0] - 2025-01-29
 
@@ -76,59 +136,82 @@ BREAKING CHANGE: update Angular to version 18
 
 ### 🔄 Changed
 
-- update bug bounty template reference
-- patch ci-cd template version, align with new defaults
-
-## [v2.0.1] - 2024-07-15
+- update base components and angular lib
 
 ### 🔄 Changed
 
-- index.html set default language to german and disable google translation
-
-## [v2.0.0] - 2024-06-06
-
-BREAKING CHANGE: Angular 17 update
-
-### 🔄 Changed
-
-- angular 17 update
-
-## [v1.79.2] - 2024-06-03
-
-### 🔄 Changed
-
-- update link to code of conduct
-
-## [v1.79.1] - 2024-04-03
-
-### 🔄 Changed
-
-- fix checkbox initialization in filter
-
-## [v1.79.0] - 2024-03-26
+- angular and base components update
 
 ### 🆕 Added
 
-- add registration statistics
-
-## [v1.78.2] - 2024-03-15
-
-### 🔄 Changed
-
-- extend input validation rules
-
-## [v1.78.1] - 2024-02-14
+- add new import source system for cobra-tg.
+- add new setting to configure supported import source systems per canton.
 
 ### 🔄 Changed
 
-- use absolut path for config.js script
-
-## [v1.78.0] - 2024-02-06
+- updated import statistics overview to only show supported import source systems.
+- updated import pop-up to only show supported import source systems.
 
 ### 🆕 Added
 
-- add filter tenant name
+- add e-voting email
 
-## [v1.77.15] - 2024-01-31
+### 🔄 Changed
 
-### 🎉 Initial release for Bug Bounty
+- fixed upload size limit for import files
+
+### 🔄 Changed
+
+- bump BC version
+
+### 🆕 Added
+
+- add option to add multiple values in a string filter
+
+### 🔄 Changed
+
+- remove deprecated card layout and change checkbox subscript size dynamic
+
+### 🔄 Changed
+
+- angular 19 update
+
+### 🆕 Added
+
+- added STISTAT e-voting export
+
+### 🆕 Added
+
+- add householder fields
+
+### 🆕 Added
+
+- add robots meta tag to instruct crawlers to not index content
+- add X-Robots-Tag response header to instruct crawlers to not index content
+
+### 🔄 Changed
+
+- align import models to naming conventions
+
+### 🆕 Added
+
+- add sorting to import statistics
+
+### 🔄 Changed
+
+- show labels for number filter fields
+
+BREAKING CHANGE: update Angular to version 18
+
+### 🔄 Changed
+
+- update Angular to version 18
+- migrate to new build system
+
+### ❌ Removed
+
+- remove e-voter registration count columns
+
+### 🔄 Changed
+
+- migrate from gcr to harbor

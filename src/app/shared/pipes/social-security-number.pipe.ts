@@ -8,6 +8,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'socialSecurityNumber',
+  standalone: false,
 })
 export class SocialSecurityNumberPipe implements PipeTransform {
   public transform(ahv: string): string {

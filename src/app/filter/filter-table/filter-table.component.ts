@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FilterColumn } from './filter-column';
 import { TableDataSource } from '@abraxas/base-components';
 import { FilterDefinition } from '../../models/filter/filterDefinition';
@@ -14,8 +14,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-filter-table',
   templateUrl: './filter-table.component.html',
   styleUrls: ['./filter-table.component.scss'],
+  standalone: false,
 })
 export class FilterTableComponent {
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+
   @Input()
   public set filters(filters: FilterDefinition[]) {
     this.filterDatasource.data = filters;
@@ -32,11 +36,6 @@ export class FilterTableComponent {
     FilterColumn.LATEST_VERSION,
     FilterColumn.TENANT_NAME,
   ];
-
-  constructor(
-    private readonly router: Router,
-    private readonly route: ActivatedRoute
-  ) {}
 
   public async openDetailView(filter: FilterDefinition): Promise<void> {
     await this.router.navigate([filter.id], { relativeTo: this.route });

@@ -11,6 +11,7 @@ import { createPopper } from '@popperjs/core';
   selector: 'app-person-attribute-validation-template',
   templateUrl: './person-attribute-validation-template.component.html',
   styleUrls: ['./person-attribute-validation-template.component.scss'],
+  standalone: false,
 })
 export class PersonAttributeValidationTemplateComponent implements AfterViewInit {
   @Input()

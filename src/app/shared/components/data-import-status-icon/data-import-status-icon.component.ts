@@ -13,6 +13,7 @@ type iconColor = 'basic' | 'error' | 'info' | 'success' | 'warning' | 'none';
   selector: 'app-data-import-status-icon',
   templateUrl: './data-import-status-icon.component.html',
   styleUrls: ['./data-import-status-icon.component.scss'],
+  standalone: false,
 })
 export class DataImportStatusIconComponent {
   public color: iconColor = 'basic';

@@ -10,7 +10,7 @@ export class InputValidatorHelper {
   }
 
   public static getAlpha(): string {
-    return '^[A-Za-z\\u0080-\\uFFFF ./-]{0,7}$';
+    return '^[A-Za-z\\u0080-\\uFFFF ./,-]{0,200}$';
   }
 
   public static getSimpleSlText(): string {

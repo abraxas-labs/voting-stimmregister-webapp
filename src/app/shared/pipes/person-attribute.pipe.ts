@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import { Person } from '../../models/person/person';
 import { PersonAttributeEnum } from '../../models/person/personAttributeEnum';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,13 +14,12 @@ import { Sex } from '../../models/person/sex';
 
 @Pipe({
   name: 'personAttribute',
+  standalone: false,
 })
 export class PersonAttributePipe implements PipeTransform {
-  constructor(
-    private readonly datePipe: LocalDatePipe,
-    private readonly socialSecurityNumberPipe: SocialSecurityNumberPipe,
-    private readonly i18n: TranslateService
-  ) {}
+  private readonly datePipe = inject(LocalDatePipe);
+  private readonly socialSecurityNumberPipe = inject(SocialSecurityNumberPipe);
+  private readonly i18n = inject(TranslateService);
 
   public transform(person: Person, attr: PersonAttributeEnum): string | null {
     const value = person[attr];

@@ -2,31 +2,40 @@
   <div class="header">
     <div class="header__title">
       <bc-icon class="cancel-icon" [icon]="'cancel'" (click)="navigateBack()"></bc-icon>
-      <p *ngIf="isNew">{{ 'handle-filter.new-title' | translate }}</p>
-      <p *ngIf="!isNew">{{ 'handle-filter.edit-title' | translate }}</p>
+      @if (isNew) {
+        <p>{{ 'handle-filter.new-title' | translate }}</p>
+      }
+      @if (!isNew) {
+        <p>{{ 'handle-filter.edit-title' | translate }}</p>
+      }
     </div>
     <div class="header__buttons">
-      <bc-button
-        *ngIf="!isNew && !isLoading"
-        [variant]="'tertiary'"
-        [label]="'shared.action.delete' | translate"
-        [color]="'warn'"
-        (buttonClick)="openDeletePopup()"
-      ></bc-button>
-      <bc-button
-        *ngIf="!isNew && !isLoading"
-        [variant]="'tertiary'"
-        [label]="'shared.action.duplicate' | translate"
-        (buttonClick)="duplicate()"
-      ></bc-button>
-      <bc-button
-        *ngIf="!isLoading"
-        [disabled]="!this.filterForm.valid"
-        [variant]="'tertiary'"
-        [label]="'shared.action.save' | translate"
-        (click)="save()"
-      ></bc-button>
-      <bc-spinner *ngIf="isLoading"></bc-spinner>
+      @if (!isNew && !isLoading) {
+        <bc-button
+          [variant]="'tertiary'"
+          [label]="'shared.action.delete' | translate"
+          [color]="'warn'"
+          (buttonClick)="openDeletePopup()"
+        ></bc-button>
+      }
+      @if (!isNew && !isLoading) {
+        <bc-button
+          [variant]="'tertiary'"
+          [label]="'shared.action.duplicate' | translate"
+          (buttonClick)="duplicate()"
+        ></bc-button>
+      }
+      @if (!isLoading) {
+        <bc-button
+          [disabled]="!this.filterForm.valid"
+          [variant]="'tertiary'"
+          [label]="'shared.action.save' | translate"
+          (click)="save()"
+        ></bc-button>
+      }
+      @if (isLoading) {
+        <bc-spinner></bc-spinner>
+      }
     </div>
   </div>
   <div>
@@ -50,13 +59,14 @@
     <bc-divider></bc-divider>
     <div class="filter-container">
       <h5>{{ 'handle-filter.criteriaTitle' | translate }}</h5>
-      <app-filtered-person-table
-        *ngIf="filter"
-        [searchType]="searchTypeFilter"
-        [criteria]="filter.criteria"
-        (criteriaChange)="filter.criteria = $event"
-        (resetCriteria)="resetCriteria()"
-      ></app-filtered-person-table>
+      @if (filter) {
+        <app-filtered-person-table
+          [searchType]="searchTypeFilter"
+          [criteria]="filter.criteria"
+          (criteriaChange)="filter.criteria = $event"
+          (resetCriteria)="resetCriteria()"
+        ></app-filtered-person-table>
+      }
     </div>
   </div>
 </div>

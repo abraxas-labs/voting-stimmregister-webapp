@@ -12,20 +12,21 @@
   <p class="delete-container__value">{{ data.contextValue }}</p>
 </div>
 <div class="action-buttons">
-  <bc-button
-    *ngIf="!isLoading"
-    mat-dialog-close
-    [variant]="'tertiary'"
-    [label]="'shared.action.cancel' | translate"
-  ></bc-button>
-  <bc-button
-    *ngIf="!isLoading; else spinner"
-    [variant]="'primary'"
-    [label]="'shared.action.delete' | translate"
-    (buttonClick)="this.delete.emit()"
-    [color]="'warn'"
-  ></bc-button>
-  <ng-template #spinner>
+  @if (!isLoading) {
+    <bc-button
+      mat-dialog-close
+      [variant]="'tertiary'"
+      [label]="'shared.action.cancel' | translate"
+    ></bc-button>
+  }
+  @if (!isLoading) {
+    <bc-button
+      [variant]="'primary'"
+      [label]="'shared.action.delete' | translate"
+      (buttonClick)="this.delete.emit()"
+      [color]="'warn'"
+    ></bc-button>
+  } @else {
     <bc-spinner></bc-spinner>
-  </ng-template>
+  }
 </div>

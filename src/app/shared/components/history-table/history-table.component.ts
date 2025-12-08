@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, ErrorHandler, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ErrorHandler, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import { PageEvent, PaginatorComponent, TableDataSource } from '@abraxas/base-components';
 import { HistoryColumn } from './history-column';
 import { ImportStatisticService } from '../../../services/import-statistic.service';
@@ -14,8 +14,12 @@ import { ImportStatistic } from '../../../models/data/importStatistic.model';
   selector: 'app-history-table',
   templateUrl: './history-table.component.html',
   styleUrls: ['./history-table.component.scss'],
+  standalone: false,
 })
 export class HistoryTableComponent {
+  private readonly importStatisticService = inject(ImportStatisticService);
+  private readonly errorHandler = inject(ErrorHandler);
+
   public columns = HistoryColumn;
   public columnsToDisplay: string[] = [
     HistoryColumn.LATESTUPDATE,
@@ -54,11 +58,6 @@ export class HistoryTableComponent {
 
   @ViewChild(PaginatorComponent, { static: true })
   public paginator!: PaginatorComponent;
-
-  constructor(
-    private readonly importStatisticService: ImportStatisticService,
-    private readonly errorHandler: ErrorHandler
-  ) {}
 
   public selectHistory(row: ImportStatistic) {
     if (row.id === this.selectedStatistic?.id) {

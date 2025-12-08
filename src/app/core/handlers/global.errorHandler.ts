@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { ErrorHandler, Injectable, Injector } from '@angular/core';
+import { ErrorHandler, Injectable, Injector, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -13,9 +13,7 @@ import { SnackbarService } from '@abraxas/voting-lib';
 
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  // Error handling is important and needs to be loaded first.
-  // Because of this we should manually inject the services with Injector.
-  constructor(private readonly injector: Injector) {}
+  private readonly injector = inject(Injector);
 
   public handleError(error: any): void {
     const translateService = this.injector.get<TranslateService>(TranslateService);

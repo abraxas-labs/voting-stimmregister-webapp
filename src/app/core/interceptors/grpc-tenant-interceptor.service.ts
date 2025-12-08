@@ -5,10 +5,9 @@
  */
 
 import { AuthenticationService, AuthorizationService, Tenant } from '@abraxas/base-components';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { GrpcEvent, GrpcMessage, GrpcRequest } from '@ngx-grpc/common';
-import { GrpcHandler } from '@ngx-grpc/core';
-import { GrpcInterceptor } from '@ngx-grpc/core/lib/grpc-interceptor';
+import { GrpcHandler, GrpcInterceptor } from '@ngx-grpc/core';
 import { from, Observable, Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 
@@ -18,14 +17,16 @@ const tenantKey = 'x-tenant';
   providedIn: 'root',
 })
 export class GrpcTenantInterceptor implements GrpcInterceptor, OnDestroy {
+  private readonly authorization = inject(AuthorizationService);
+
   private readonly tenantSubscription: Subscription;
   private readonly isAuthenticated: boolean;
   private tenant?: Tenant;
 
-  constructor(
-    authentication: AuthenticationService,
-    private readonly authorization: AuthorizationService
-  ) {
+  constructor() {
+    const authentication = inject(AuthenticationService);
+    const authorization = this.authorization;
+
     this.isAuthenticated = authentication.authenticated;
     this.tenantSubscription = authorization.activeTenantChanged.subscribe((t) => (this.tenant = t));
   }

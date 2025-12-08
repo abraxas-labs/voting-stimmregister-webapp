@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FilterDefinition } from '../../../models/filter/filterDefinition';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InputValidatorHelper } from '../../../shared/helpers/input-validator.helper';
@@ -23,8 +23,14 @@ export interface HandleVersionPopupData {
   selector: 'app-handle-version-popup',
   templateUrl: './handle-version-popup.component.html',
   styleUrls: ['./handle-version-popup.component.scss'],
+  standalone: false,
 })
 export class HandleVersionPopupComponent {
+  private readonly filterService = inject(FilterService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly dialogRef = inject<MatDialogRef<HandleVersionPopupComponent>>(MatDialogRef);
+  private readonly toast = inject(ToastService);
+
   public readonly isNew: boolean;
   public isLoading: boolean = false;
   public readonly version: FilterVersion;
@@ -36,13 +42,9 @@ export class HandleVersionPopupComponent {
 
   private readonly now: Date = new Date();
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) data: HandleVersionPopupData,
-    private readonly filterService: FilterService,
-    private readonly formBuilder: FormBuilder,
-    private readonly dialogRef: MatDialogRef<HandleVersionPopupComponent>,
-    private readonly toast: ToastService
-  ) {
+  constructor() {
+    const data = inject<HandleVersionPopupData>(MAT_DIALOG_DATA);
+
     this.filter = data.filter;
     this.version = data.version ?? {
       count: 0,

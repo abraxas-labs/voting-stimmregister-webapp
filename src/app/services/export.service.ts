@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { FileDownloadService } from '@abraxas/voting-lib';
 
@@ -12,9 +12,11 @@ import { FileDownloadService } from '@abraxas/voting-lib';
   providedIn: 'root',
 })
 export class ExportService {
+  private readonly fileDownloader = inject(FileDownloadService);
+
   private readonly restApiUrl: string = '';
 
-  constructor(private readonly fileDownloader: FileDownloadService) {
+  constructor() {
     this.restApiUrl = `${environment.restApiEndpoint}/export`;
   }
 

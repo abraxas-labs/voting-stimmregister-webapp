@@ -133,6 +133,7 @@
       "hasValidationErrors": "Validierungsfehler",
       "sendVotingCardsToDomainOfInfluenceReturnAddress": "Nicht zustellen",
       "eVoting": "E-Voting",
+      "eVotingEmail": "E-Voting E-Mail",
       "isHouseholder": "Haushaltsvorstand",
       "residenceBuildingId": "Gebäude Identifikator",
       "residenceApartmentId": "Wohnung Identifikator"
@@ -202,7 +203,8 @@
       "unspecified": "Nicht spezifizierter Import",
       "domainOfInfluenceLoganto": "Einflussbereiche - Loganto",
       "peopleLoganto": "Personen - Loganto",
-      "peopleCobra": "Personen - Cobra",
+      "peopleCobra": "Personen - Cobra (SG)",
+      "peopleCobraTg": "Personen - Cobra (TG)",
       "aclVotingBasis": "Access Control List - VOTING Basis",
       "peopleInnosolv": "Personen - Innosolv"
     },
@@ -250,7 +252,8 @@
       "1": "Loganto",
       "2": "Cobra",
       "3": "Voting Basis",
-      "4": "Innosolv"
+      "4": "Innosolv",
+      "5": "CobraTg"
     }
   },
   "data-table": {
@@ -294,7 +297,8 @@
     "dropdown": {
       "title": "Quelle",
       "swiss": "Schweizer (Loganto)",
-      "swissAbroad": "Auslandschweizer (Cobra)",
+      "swissAbroad": "Auslandschweizer (Cobra SG)",
+      "swissAbroadTg": "Auslandschweizer (Cobra TG)",
       "doiLoganto": "Einflussbereiche (DOI Loganto)",
       "innosolvPersons": "Innosolv"
     },

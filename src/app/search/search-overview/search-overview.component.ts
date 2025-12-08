@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { buildSearchDefaultCriteria } from '../../models/filter/filterCriteria';
 import { PersonService } from '../../services/person.service';
 import { PersonSearchParameters, PersonSearchType } from '../../models/person/personSearchParameters';
@@ -13,13 +13,14 @@ import { PersonSearchParameters, PersonSearchType } from '../../models/person/pe
   selector: 'app-search',
   templateUrl: './search-overview.component.html',
   styleUrls: ['./search-overview.component.scss'],
+  standalone: false,
 })
 export class SearchOverviewComponent implements OnInit {
+  private readonly personService = inject(PersonService);
+
   public readonly searchTypePerson = PersonSearchType.Person;
 
   public params?: PersonSearchParameters;
-
-  constructor(public readonly personService: PersonService) {}
 
   public async ngOnInit(): Promise<void> {
     this.params = await this.personService.getLastUsedParameters(this.searchTypePerson);

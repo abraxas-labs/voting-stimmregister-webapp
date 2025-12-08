@@ -1,7 +1,11 @@
 <div class="content">
   <bc-readonly class="content-description">{{ 'person.attribute-label.' + title | translate }}</bc-readonly>
   <div class="content-data">
-    <bc-readonly *ngIf="content">{{ content }}</bc-readonly>
-    <bc-readonly *ngIf="!content">-</bc-readonly>
+    @if (content) {
+      <bc-readonly>{{ content }}</bc-readonly>
+    }
+    @if (!content) {
+      <bc-readonly>-</bc-readonly>
+    }
   </div>
 </div>

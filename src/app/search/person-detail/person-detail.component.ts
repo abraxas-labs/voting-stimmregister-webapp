@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { PersonWithDomainOfInfluences } from '../../models/person/person';
 import { PersonService } from '../../services/person.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,8 +27,13 @@ export enum PersonAddressType {
   selector: 'app-person',
   templateUrl: './person-detail.component.html',
   styleUrls: ['./person-detail.component.scss'],
+  standalone: false,
 })
 export class PersonDetailComponent implements OnInit {
+  private readonly personService = inject(PersonService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly translate = inject(TranslateService);
+
   public person!: PersonWithDomainOfInfluences;
   public personAddressTypes: PersonAddressType[] = [];
   public personAttributes: PersonAttribute[];
@@ -36,11 +41,7 @@ export class PersonDetailComponent implements OnInit {
   public readonly sex: typeof Sex = Sex;
   private readonly allPersonAttributes: PersonAttribute[];
 
-  constructor(
-    private readonly personService: PersonService,
-    private readonly route: ActivatedRoute,
-    private readonly translate: TranslateService
-  ) {
+  constructor() {
     this.personAttributes = this.allPersonAttributes = Object.values(PersonAttributeEnum).map((key) => {
       const label = this.translate.instant('person.attribute-label.' + key);
       return {

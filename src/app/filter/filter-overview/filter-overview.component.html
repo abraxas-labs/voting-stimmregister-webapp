@@ -1,25 +1,29 @@
-<div class="filter-container" *ngIf="loaded">
-  <div class="header">
-    <div>
-      <h5>{{ 'filter-overview.title' | translate }}</h5>
+@if (loaded) {
+  <div class="filter-container">
+    <div class="header">
+      <div>
+        <h5>{{ 'filter-overview.title' | translate }}</h5>
+      </div>
+      <div></div>
+      <div>
+        @if (isManager) {
+          <bc-button
+            [variant]="'tertiary'"
+            [icon]="'plus'"
+            [label]="'filter-overview.create-filter' | translate"
+            (buttonClick)="openCreateView()"
+          ></bc-button>
+        }
+      </div>
     </div>
-    <div></div>
-    <div>
-      <bc-button
-        *ngIf="isManager"
-        [variant]="'tertiary'"
-        [icon]="'plus'"
-        [label]="'filter-overview.create-filter' | translate"
-        (buttonClick)="openCreateView()"
-      ></bc-button>
+    <div class="filter-tables">
+      <app-filter-table [title]="'filter-overview.my-filter'" [filters]="myFilters"></app-filter-table>
+      @if (aggregateFilters.length !== 0) {
+        <app-filter-table
+          [title]="'filter-overview.aggregate-filter'"
+          [filters]="aggregateFilters"
+        ></app-filter-table>
+      }
     </div>
   </div>
-  <div class="filter-tables">
-    <app-filter-table [title]="'filter-overview.my-filter'" [filters]="myFilters"></app-filter-table>
-    <app-filter-table
-      *ngIf="aggregateFilters.length !== 0"
-      [title]="'filter-overview.aggregate-filter'"
-      [filters]="aggregateFilters"
-    ></app-filter-table>
-  </div>
-</div>
+}

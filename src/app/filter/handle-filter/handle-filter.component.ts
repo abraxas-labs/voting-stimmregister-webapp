@@ -4,7 +4,15 @@
  * For license information see LICENSE file.
  */
 
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilterDefinition, newFilter } from '../../models/filter/filterDefinition';
 import { FilterService } from '../../services/filter.service';
@@ -13,7 +21,7 @@ import { DeletePopupComponent } from '../../shared/components/delete-popup/delet
 import { InputValidatorHelper } from 'src/app/shared/helpers/input-validator.helper';
 import { buildFilterDefaultCriteria } from '../../models/filter/filterCriteria';
 import { Subscription } from 'rxjs';
-import { TextComponent } from '@abraxas/base-components/lib/components/formfields/text/text.component';
+import { TextComponent } from '@abraxas/base-components';
 import { ToastService } from '../../services/toast.service';
 import { PersonService } from '../../services/person.service';
 import { PersonSearchType } from '../../models/person/personSearchParameters';
@@ -23,8 +31,18 @@ import { MatDialog } from '@angular/material/dialog';
   selector: 'app-edit-filter',
   templateUrl: './handle-filter.component.html',
   styleUrls: ['./handle-filter.component.scss'],
+  standalone: false,
 })
 export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly filterService = inject(FilterService);
+  private readonly personService = inject(PersonService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly dialog = inject(MatDialog);
+  private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly toast = inject(ToastService);
+
   public readonly searchTypeFilter = PersonSearchType.Filter;
 
   public filterForm!: FormGroup;
@@ -34,17 +52,6 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('name')
   public nameInput!: TextComponent;
-
-  constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly filterService: FilterService,
-    private readonly personService: PersonService,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly dialog: MatDialog,
-    private readonly changeDetectorRef: ChangeDetectorRef,
-    private readonly toast: ToastService
-  ) {}
 
   private paramsSubscription = Subscription.EMPTY;
 

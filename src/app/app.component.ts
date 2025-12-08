@@ -6,20 +6,21 @@
 
 import { AuthorizationService } from '@abraxas/base-components';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  standalone: false,
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private readonly authorization: AuthorizationService,
-    private readonly translate: TranslateService,
-    private readonly oauthService: OAuthService
-  ) {
+  private readonly authorization = inject(AuthorizationService);
+  private readonly translate = inject(TranslateService);
+  private readonly oauthService = inject(OAuthService);
+
+  constructor() {
     // this language will be used as a fallback when a translation isn't found in the current language
     this.translate.setDefaultLang('de');
     // the lang to use, if the lang isn't available, it will use the current loader to get them

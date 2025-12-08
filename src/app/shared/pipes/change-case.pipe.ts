@@ -11,6 +11,7 @@ export type CasePattern = 'kebab-case';
 
 @Pipe({
   name: 'changeCase',
+  standalone: false,
 })
 export class ChangeCasePipe implements PipeTransform {
   public transform(value: string, pattern: CasePattern): string {

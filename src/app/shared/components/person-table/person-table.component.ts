@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import { Person } from '../../../models/person/person';
 import { PageEvent } from '@abraxas/base-components';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,8 +18,13 @@ import { PersonSearchType } from '../../../models/person/personSearchParameters'
   selector: 'app-person-table',
   templateUrl: './person-table.component.html',
   styleUrls: ['./person-table.component.scss'],
+  standalone: false,
 })
 export class PersonTableComponent implements OnChanges {
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly personService = inject(PersonService);
+
   @Input()
   public searchType: PersonSearchType = PersonSearchType.Person;
 
@@ -65,12 +70,6 @@ export class PersonTableComponent implements OnChanges {
 
   private lastLoadedPageIndex: number = 0;
   private lastLoadedPageSize: number = 0;
-
-  constructor(
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
-    private readonly personService: PersonService
-  ) {}
 
   public async openDetailView(registerId: string): Promise<void> {
     await this.router.navigate(['person', registerId], { relativeTo: this.route });

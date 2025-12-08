@@ -2,260 +2,272 @@
   <bc-icon class="backwards-icon pointer" [icon]="'arrow-left'" routerLink="../.."></bc-icon>
   <bc-divider></bc-divider>
 </div>
-<div *ngIf="!!this.person">
+@if (!!this.person) {
   <div>
-    <div class="person-header page-padding">
-      <div>
-        <span
-          >{{ person.officialName + ' ' }}{{ person.firstName + ' ' }}{{ person.dateOfBirth | localDate }},
-        </span>
-        <span>{{ person.contactAddressStreet }} {{ person.contactAddressHouseNumber }}, </span>
-        <span>{{ person.contactAddressZipCode }} {{ person.contactAddressTown }}</span>
+    <div>
+      <div class="person-header page-padding">
+        <div>
+          <span
+            >{{ person.officialName + ' ' }}{{ person.firstName + ' ' }}{{ person.dateOfBirth | localDate }},
+          </span>
+          <span>{{ person.contactAddressStreet }} {{ person.contactAddressHouseNumber }}, </span>
+          <span>{{ person.contactAddressZipCode }} {{ person.contactAddressTown }}</span>
+        </div>
+        <div class="person-header__actuality">
+          @if (person.actuality) {
+            <bc-icon [icon]="'checkmark'" class="person-header__actuality__true"></bc-icon>
+          }
+          @if (!person.actuality) {
+            <bc-icon [icon]="'exclamation-circle-o'" class="person-header__actuality__false"></bc-icon>
+          }
+          <span>{{ 'person.actuality' | translate }}{{ person.actualityDate | localDate: true }}</span>
+        </div>
+        <div>
+          <span>{{ 'person.title' | translate }}</span>
+        </div>
+        <div>
+          <span>{{ person.municipalityName + ' (' + person.municipalityId + ')' }}</span>
+        </div>
+        <div class="person-header__votingRight">
+          @if (person.isVotingAllowed) {
+            <bc-status-label
+              [backgroundColor]="'#e8f4ed'"
+              [label]="'person.votingRight.right' | translate"
+            ></bc-status-label>
+          }
+          @if (!person.isVotingAllowed) {
+            <bc-status-label
+              [backgroundColor]="'#c60000'"
+              [foregroundColor]="'light'"
+              [label]="'person.votingRight.noRight' | translate"
+            ></bc-status-label>
+          }
+        </div>
       </div>
-      <div class="person-header__actuality">
-        <bc-icon
-          *ngIf="person.actuality"
-          [icon]="'checkmark'"
-          class="person-header__actuality__true"
-        ></bc-icon>
-        <bc-icon
-          *ngIf="!person.actuality"
-          [icon]="'exclamation-circle-o'"
-          class="person-header__actuality__false"
-        ></bc-icon>
-        <span>{{ 'person.actuality' | translate }}{{ person.actualityDate | localDate: true }}</span>
-      </div>
-      <div>
-        <span>{{ 'person.title' | translate }}</span>
-      </div>
-      <div>
-        <span>{{ person.municipalityName + ' (' + person.municipalityId + ')' }}</span>
-      </div>
-      <div class="person-header__votingRight">
-        <bc-status-label
-          *ngIf="person.isVotingAllowed"
-          [backgroundColor]="'#e8f4ed'"
-          [label]="'person.votingRight.right' | translate"
-        ></bc-status-label>
-        <bc-status-label
-          *ngIf="!person.isVotingAllowed"
-          [backgroundColor]="'#c60000'"
-          [foregroundColor]="'light'"
-          [label]="'person.votingRight.noRight' | translate"
-        ></bc-status-label>
+      <bc-divider></bc-divider>
+    </div>
+    <div>
+      <div class="cards">
+        <bc-card [sideStripe]="true">
+          <bc-card-header>
+            <bc-card-title [label]="'person.names-title' | translate"></bc-card-title>
+          </bc-card-header>
+          <bc-card-content>
+            <app-person-attribute-template
+              [title]="'officialName'"
+              [content]="person.officialName"
+            ></app-person-attribute-template>
+            <app-person-attribute-template
+              [title]="'firstName'"
+              [content]="person.firstName"
+            ></app-person-attribute-template>
+            <app-person-attribute-template
+              [title]="'callName'"
+              [content]="person.callName"
+            ></app-person-attribute-template>
+            <app-person-attribute-template
+              [title]="'allianceName'"
+              [content]="person.allianceName"
+            ></app-person-attribute-template>
+            <app-person-attribute-template
+              [title]="'originalName'"
+              [content]="person.originalName"
+            ></app-person-attribute-template>
+            <app-person-attribute-template
+              [title]="'otherName'"
+              [content]="person.otherName"
+            ></app-person-attribute-template>
+            <app-person-attribute-template
+              [title]="'aliasName'"
+              [content]="person.aliasName"
+            ></app-person-attribute-template>
+          </bc-card-content>
+        </bc-card>
+        <bc-card [sideStripe]="true">
+          <bc-card-header>
+            <bc-card-title [label]="'person.data-title' | translate"></bc-card-title>
+          </bc-card-header>
+          <bc-card-content>
+            <app-person-attribute-template
+              [title]="'sex'"
+              [content]="'' + sex[person.sex || 3]"
+            ></app-person-attribute-template>
+            <app-person-attribute-advanced-template
+              [title]="'dateOfBirth'"
+              [content]="(person.dateOfBirth | localDate) || ''"
+              [valid]="!!person.isBirthDateValidForVotingRights"
+            ></app-person-attribute-advanced-template>
+            <app-person-attribute-advanced-template
+              [title]="'restrictedVotingAndElectionRightFederation'"
+              [content]="'boolean.' + person.restrictedVotingAndElectionRightFederation | translate"
+              [valid]="!person.restrictedVotingAndElectionRightFederation"
+            ></app-person-attribute-advanced-template>
+            <app-person-attribute-advanced-template
+              [title]="'countryNameShort'"
+              [content]="person.countryNameShort ? person.countryNameShort : person.country"
+              [valid]="!!person.isNationalityValidForVotingRights"
+            ></app-person-attribute-advanced-template>
+            <app-person-attribute-template
+              [title]="'municipalityName'"
+              [content]="person.municipalityName"
+            ></app-person-attribute-template>
+            <app-person-attribute-template
+              [title]="'residenceCantonAbbreviation'"
+              [content]="person.residenceCantonAbbreviation"
+            ></app-person-attribute-template>
+            <app-person-attribute-evoting-template
+              [eVotingFlag]="person.eVoting!"
+            ></app-person-attribute-evoting-template>
+          </bc-card-content>
+        </bc-card>
+        <app-person-address [person]="person"></app-person-address>
+        <bc-card [sideStripe]="true" [height]="'445px'">
+          <bc-card-header>
+            <bc-card-title [label]="'person.information-title' | translate"></bc-card-title>
+          </bc-card-header>
+          <bc-card-content>
+            <bc-search
+              class="search"
+              (valueChange)="filterAttributes($event)"
+              (searchClick)="filterAttributes($event)"
+            ></bc-search>
+            @for (info of personAttributes; track info) {
+              <div>
+                <app-person-attribute-validation-template
+                  [title]="info.key"
+                  [content]="(person | personAttribute: info.key) || '-'"
+                  [validationInfo]="getPersonValidationErrors(info.key)"
+                ></app-person-attribute-validation-template>
+              </div>
+            }
+          </bc-card-content>
+        </bc-card>
+        <bc-card [sideStripe]="true">
+          <bc-card-header>
+            <bc-card-title [label]="'person.domainOfInfluence-title' | translate"></bc-card-title>
+          </bc-card-header>
+          <bc-card-content>
+            <bc-table [dataSource]="person.domainOfInfluences">
+              <ng-container columnDef="type">
+                <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.typ' | translate }}</bc-header-cell>
+                <bc-data-cell *dataCellDef="let row">
+                  {{ 'domain-of-influence-types.' + row.domainOfInfluenceType | translate }}
+                </bc-data-cell>
+              </ng-container>
+              <ng-container columnDef="localId">
+                <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.localId' | translate }}</bc-header-cell>
+                <bc-data-cell *dataCellDef="let row">
+                  {{ row.identifier }}
+                </bc-data-cell>
+              </ng-container>
+              <ng-container columnDef="name">
+                <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.name' | translate }}</bc-header-cell>
+                <bc-data-cell *dataCellDef="let row">
+                  {{ row.name }}
+                  @if (!!row.canton) {
+                    <span> ({{ 'cantons.short.' + row.canton | translate }})</span>
+                  }
+                </bc-data-cell>
+              </ng-container>
+              <bc-header-row *headerRowDef="let row; columns: ['type', 'localId', 'name']"></bc-header-row>
+              <bc-data-row
+                *dataRowDef="let row; columns: ['type', 'localId', 'name']; let i = index"
+              ></bc-data-row>
+            </bc-table>
+          </bc-card-content>
+        </bc-card>
+        <bc-card [sideStripe]="true">
+          <bc-card-header>
+            <bc-card-title [label]="'person.residence-title' | translate"></bc-card-title>
+          </bc-card-header>
+          <bc-card-content>
+            <bc-table [dataSource]="personAddressTypes">
+              <ng-container columnDef="typeOfResidence">
+                <bc-header-cell *headerCellDef>{{
+                  'reportingRelationship.addressTyp' | translate
+                }}</bc-header-cell>
+                <bc-data-cell *dataCellDef="let addressType">
+                  @if (addressType === addressTypes.ResidenceAddress) {
+                    <span>{{ 'person.residenceType.' + person.typeOfResidence | translate }}</span>
+                  } @else {
+                    <span>{{ 'person.moveInAddress' | translate }}</span>
+                  }
+                </bc-data-cell>
+              </ng-container>
+              <ng-container columnDef="residenceEntryDate">
+                <bc-header-cell *headerCellDef>{{ 'reportingRelationship.date' | translate }}</bc-header-cell>
+                <bc-data-cell *dataCellDef="let addressType">
+                  @if (addressType === addressTypes.ResidenceAddress) {
+                    @if (person.residenceEntryDate) {
+                      <span>{{
+                        'person.residence-entry-date-value'
+                          | translate: { date: (person.residenceEntryDate | localDate) }
+                      }}</span>
+                    }
+                  } @else {
+                    @if (person.moveInArrivalDate) {
+                      <span>{{ person.moveInArrivalDate | localDate }}</span>
+                    }
+                  }
+                </bc-data-cell>
+              </ng-container>
+              <ng-container columnDef="residenceAddress">
+                <bc-header-cell *headerCellDef>{{
+                  'reportingRelationship.address' | translate
+                }}</bc-header-cell>
+                <bc-data-cell *dataCellDef="let addressType">
+                  <div class="address">
+                    @if (addressType === addressTypes.ResidenceAddress) {
+                      <span
+                        >{{ person.residenceAddressStreet }} {{ person.residenceAddressHouseNumber }}</span
+                      >
+                      @if (person.residenceAddressExtensionLine1) {
+                        <span>{{ person.residenceAddressExtensionLine1 }}</span>
+                      }
+                      @if (person.residenceAddressExtensionLine2) {
+                        <span>{{ person.residenceAddressExtensionLine2 }}</span>
+                      }
+                      @if (person.residenceAddressPostOfficeBoxText) {
+                        <span>{{ person.residenceAddressPostOfficeBoxText }}</span>
+                      }
+                      <span>{{ person.residenceAddressZipCode }} {{ person.residenceAddressTown }}</span>
+                      @if (person.residenceCountry && person.residenceCountry !== 'CH') {
+                        <span>{{ person.residenceCountry }}</span>
+                      }
+                    } @else {
+                      @if (person.moveInMunicipalityName) {
+                        <span>{{ person.moveInMunicipalityName }}</span>
+                      }
+                      @if (person.moveInCantonAbbreviation) {
+                        <span>{{ person.moveInCantonAbbreviation }}</span>
+                      }
+                      @if (person.moveInComesFrom) {
+                        <span>{{ person.moveInComesFrom }}</span>
+                      }
+                      @if (person.moveInCountryNameShort && person.moveInCountryNameShort !== 'CH') {
+                        <span>{{ person.moveInCountryNameShort }}</span>
+                      }
+                    }
+                  </div>
+                </bc-data-cell>
+              </ng-container>
+              <bc-header-row
+                *headerRowDef="
+                  let row;
+                  columns: ['typeOfResidence', 'residenceEntryDate', 'residenceAddress']
+                "
+              ></bc-header-row>
+              <bc-data-row
+                *dataRowDef="
+                  let row;
+                  columns: ['typeOfResidence', 'residenceEntryDate', 'residenceAddress'];
+                  let i = index
+                "
+              ></bc-data-row>
+            </bc-table>
+          </bc-card-content>
+        </bc-card>
       </div>
     </div>
-    <bc-divider></bc-divider>
   </div>
-  <div>
-    <bc-card-layout [align]="'topLeft'">
-      <bc-card [sideStripe]="true">
-        <bc-card-header>
-          <bc-card-title [label]="'person.names-title' | translate"></bc-card-title>
-        </bc-card-header>
-        <bc-card-content>
-          <app-person-attribute-template
-            [title]="'officialName'"
-            [content]="person.officialName"
-          ></app-person-attribute-template>
-          <app-person-attribute-template
-            [title]="'firstName'"
-            [content]="person.firstName"
-          ></app-person-attribute-template>
-          <app-person-attribute-template
-            [title]="'callName'"
-            [content]="person.callName"
-          ></app-person-attribute-template>
-          <app-person-attribute-template
-            [title]="'allianceName'"
-            [content]="person.allianceName"
-          ></app-person-attribute-template>
-          <app-person-attribute-template
-            [title]="'originalName'"
-            [content]="person.originalName"
-          ></app-person-attribute-template>
-          <app-person-attribute-template
-            [title]="'otherName'"
-            [content]="person.otherName"
-          ></app-person-attribute-template>
-          <app-person-attribute-template
-            [title]="'aliasName'"
-            [content]="person.aliasName"
-          ></app-person-attribute-template>
-        </bc-card-content>
-      </bc-card>
-      <bc-card [sideStripe]="true">
-        <bc-card-header>
-          <bc-card-title [label]="'person.data-title' | translate"></bc-card-title>
-        </bc-card-header>
-        <bc-card-content>
-          <app-person-attribute-template
-            [title]="'sex'"
-            [content]="'' + sex[person.sex || 3]"
-          ></app-person-attribute-template>
-          <app-person-attribute-advanced-template
-            [title]="'dateOfBirth'"
-            [content]="(person.dateOfBirth | localDate) || ''"
-            [valid]="!!person.isBirthDateValidForVotingRights"
-          ></app-person-attribute-advanced-template>
-          <app-person-attribute-advanced-template
-            [title]="'restrictedVotingAndElectionRightFederation'"
-            [content]="'boolean.' + person.restrictedVotingAndElectionRightFederation | translate"
-            [valid]="!person.restrictedVotingAndElectionRightFederation"
-          ></app-person-attribute-advanced-template>
-          <app-person-attribute-advanced-template
-            [title]="'countryNameShort'"
-            [content]="person.countryNameShort ? person.countryNameShort : person.country"
-            [valid]="!!person.isNationalityValidForVotingRights"
-          ></app-person-attribute-advanced-template>
-          <app-person-attribute-template
-            [title]="'municipalityName'"
-            [content]="person.municipalityName"
-          ></app-person-attribute-template>
-          <app-person-attribute-template
-            [title]="'residenceCantonAbbreviation'"
-            [content]="person.residenceCantonAbbreviation"
-          ></app-person-attribute-template>
-          <app-person-attribute-evoting-template
-            [eVotingFlag]="person.eVoting!"
-          ></app-person-attribute-evoting-template>
-        </bc-card-content>
-      </bc-card>
-      <app-person-address [person]="person"></app-person-address>
-      <bc-card [sideStripe]="true" [height]="'445px'">
-        <bc-card-header>
-          <bc-card-title [label]="'person.information-title' | translate"></bc-card-title>
-        </bc-card-header>
-        <bc-card-content>
-          <bc-search
-            class="search"
-            (valueChange)="filterAttributes($event)"
-            (searchClick)="filterAttributes($event)"
-          ></bc-search>
-          <div *ngFor="let info of personAttributes">
-            <app-person-attribute-validation-template
-              [title]="info.key"
-              [content]="(person | personAttribute: info.key) || '-'"
-              [validationInfo]="getPersonValidationErrors(info.key)"
-            ></app-person-attribute-validation-template>
-          </div>
-        </bc-card-content>
-      </bc-card>
-      <bc-card [sideStripe]="true">
-        <bc-card-header>
-          <bc-card-title [label]="'person.domainOfInfluence-title' | translate"></bc-card-title>
-        </bc-card-header>
-        <bc-card-content>
-          <bc-table [dataSource]="person.domainOfInfluences">
-            <ng-container columnDef="type">
-              <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.typ' | translate }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let row">
-                {{ 'domain-of-influence-types.' + row.domainOfInfluenceType | translate }}
-              </bc-data-cell>
-            </ng-container>
-
-            <ng-container columnDef="localId">
-              <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.localId' | translate }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let row">
-                {{ row.identifier }}
-              </bc-data-cell>
-            </ng-container>
-
-            <ng-container columnDef="name">
-              <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.name' | translate }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let row">
-                {{ row.name
-                }}<span *ngIf="!!row.canton"> ({{ 'cantons.short.' + row.canton | translate }})</span>
-              </bc-data-cell>
-            </ng-container>
-            <bc-header-row *headerRowDef="let row; columns: ['type', 'localId', 'name']"></bc-header-row>
-            <bc-data-row
-              *dataRowDef="let row; columns: ['type', 'localId', 'name']; let i = index"
-            ></bc-data-row>
-          </bc-table>
-        </bc-card-content>
-      </bc-card>
-      <bc-card [sideStripe]="true">
-        <bc-card-header>
-          <bc-card-title [label]="'person.residence-title' | translate"></bc-card-title>
-        </bc-card-header>
-        <bc-card-content>
-          <bc-table [dataSource]="personAddressTypes">
-            <ng-container columnDef="typeOfResidence">
-              <bc-header-cell *headerCellDef>{{
-                'reportingRelationship.addressTyp' | translate
-              }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let addressType">
-                <span *ngIf="addressType === addressTypes.ResidenceAddress; else moveInType">{{
-                  'person.residenceType.' + person.typeOfResidence | translate
-                }}</span>
-                <ng-template #moveInType>
-                  <span>{{ 'person.moveInAddress' | translate }}</span>
-                </ng-template>
-              </bc-data-cell>
-            </ng-container>
-
-            <ng-container columnDef="residenceEntryDate">
-              <bc-header-cell *headerCellDef>{{ 'reportingRelationship.date' | translate }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let addressType">
-                <ng-container *ngIf="addressType === addressTypes.ResidenceAddress; else moveInDate">
-                  <span *ngIf="person.residenceEntryDate">{{
-                    'person.residence-entry-date-value'
-                      | translate: { date: (person.residenceEntryDate | localDate) }
-                  }}</span>
-                </ng-container>
-                <ng-template #moveInDate>
-                  <span *ngIf="person.moveInArrivalDate">{{ person.moveInArrivalDate | localDate }}</span>
-                </ng-template>
-              </bc-data-cell>
-            </ng-container>
-
-            <ng-container columnDef="residenceAddress">
-              <bc-header-cell *headerCellDef>{{
-                'reportingRelationship.address' | translate
-              }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let addressType">
-                <div class="address">
-                  <ng-container *ngIf="addressType === addressTypes.ResidenceAddress; else moveInAddress">
-                    <span>{{ person.residenceAddressStreet }} {{ person.residenceAddressHouseNumber }}</span>
-                    <span *ngIf="person.residenceAddressExtensionLine1">{{
-                      person.residenceAddressExtensionLine1
-                    }}</span>
-                    <span *ngIf="person.residenceAddressExtensionLine2">{{
-                      person.residenceAddressExtensionLine2
-                    }}</span>
-                    <span *ngIf="person.residenceAddressPostOfficeBoxText">{{
-                      person.residenceAddressPostOfficeBoxText
-                    }}</span>
-                    <span>{{ person.residenceAddressZipCode }} {{ person.residenceAddressTown }}</span>
-                    <span *ngIf="person.residenceCountry && person.residenceCountry !== 'CH'">{{
-                      person.residenceCountry
-                    }}</span>
-                  </ng-container>
-                  <ng-template #moveInAddress>
-                    <span *ngIf="person.moveInMunicipalityName">{{ person.moveInMunicipalityName }}</span>
-                    <span *ngIf="person.moveInCantonAbbreviation">{{ person.moveInCantonAbbreviation }}</span>
-                    <span *ngIf="person.moveInComesFrom">{{ person.moveInComesFrom }}</span>
-                    <span *ngIf="person.moveInCountryNameShort && person.moveInCountryNameShort !== 'CH'">{{
-                      person.moveInCountryNameShort
-                    }}</span>
-                  </ng-template>
-                </div>
-              </bc-data-cell>
-            </ng-container>
-            <bc-header-row
-              *headerRowDef="let row; columns: ['typeOfResidence', 'residenceEntryDate', 'residenceAddress']"
-            ></bc-header-row>
-            <bc-data-row
-              *dataRowDef="
-                let row;
-                columns: ['typeOfResidence', 'residenceEntryDate', 'residenceAddress'];
-                let i = index
-              "
-            ></bc-data-row>
-          </bc-table>
-        </bc-card-content>
-      </bc-card>
-    </bc-card-layout>
-  </div>
-</div>
+}

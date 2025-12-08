@@ -6,7 +6,7 @@
 
 import { AuthorizationService, Tenant } from '@abraxas/base-components';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { from, Observable, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
@@ -17,12 +17,14 @@ const tenantKey = 'x-tenant';
   providedIn: 'root',
 })
 export class RestTenantInterceptor implements HttpInterceptor, OnDestroy {
+  private readonly authorization = inject(AuthorizationService);
+
   private readonly restApiEndpoint = environment.serviceUrl;
   private readonly tenantSubscription: Subscription;
   private tenant?: Tenant;
 
-  constructor(private readonly authorization: AuthorizationService) {
-    this.tenantSubscription = authorization.activeTenantChanged.subscribe((t) => (this.tenant = t));
+  constructor() {
+    this.tenantSubscription = this.authorization.activeTenantChanged.subscribe((t) => (this.tenant = t));
   }
 
   public ngOnDestroy(): void {

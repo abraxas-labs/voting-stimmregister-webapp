@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { AuthenticationService, AuthorizationService, SnackbarComponent } from '@abraxas/base-components';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -15,8 +15,13 @@ import { firstValueFrom, Subscription } from 'rxjs';
 @Component({
   selector: 'app-layout',
   templateUrl: './app-layout.component.html',
+  standalone: false,
 })
 export class AppLayoutComponent implements OnInit, OnDestroy {
+  private readonly translations = inject(TranslateService);
+  private readonly authentication = inject(AuthenticationService);
+  private readonly authorization = inject(AuthorizationService);
+
   public authenticated = false;
   public hasTenant = false;
   public loading = false;
@@ -31,13 +36,10 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
 
   private readonly subscriptions: Subscription[] = [];
 
-  constructor(
-    themeService: ThemeService,
-    snackbarService: SnackbarService,
-    private readonly translations: TranslateService,
-    private readonly authentication: AuthenticationService,
-    private readonly authorization: AuthorizationService
-  ) {
+  constructor() {
+    const themeService = inject(ThemeService);
+    const snackbarService = inject(SnackbarService);
+
     const snackbarSubscription = snackbarService.message$.subscribe((m) => {
       if (!this.snackbarComponent) {
         return;

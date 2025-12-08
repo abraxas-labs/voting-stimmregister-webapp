@@ -13,7 +13,7 @@
     <span>{{ statistic.totalElapsedMilliseconds }}</span>
   </div>
   <div class="spacer"></div>
-  <ng-container *ngIf="statistic.processingErrors === ''; else processingError">
+  @if (statistic.processingErrors === '') {
     <div>
       <h5>{{ 'data-overview.infos.created' | translate }}</h5>
       <span>{{ statistic.datasetsCountCreated | number }}</span>
@@ -34,14 +34,13 @@
       <h5>{{ 'data-overview.infos.killedRecords' | translate }}</h5>
       <span>{{ statistic.recordValidationErrors.length }}</span>
     </div>
-  </ng-container>
-  <ng-template #processingError>
+  } @else {
     <div class="processing-error-detail">
       <h5>{{ 'data-overview.infos.processingError' | translate }}</h5>
       <span *appIfHasRole="[roles.ImportObserver]">{{ statistic.processingErrors }}</span>
-      <span *ngIf="statistic.processingErrors === 'default'">{{
-        'data-overview.infos.errorDefaultMessage' | translate
-      }}</span>
+      @if (statistic.processingErrors === 'default') {
+        <span>{{ 'data-overview.infos.errorDefaultMessage' | translate }}</span>
+      }
     </div>
-  </ng-template>
+  }
 </div>

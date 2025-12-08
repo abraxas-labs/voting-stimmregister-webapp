@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DropdownItem } from '@abraxas/base-components';
 import { TranslateService } from '@ngx-translate/core';
 import { ExportService } from '../../../services/export.service';
@@ -13,7 +13,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 enum ExportType {
   CSV = 'csv',
   ECH = 'ech',
-  STISTAT = 'stistat'
+  STISTAT = 'stistat',
 }
 
 export interface ExportPopupData {
@@ -26,8 +26,14 @@ export interface ExportPopupData {
   selector: 'app-export-popup',
   templateUrl: './export-popup.component.html',
   styleUrls: ['./export-popup.component.scss'],
+  standalone: false,
 })
 export class ExportPopupComponent {
+  private readonly dialogData = inject<ExportPopupData>(MAT_DIALOG_DATA);
+  private readonly dialog = inject<MatDialogRef<ExportPopupComponent>>(MatDialogRef);
+  private readonly translate = inject(TranslateService);
+  private readonly exportService = inject(ExportService);
+
   public readonly exportTypes: typeof ExportType = ExportType;
   public type: ExportType = ExportType.ECH;
   public types: DropdownItem[] = [
@@ -52,13 +58,8 @@ export class ExportPopupComponent {
 
   public exporting: boolean = false;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private readonly dialogData: ExportPopupData,
-    private readonly dialog: MatDialogRef<ExportPopupComponent>,
-    private readonly translate: TranslateService,
-    private readonly exportService: ExportService
-  ) {
-    this.invalidPersonCount = dialogData.invalidPersonCount;
+  constructor() {
+    this.invalidPersonCount = this.dialogData.invalidPersonCount;
   }
 
   public async export(): Promise<void> {

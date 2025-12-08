@@ -14,19 +14,21 @@
     [disabled]="exporting"
     subscriptSizing="dynamic"
   ></bc-dropdown>
-  <div *ngIf="invalidPersonCount > 0" class="invalid-persons-warning">
-    <bc-icon class="color-warning" icon="exclamation-triangle-o"></bc-icon>
-    <p>
-      {{
-        'export-filter.invalid-persons-count.' +
-          (type === exportTypes.ECH ? 'filtered' : 'included') +
-          (invalidPersonCount === 1 ? '-single' : '') | translate: { count: invalidPersonCount | number }
-      }}
-    </p>
-  </div>
+  @if (invalidPersonCount > 0) {
+    <div class="invalid-persons-warning">
+      <bc-icon class="color-warning" icon="exclamation-triangle-o"></bc-icon>
+      <p>
+        {{
+          'export-filter.invalid-persons-count.' +
+            (type === exportTypes.ECH ? 'filtered' : 'included') +
+            (invalidPersonCount === 1 ? '-single' : '') | translate: { count: invalidPersonCount | number }
+        }}
+      </p>
+    </div>
+  }
 </div>
 <div class="action-buttons">
-  <ng-container *ngIf="!exporting; else spinner">
+  @if (!exporting) {
     <bc-button
       mat-dialog-close
       [label]="'shared.action.cancel' | translate"
@@ -38,8 +40,7 @@
       [variant]="'primary'"
       (buttonClick)="export()"
     ></bc-button>
-  </ng-container>
-  <ng-template #spinner>
+  } @else {
     <bc-spinner></bc-spinner>
-  </ng-template>
+  }
 </div>

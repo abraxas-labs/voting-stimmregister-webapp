@@ -5,15 +5,17 @@
  */
 
 import { AuthorizationService } from '@abraxas/base-components';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { constants } from '../shared/helpers/constants';
 
 @Injectable({ providedIn: 'root' })
 export class CacheService {
+  private readonly authService = inject(AuthorizationService);
+
   private readonly storage: Storage = window.sessionStorage;
   private tenantId = '';
 
-  constructor(private readonly authService: AuthorizationService) {
+  constructor() {
     this.authService.getActiveTenant().then((t) => (this.tenantId = t.id));
   }
 

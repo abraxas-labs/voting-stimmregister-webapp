@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -12,10 +12,8 @@ import { TranslateService } from '@ngx-translate/core';
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(
-    private readonly snackBar: MatSnackBar,
-    private readonly i18n: TranslateService
-  ) {}
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly i18n = inject(TranslateService);
 
   public success(message: string): void {
     this.show(message);

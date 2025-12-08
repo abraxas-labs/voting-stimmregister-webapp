@@ -1,60 +1,64 @@
-<div *ngIf="theme">
-  <header>
-    <bc-app-header-bar-iam
-      bc-app-header-bar
-      *ngIf="hasTenant; else nonIamHeader"
-      logo="VO"
-      [title]="appTitle"
-      [link]="['/', theme]"
-      [settingsLabel]="'misc.settings' | translate"
-      [signOutLabel]="'misc.logout' | translate"
-      [defaultLanguage]="language"
-      [languages]="languages"
-      [customLogoPath]="customLogo ?? ''"
-      (tenantChanged)="reload()"
-    >
-      <vo-lib-environment-chip></vo-lib-environment-chip>
-    </bc-app-header-bar-iam>
-    <ng-template #nonIamHeader>
-      <bc-app-header-bar
-        [link]="['/']"
-        [title]="'misc.application-title.default' | translate"
-        logo="VO"
-      ></bc-app-header-bar>
-    </ng-template>
-    <ng-content select="[navigation]"></ng-content>
-  </header>
-
-  <main>
-    <bc-snackbar
-      #snackbar
-      action="{{ 'shared.action.discard' | translate }}"
-      horizontalPosition="right"
-      message=""
-      variant="info"
-      verticalPosition="top"
-    >
-    </bc-snackbar>
-
-    <div *ngIf="!loading && hasTenant; else notAuthenticated">
-      <ng-content></ng-content>
-    </div>
-  </main>
-  <footer></footer>
-</div>
-
-<ng-template #notAuthenticated>
-  <div class="no-permissions-container" *ngIf="!loading; else appLoading" style="margin: 1rem">
-    <p translate>misc.no-permissions</p>
-    <div>
-      <bc-button (buttonClick)="reload()" [label]="'misc.reload' | translate"></bc-button>
-      <bc-button class="ml-2" (buttonClick)="logout()" [label]="'misc.logout' | translate"></bc-button>
-    </div>
+@if (theme) {
+  <div>
+    <header>
+      @if (hasTenant) {
+        <bc-app-header-bar-iam
+          bc-app-header-bar
+          logo="VO"
+          [title]="appTitle"
+          [link]="['/', theme]"
+          [settingsLabel]="'misc.settings' | translate"
+          [signOutLabel]="'misc.logout' | translate"
+          [defaultLanguage]="language"
+          [languages]="languages"
+          [customLogoPath]="customLogo ?? ''"
+          (tenantChanged)="reload()"
+        >
+          <vo-lib-environment-chip></vo-lib-environment-chip>
+        </bc-app-header-bar-iam>
+      } @else {
+        <bc-app-header-bar
+          [link]="['/']"
+          [title]="'misc.application-title.default' | translate"
+          logo="VO"
+        ></bc-app-header-bar>
+      }
+      <ng-content select="[navigation]"></ng-content>
+    </header>
+    <main>
+      <bc-snackbar
+        #snackbar
+        action="{{ 'shared.action.discard' | translate }}"
+        horizontalPosition="right"
+        message=""
+        variant="info"
+        verticalPosition="top"
+      >
+      </bc-snackbar>
+      @if (!loading && hasTenant) {
+        <div>
+          <ng-content></ng-content>
+        </div>
+      } @else {
+        @if (!loading) {
+          <div class="no-permissions-container" style="margin: 1rem">
+            <p translate>misc.no-permissions</p>
+            <div>
+              <bc-button (buttonClick)="reload()" [label]="'misc.reload' | translate"></bc-button>
+              <bc-button
+                class="ml-2"
+                (buttonClick)="logout()"
+                [label]="'misc.logout' | translate"
+              ></bc-button>
+            </div>
+          </div>
+        } @else {
+          <div class="spinner-container">
+            <bc-spinner size="large"></bc-spinner>
+          </div>
+        }
+      }
+    </main>
+    <footer></footer>
   </div>
-
-  <ng-template #appLoading>
-    <div class="spinner-container">
-      <bc-spinner size="large"></bc-spinner>
-    </div>
-  </ng-template>
-</ng-template>
+}

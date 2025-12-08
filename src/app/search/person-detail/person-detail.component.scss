@@ -41,6 +41,12 @@
   display: block;
 }
 
-::ng-deep .cards > * {
-  flex: 1 1 max(30%, 20rem);
+.cards {
+  display: flex;
+  flex-flow: row wrap;
+
+  > * {
+    flex: 1 1 max(30%, 20rem);
+    padding: 16px;
+  }
 }

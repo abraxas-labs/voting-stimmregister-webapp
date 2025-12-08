@@ -1,10 +1,16 @@
 <div class="header">
   <bc-icon mat-dialog-close [icon]="'cancel'"></bc-icon>
-  <p *ngIf="isNew">{{ 'filter-version.createVersion.title' | translate }}</p>
-  <p *ngIf="!isNew">{{ 'filter-version.editVersion' | translate }}</p>
+  @if (isNew) {
+    <p>{{ 'filter-version.createVersion.title' | translate }}</p>
+  }
+  @if (!isNew) {
+    <p>{{ 'filter-version.editVersion' | translate }}</p>
+  }
 </div>
 <div class="form-container" [formGroup]="versionForm">
-  <h5 *ngIf="isNew">{{ 'filter-version.createVersion.info' | translate }}</h5>
+  @if (isNew) {
+    <h5>{{ 'filter-version.createVersion.info' | translate }}</h5>
+  }
   <bc-text
     [formControlName]="'description'"
     [label]="'filter-version.description' | translate"
@@ -21,32 +27,35 @@
     [(ngModel)]="this.version.deadline"
     [disabled]="!isNew"
   ></bc-date>
-  <div *ngIf="version.countOfInvalidPersons > 0 && isNew" class="invalid-persons-warning">
-    <bc-icon class="color-warning" icon="exclamation-triangle-o"></bc-icon>
-    <p>
-      {{
-        'filter-version.createVersion.invalidPersons.' +
-          (version.countOfInvalidPersons === 1 ? 'single' : 'multiple')
-          | translate: { count: version.countOfInvalidPersons | number }
-      }}
-    </p>
-  </div>
+  @if (version.countOfInvalidPersons > 0 && isNew) {
+    <div class="invalid-persons-warning">
+      <bc-icon class="color-warning" icon="exclamation-triangle-o"></bc-icon>
+      <p>
+        {{
+          'filter-version.createVersion.invalidPersons.' +
+            (version.countOfInvalidPersons === 1 ? 'single' : 'multiple')
+            | translate: { count: version.countOfInvalidPersons | number }
+        }}
+      </p>
+    </div>
+  }
 </div>
 <div class="action-buttons">
-  <bc-button
-    *ngIf="!isLoading"
-    [variant]="'tertiary'"
-    [label]="'shared.action.cancel' | translate"
-    mat-dialog-close
-  ></bc-button>
-  <bc-button
-    *ngIf="!isLoading; else spinner"
-    [disabled]="!versionForm.valid"
-    [variant]="'primary'"
-    [label]="'shared.action.save' | translate"
-    (click)="save()"
-  ></bc-button>
-  <ng-template #spinner>
+  @if (!isLoading) {
+    <bc-button
+      [variant]="'tertiary'"
+      [label]="'shared.action.cancel' | translate"
+      mat-dialog-close
+    ></bc-button>
+  }
+  @if (!isLoading) {
+    <bc-button
+      [disabled]="!versionForm.valid"
+      [variant]="'primary'"
+      [label]="'shared.action.save' | translate"
+      (click)="save()"
+    ></bc-button>
+  } @else {
     <bc-spinner></bc-spinner>
-  </ng-template>
+  }
 </div>

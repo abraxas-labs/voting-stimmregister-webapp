@@ -14,15 +14,32 @@
           ></bc-button>
         </div>
       </div>
-      <p>{{ 'data-overview.imports.peopleCobra' | translate }}</p>
-      <app-data-table
-        [type]="importTypes.IMPORT_TYPE_PERSON"
-        [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_COBRA"
-        [source]="importSource.IMPORT_SOURCE_MANUAL"
-        [state]="importStatusSimple.IMPORT_STATUS_SIMPLE_ALL"
-        [selectedRow]="selectedHistoryStatistic"
-        (selectedRowChange)="selectHistory($event)"
-      ></app-data-table>
+      @if (supportedSourceSystems.includes(importSourceSystems.IMPORT_SOURCE_SYSTEM_COBRA)) {
+        <div>
+          <p>{{ 'data-overview.imports.peopleCobra' | translate }}</p>
+          <app-data-table
+            [type]="importTypes.IMPORT_TYPE_PERSON"
+            [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_COBRA"
+            [source]="importSource.IMPORT_SOURCE_MANUAL"
+            [state]="importStatusSimple.IMPORT_STATUS_SIMPLE_ALL"
+            [selectedRow]="selectedHistoryStatistic"
+            (selectedRowChange)="selectHistory($event)"
+          ></app-data-table>
+        </div>
+      }
+      @if (supportedSourceSystems.includes(importSourceSystems.IMPORT_SOURCE_SYSTEM_COBRA_TG)) {
+        <div>
+          <p>{{ 'data-overview.imports.peopleCobraTg' | translate }}</p>
+          <app-data-table
+            [type]="importTypes.IMPORT_TYPE_PERSON"
+            [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_COBRA_TG"
+            [source]="importSource.IMPORT_SOURCE_MANUAL"
+            [state]="importStatusSimple.IMPORT_STATUS_SIMPLE_ALL"
+            [selectedRow]="selectedHistoryStatistic"
+            (selectedRowChange)="selectHistory($event)"
+          ></app-data-table>
+        </div>
+      }
     </div>
     <div>
       <div class="content__imports__header">
@@ -38,36 +55,48 @@
           ></bc-segmented-control-group>
         </div>
       </div>
-      <p>{{ 'data-overview.imports.peopleLoganto' | translate }}</p>
-      <app-data-table
-        [type]="importTypes.IMPORT_TYPE_PERSON"
-        [source]="importSource.IMPORT_SOURCE_AUTOMATED"
-        [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_LOGANTO"
-        [state]="filter"
-        [selectedRow]="selectedHistoryStatistic"
-        (selectedRowChange)="selectHistory($event)"
-      ></app-data-table>
-      <br />
-      <p>{{ 'data-overview.imports.peopleInnosolv' | translate }}</p>
-      <app-data-table
-        [type]="importTypes.IMPORT_TYPE_PERSON"
-        [source]="importSource.IMPORT_SOURCE_AUTOMATED"
-        [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_INNOSOLV"
-        [state]="filter"
-        [selectedRow]="selectedHistoryStatistic"
-        (selectedRowChange)="selectHistory($event)"
-      ></app-data-table>
-      <br />
-      <p>{{ 'data-overview.imports.domainOfInfluenceLoganto' | translate }}</p>
-      <app-data-table
-        [type]="importTypes.IMPORT_TYPE_DOMAIN_OF_INFLUENCE"
-        [source]="importSource.IMPORT_SOURCE_AUTOMATED"
-        [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_LOGANTO"
-        [state]="filter"
-        [selectedRow]="selectedHistoryStatistic"
-        (selectedRowChange)="selectHistory($event)"
-      ></app-data-table>
-      <br />
+      @if (supportedSourceSystems.includes(importSourceSystems.IMPORT_SOURCE_SYSTEM_LOGANTO)) {
+        <div>
+          <p>{{ 'data-overview.imports.peopleLoganto' | translate }}</p>
+          <app-data-table
+            [type]="importTypes.IMPORT_TYPE_PERSON"
+            [source]="importSource.IMPORT_SOURCE_AUTOMATED"
+            [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_LOGANTO"
+            [state]="filter"
+            [selectedRow]="selectedHistoryStatistic"
+            (selectedRowChange)="selectHistory($event)"
+          ></app-data-table>
+          <br />
+        </div>
+      }
+      @if (supportedSourceSystems.includes(importSourceSystems.IMPORT_SOURCE_SYSTEM_INNOSOLV)) {
+        <div>
+          <p>{{ 'data-overview.imports.peopleInnosolv' | translate }}</p>
+          <app-data-table
+            [type]="importTypes.IMPORT_TYPE_PERSON"
+            [source]="importSource.IMPORT_SOURCE_AUTOMATED"
+            [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_INNOSOLV"
+            [state]="filter"
+            [selectedRow]="selectedHistoryStatistic"
+            (selectedRowChange)="selectHistory($event)"
+          ></app-data-table>
+          <br />
+        </div>
+      }
+      @if (supportedSourceSystems.includes(importSourceSystems.IMPORT_SOURCE_SYSTEM_LOGANTO)) {
+        <div>
+          <p>{{ 'data-overview.imports.domainOfInfluenceLoganto' | translate }}</p>
+          <app-data-table
+            [type]="importTypes.IMPORT_TYPE_DOMAIN_OF_INFLUENCE"
+            [source]="importSource.IMPORT_SOURCE_AUTOMATED"
+            [sourceSystem]="importSourceSystems.IMPORT_SOURCE_SYSTEM_LOGANTO"
+            [state]="filter"
+            [selectedRow]="selectedHistoryStatistic"
+            (selectedRowChange)="selectHistory($event)"
+          ></app-data-table>
+          <br />
+        </div>
+      }
       <div *appIfHasRole="[roles.ImportObserver]">
         <p>{{ 'data-overview.imports.aclVotingBasis' | translate }}</p>
         <app-data-table
@@ -90,53 +119,56 @@
       [importStatistic]="selectedHistoryStatistic"
       [(selectedStatistic)]="selectedDetailStatistic"
     ></app-history-table>
-    <div *ngIf="selectedDetailStatistic !== undefined">
-      <app-data-import-details
-        *ngIf="selectedHistoryStatistic"
-        [statistic]="selectedDetailStatistic"
-      ></app-data-import-details>
-      <br />
-      <div [hidden]="selectedDetailStatistic.recordValidationErrors.length === 0">
-        <h5>{{ 'data-overview.infos.errors' | translate }}</h5>
-        <bc-table [dataSource]="selectedDetailStatistic.recordValidationErrors">
-          <ng-container [columnDef]="'record'">
-            <bc-header-cell *headerCellDef>{{
-              'data-overview.record-error-table.record' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let column">
-              {{ column.recordNumber }}
-            </bc-data-cell>
-          </ng-container>
-          <ng-container [columnDef]="'recordIdentifier'">
-            <bc-header-cell *headerCellDef>{{
-              'data-overview.record-error-table.recordIdentifier' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let column">
-              {{ column.recordIdentifier }}
-            </bc-data-cell>
-          </ng-container>
-          <ng-container [columnDef]="'field'">
-            <bc-header-cell *headerCellDef>{{
-              'data-overview.record-error-table.field' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let column">
-              {{ column.field[0].fieldName }}
-            </bc-data-cell>
-          </ng-container>
-          <ng-container [columnDef]="'error'">
-            <bc-header-cell *headerCellDef>{{
-              'data-overview.record-error-table.error' | translate
-            }}</bc-header-cell>
-            <bc-data-cell *dataCellDef="let column">
-              <div *ngFor="let error of column.field[0].errors">
-                {{ error }}
-              </div>
-            </bc-data-cell>
-          </ng-container>
-          <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-          <bc-data-row *dataRowDef="let row; columns: columnsToDisplay"></bc-data-row>
-        </bc-table>
+    @if (selectedDetailStatistic !== undefined) {
+      <div>
+        @if (selectedHistoryStatistic) {
+          <app-data-import-details [statistic]="selectedDetailStatistic"></app-data-import-details>
+        }
+        <br />
+        <div [hidden]="selectedDetailStatistic.recordValidationErrors.length === 0">
+          <h5>{{ 'data-overview.infos.errors' | translate }}</h5>
+          <bc-table [dataSource]="selectedDetailStatistic.recordValidationErrors">
+            <ng-container [columnDef]="'record'">
+              <bc-header-cell *headerCellDef>{{
+                'data-overview.record-error-table.record' | translate
+              }}</bc-header-cell>
+              <bc-data-cell *dataCellDef="let column">
+                {{ column.recordNumber }}
+              </bc-data-cell>
+            </ng-container>
+            <ng-container [columnDef]="'recordIdentifier'">
+              <bc-header-cell *headerCellDef>{{
+                'data-overview.record-error-table.recordIdentifier' | translate
+              }}</bc-header-cell>
+              <bc-data-cell *dataCellDef="let column">
+                {{ column.recordIdentifier }}
+              </bc-data-cell>
+            </ng-container>
+            <ng-container [columnDef]="'field'">
+              <bc-header-cell *headerCellDef>{{
+                'data-overview.record-error-table.field' | translate
+              }}</bc-header-cell>
+              <bc-data-cell *dataCellDef="let column">
+                {{ column.field[0].fieldName }}
+              </bc-data-cell>
+            </ng-container>
+            <ng-container [columnDef]="'error'">
+              <bc-header-cell *headerCellDef>{{
+                'data-overview.record-error-table.error' | translate
+              }}</bc-header-cell>
+              <bc-data-cell *dataCellDef="let column">
+                @for (error of column.field[0].errors; track error) {
+                  <div>
+                    {{ error }}
+                  </div>
+                }
+              </bc-data-cell>
+            </ng-container>
+            <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
+            <bc-data-row *dataRowDef="let row; columns: columnsToDisplay"></bc-data-row>
+          </bc-table>
+        </div>
       </div>
-    </div>
+    }
   </div>
 </div>

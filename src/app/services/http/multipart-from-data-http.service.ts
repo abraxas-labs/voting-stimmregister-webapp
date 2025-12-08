@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root',
 })
 export class MultipartFromDataHttpService {
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   public async post<TData, TResponse>(url: string, data: TData, file?: File): Promise<TResponse> {
     return firstValueFrom(

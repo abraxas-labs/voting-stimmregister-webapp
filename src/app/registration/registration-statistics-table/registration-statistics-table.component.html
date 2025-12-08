@@ -1,15 +1,20 @@
-<div *ngIf="totalCount === 0">
-  <div class="mb-3">
-    <p *ngIf="!loading; else loadingSpinner">
-      {{ 'registration.statistics.result' | translate }}
-      {{ 'registration.statistics.no-results' | translate }}
-    </p>
-    <ng-template #loadingSpinner>
-      <app-labeled-spinner *ngIf="loading" class="mb-2"></app-labeled-spinner>
-      <app-fixed-space-loading-bar [loading]="loading"></app-fixed-space-loading-bar>
-    </ng-template>
+@if (totalCount === 0) {
+  <div>
+    <div class="mb-3">
+      @if (!loading) {
+        <p>
+          {{ 'registration.statistics.result' | translate }}
+          {{ 'registration.statistics.no-results' | translate }}
+        </p>
+      } @else {
+        @if (loading) {
+          <app-labeled-spinner class="mb-2"></app-labeled-spinner>
+        }
+        <app-fixed-space-loading-bar [loading]="loading"></app-fixed-space-loading-bar>
+      }
+    </div>
   </div>
-</div>
+}
 <div [hidden]="totalCount === 0">
   <p>{{ 'registration.statistics.result' | translate }}{{ totalCount | number }}</p>
   <bc-table [dataSource]="dataSource" filter sort [sortMultiple]="true">

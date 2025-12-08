@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 
 @Pipe({
   name: 'localDate',
+  standalone: false,
 })
 export class LocalDatePipe implements PipeTransform {
   private readonly datePipe: DatePipe = new DatePipe('de-CH');

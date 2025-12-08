@@ -11,6 +11,7 @@ import { AccessRole } from '../../models/accessRole';
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.scss'],
+  standalone: false,
 })
 export class MainLayoutComponent {
   public readonly roles: typeof AccessRole = AccessRole;

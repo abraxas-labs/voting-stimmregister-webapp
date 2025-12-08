@@ -17,7 +17,7 @@ import {
   PersonServiceGetSingleRequest,
   PersonServiceGetSingleResponse,
 } from '@abraxas/voting-stimmregister-proto';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Person, PersonWithDomainOfInfluences } from '../models/person/person';
 import { FilterCriteria } from '../models/filter/filterCriteria';
@@ -30,7 +30,7 @@ import { PersonSearchParameters, PersonSearchType } from '../models/person/perso
   providedIn: 'root',
 })
 export class PersonService {
-  constructor(private readonly client: PersonServiceClient) {}
+  private readonly client = inject(PersonServiceClient);
 
   public async getLastUsedParameters(
     searchType: PersonSearchType,
@@ -203,6 +203,7 @@ export class PersonService {
       sourceSystemId: person.sourceSystemId,
       sourceSystemName: person.sourceSystemName,
       eVoting: person.eVoting,
+      eVotingEmail: person.eVotingEmail,
       typeOfResidence: person.typeOfResidence!,
       validationErrors: person.validationErrors,
       vn: person.vn,
@@ -213,7 +214,7 @@ export class PersonService {
         person.sendVotingCardsToDomainOfInfluenceReturnAddress === true,
       isHouseholder: person.isHouseholder === true,
       residenceBuildingId: person.residenceBuildingId,
-      residenceApartmentId: person.residenceApartmentId
+      residenceApartmentId: person.residenceApartmentId,
     };
     return person1;
   }

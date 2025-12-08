@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { first, firstValueFrom, Observable } from 'rxjs';
 import { AuthorizationService, RoleService as IamRoleService } from '@abraxas/base-components';
 import { AccessRole } from '../models/accessRole';
@@ -13,10 +13,8 @@ import { AccessRole } from '../models/accessRole';
   providedIn: 'root',
 })
 export class RoleService {
-  constructor(
-    private readonly roles: IamRoleService,
-    private readonly auth: AuthorizationService
-  ) {}
+  private readonly roles = inject(IamRoleService);
+  private readonly auth = inject(AuthorizationService);
 
   public get isReaderOrManager$(): Observable<boolean> {
     return this.roles.hasRole([AccessRole.Reader, AccessRole.Manager]);

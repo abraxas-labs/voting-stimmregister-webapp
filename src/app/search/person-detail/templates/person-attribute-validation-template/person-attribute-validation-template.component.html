@@ -3,15 +3,19 @@
   <div class="content-data">
     <div #tooltip class="tooltip">
       <ul>
-        <li *ngFor="let message of validationInfo">
-          {{ message }}
-        </li>
+        @for (message of validationInfo; track message) {
+          <li>
+            {{ message }}
+          </li>
+        }
       </ul>
       <div class="arrow" #arrow data-popper-arrow><span></span></div>
     </div>
-    <span #validationIcon class="validation-icon" *ngIf="!!validationInfo">
-      <bc-icon [iconColor]="'warning'" [icon]="'exclamation-circle-o'"></bc-icon>
-    </span>
+    @if (!!validationInfo) {
+      <span #validationIcon class="validation-icon">
+        <bc-icon [iconColor]="'warning'" [icon]="'exclamation-circle-o'"></bc-icon>
+      </span>
+    }
     <bc-readonly class="content-description">{{ content || '-' }}</bc-readonly>
   </div>
 </div>
