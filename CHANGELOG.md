@@ -1,4 +1,4 @@
-# ✨ Changelog (`v3.10.2`)
+# ✨ Changelog (`v3.10.3`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v3.10.2
-Previous version ---- v3.4.0
+This version -------- v3.10.3
+Previous version ---- v3.10.2
 Initial version ----- v1.77.15
-Total commits ------- 10
+Total commits ------- 1
 ```
+
+## [v3.10.3] - 2025-12-11
+
+### 🔄 Changed
+
+- update voting lib dependency
 
 ## [v3.10.2] - 2025-11-20
 
@@ -136,82 +142,59 @@ BREAKING CHANGE: update Angular to version 18
 
 ### 🔄 Changed
 
-- update base components and angular lib
+- update bug bounty template reference
+- patch ci-cd template version, align with new defaults
+
+## [v2.0.1] - 2024-07-15
 
 ### 🔄 Changed
 
-- angular and base components update
+- index.html set default language to german and disable google translation
+
+## [v2.0.0] - 2024-06-06
+
+BREAKING CHANGE: Angular 17 update
+
+### 🔄 Changed
+
+- angular 17 update
+
+## [v1.79.2] - 2024-06-03
+
+### 🔄 Changed
+
+- update link to code of conduct
+
+## [v1.79.1] - 2024-04-03
+
+### 🔄 Changed
+
+- fix checkbox initialization in filter
+
+## [v1.79.0] - 2024-03-26
 
 ### 🆕 Added
 
-- add new import source system for cobra-tg.
-- add new setting to configure supported import source systems per canton.
+- add registration statistics
+
+## [v1.78.2] - 2024-03-15
 
 ### 🔄 Changed
 
-- updated import statistics overview to only show supported import source systems.
-- updated import pop-up to only show supported import source systems.
+- extend input validation rules
+
+## [v1.78.1] - 2024-02-14
+
+### 🔄 Changed
+
+- use absolut path for config.js script
+
+## [v1.78.0] - 2024-02-06
 
 ### 🆕 Added
 
-- add e-voting email
+- add filter tenant name
 
-### 🔄 Changed
+## [v1.77.15] - 2024-01-31
 
-- fixed upload size limit for import files
-
-### 🔄 Changed
-
-- bump BC version
-
-### 🆕 Added
-
-- add option to add multiple values in a string filter
-
-### 🔄 Changed
-
-- remove deprecated card layout and change checkbox subscript size dynamic
-
-### 🔄 Changed
-
-- angular 19 update
-
-### 🆕 Added
-
-- added STISTAT e-voting export
-
-### 🆕 Added
-
-- add householder fields
-
-### 🆕 Added
-
-- add robots meta tag to instruct crawlers to not index content
-- add X-Robots-Tag response header to instruct crawlers to not index content
-
-### 🔄 Changed
-
-- align import models to naming conventions
-
-### 🆕 Added
-
-- add sorting to import statistics
-
-### 🔄 Changed
-
-- show labels for number filter fields
-
-BREAKING CHANGE: update Angular to version 18
-
-### 🔄 Changed
-
-- update Angular to version 18
-- migrate to new build system
-
-### ❌ Removed
-
-- remove e-voter registration count columns
-
-### 🔄 Changed
-
-- migrate from gcr to harbor
+### 🎉 Initial release for Bug Bounty
