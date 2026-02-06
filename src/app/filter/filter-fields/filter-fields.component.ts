@@ -148,7 +148,7 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
       ],
       [FilterCriteriaReferenceId.officialName]: [
         '',
-        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(100)],
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(500)],
       ],
       [FilterCriteriaReferenceId.firstName]: [
         '',

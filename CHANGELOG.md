@@ -1,4 +1,4 @@
-# ✨ Changelog (`v3.10.3`)
+# ✨ Changelog (`v3.10.7`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v3.10.3
+This version -------- v3.10.7
 Previous version ---- v3.10.2
 Initial version ----- v1.77.15
-Total commits ------- 1
+Total commits ------- 5
 ```
+
+## [v3.10.7] - 2026-02-06
+
+### 🔄 Changed
+
+- extend CD pipeline with enhanced bug bounty publication workflow
+
+## [v3.10.6] - 2026-02-03
+
+- update default length for input validation string rule-sets.
+- align default length with proto validation rules.
+
+## [v3.10.5] - 2026-02-03
+
+### 🔄 Changed
+
+- update input validation length from `100` to `500` characters for official name filter value.
+
+## [v3.10.4] - 2026-01-14
+
+### 🔄 Changed
+
+- bump voting-lib version to v5.11.6
 
 ## [v3.10.3] - 2025-12-11
 

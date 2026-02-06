@@ -10,15 +10,15 @@ export class InputValidatorHelper {
   }
 
   public static getAlpha(): string {
-    return '^[A-Za-z\\u0080-\\uFFFF ./,-]{0,200}$';
+    return '^[A-Za-z\\u0080-\\uFFFF ./,-]{0,500}$';
   }
 
   public static getSimpleSlText(): string {
-    return "^[A-Za-z0-9\\u0080-\\uFFFF ',-./]{0,200}$";
+    return "^[A-Za-z0-9\\u0080-\\uFFFF ',-./]{0,500}$";
   }
 
   public static getComplexSlText(): string {
-    return '^[A-Za-z0-9\\u0080-\\uFFFF _!?+-@,.:\'()/—"«»;&–`´’+*%]{0,200}$';
+    return '^[A-Za-z0-9\\u0080-\\uFFFF _!?+-@,.:\'()/—"«»;&–`´’+*%]{0,500}$';
   }
 
   public static getExactDate(): RegExp {
