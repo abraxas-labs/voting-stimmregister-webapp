@@ -30,10 +30,10 @@
       "houseNumber": "Nr.",
       "zipCode": "PLZ",
       "locality": "Gemeinde",
+      "origins": "Heimatort(e)",
       "countryNameShort": "Nationalität",
       "town": "Ort",
       "residence": "Residence",
-      "source": "Quellsystem",
       "isVotingAllowed": "Stimmrecht"
     },
     "votingRight": {
@@ -50,6 +50,7 @@
     "information-title": "Alle Informationen",
     "domainOfInfluence-title": "Kreis-Informationen",
     "actuality": "Aktualisierung am ",
+    "origins-title": "Heimatort(e)",
     "residenceType": {
       "HWS": "Hauptwohnsitz (Meldeverhältnis)",
       "NWS": "Nebenwohnsitz (Meldeverhältnis)",
@@ -124,6 +125,10 @@
       "evangelicCircleName": "Evangelischer Kirchkreis Name",
       "schoolCircleId": "Schulkreis Identifikator",
       "schoolCircleName": "Schulkreis Name",
+      "elementarySchoolCircleId": "Primarschulkreis Identifikator",
+      "elementarySchoolCircleName": "Primarschulkreis Name",
+      "upperSchoolCircleId": "Oberstufenschulkreis Identifikator",
+      "upperSchoolCircleName": "Oberstufenschulkreis Name",
       "trafficCircleId": "Verkehrskreis Identifikator",
       "trafficCircleName": "Verkehrskreis Name",
       "residentialDistrictCircleId": "Wohnviertel Identifikator",
@@ -187,7 +192,7 @@
     "title": "Personen exportieren",
     "dropdown": {
       "title": "Art des Exports",
-      "ech": "eCH-0045",
+      "echv6": "eCH-0045 (v4.2)",
       "csv": "CSV",
       "stistat": "STISTAT E-Voting"
     },
@@ -254,6 +259,12 @@
       "3": "Voting Basis",
       "4": "Innosolv",
       "5": "CobraTg"
+    },
+    "sex": {
+      "0": "Unbekannt",
+      "1": "M",
+      "2": "W",
+      "3": "Unbestimmt"
     }
   },
   "data-table": {
@@ -431,6 +442,10 @@
       "evangelicCircleName": "Evangelischer Kirchkreis (Name)",
       "schoolCircleId": "Schulkreis (id)",
       "schoolCircleName": "Schulkreis (Name)",
+      "elementarySchoolCircleId": "Primarschulkreis (id)",
+      "elementarySchoolCircleName": "Primarschulkreis (Name)",
+      "upperSchoolCircleId": "Oberstufenschulkreis (id)",
+      "upperSchoolCircleName": "Oberstufenschulkreis (Name)",
       "trafficCircleId": "Verkehrskreis (id)",
       "trafficCircleName": "Verkehrskreis (Name)",
       "residentialDistrictCircleId": "Wohnviertel (id)",
@@ -515,7 +530,9 @@
     "12": "KI_EVA",
     "13": "AN_VEK",
     "14": "AN_WOK",
-    "15": "AN_VOK"
+    "15": "AN_VOK",
+    "16": "SC_PS",
+    "17": "SC_OS"
   },
   "cantons": {
     "short": {

@@ -29,10 +29,8 @@
   @if (totalCount !== 0) {
     <bc-table [dataSource]="datasource" [fixed]="false">
       <ng-container [columnDef]="columns.actuality">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.actuality | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.actuality | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           @if (person[columns.actuality]) {
             <bc-icon
               [icon]="'checkmark'"
@@ -47,77 +45,69 @@
               [title]="('person.actuality' | translate) + (person.actualityDate | localDate: true)"
             ></bc-icon>
           }
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.officialName">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.officialName | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>
+          {{ 'person-table.columns.' + columns.officialName | translate }}
+        </th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.officialName }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.firstName">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.firstName | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.firstName | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.firstName }}
-        </bc-data-cell>
+        </td>
+      </ng-container>
+      <ng-container [columnDef]="columns.sex">
+        <th bc-header-cell *headerCellDef></th>
+        <td bc-data-cell *dataCellDef="let person">
+          {{ 'data-overview.sex.' + person.sex | translate }}
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.dateOfBirth">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.dateOfBirth | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.dateOfBirth | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.dateOfBirth | localDate }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.street">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.street | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.street | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.contactAddressStreet }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.houseNumber">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.houseNumber | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.houseNumber | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.contactAddressHouseNumber }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.zipCode">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.zipCode | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.zipCode | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.contactAddressZipCode }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.town">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.town | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.town | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.contactAddressTown }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.countryNameShort">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.countryNameShort | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>
+          {{ 'person-table.columns.' + columns.countryNameShort | translate }}
+        </th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.countryNameShort ? person.countryNameShort : person.country }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.locality">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.locality | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.locality | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           @if (!person.isSwissAbroad) {
             <span
               >{{ person.contactAddressLocality || person.municipalityName }} ({{
@@ -127,29 +117,25 @@
           } @else {
             <span>{{ person.municipalityName }} ({{ person.municipalityId }})</span>
           }
-        </bc-data-cell>
+        </td>
+      </ng-container>
+      <ng-container [columnDef]="columns.origins">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.origins | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person" tooltip truncateWithTooltip>
+          {{ person.origins.join(', ') }}
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.residence">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.residence | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>{{ 'person-table.columns.' + columns.residence | translate }}</th>
+        <td bc-data-cell *dataCellDef="let person">
           {{ person.typeOfResidence }}
-        </bc-data-cell>
-      </ng-container>
-      <ng-container [columnDef]="columns.source">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.source | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
-          {{ 'data-overview.source-system.' + person.sourceSystemName | translate }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.isVotingAllowed">
-        <bc-header-cell *headerCellDef>{{
-          'person-table.columns.' + columns.isVotingAllowed | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let person">
+        <th bc-header-cell *headerCellDef>
+          {{ 'person-table.columns.' + columns.isVotingAllowed | translate }}
+        </th>
+        <td bc-data-cell *dataCellDef="let person">
           @if (person.isVotingAllowed) {
             <bc-status-label
               [backgroundColor]="'#e8f4ed'"
@@ -165,14 +151,15 @@
               [label]="'person-table.votingRight.no' | translate"
             ></bc-status-label>
           }
-        </bc-data-cell>
+        </td>
       </ng-container>
-      <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-      <bc-data-row
+      <tr bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></tr>
+      <tr
+        bc-data-row
         *dataRowDef="let row; columns: columnsToDisplay"
         class="pointer"
         (click)="openDetailView(row.registerId)"
-      ></bc-data-row>
+      ></tr>
     </bc-table>
   }
   <bc-paginator

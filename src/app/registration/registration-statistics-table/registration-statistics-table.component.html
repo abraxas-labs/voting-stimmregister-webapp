@@ -19,42 +19,40 @@
   <p>{{ 'registration.statistics.result' | translate }}{{ totalCount | number }}</p>
   <bc-table [dataSource]="dataSource" filter sort [sortMultiple]="true">
     <ng-container [columnDef]="columns.MUNICIPALITY_NAME">
-      <bc-header-cell filter filterType="list" [filterItems]="municipalityFilterItems" sort *headerCellDef>{{
-        'registration.statistics.table.columns.' + columns.MUNICIPALITY_NAME | translate
-      }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row">
+      <th bc-header-cell filter filterType="list" [filterItems]="municipalityFilterItems" sort *headerCellDef>
+        {{ 'registration.statistics.table.columns.' + columns.MUNICIPALITY_NAME | translate }}
+      </th>
+      <td bc-data-cell *dataCellDef="let row">
         {{ row[columns.MUNICIPALITY_NAME] }}
-      </bc-data-cell>
+      </td>
     </ng-container>
     <ng-container [columnDef]="columns.TOTAL_EVOTER_COUNT">
-      <bc-header-cell sort *headerCellDef>{{
-        'registration.statistics.table.columns.' + columns.TOTAL_EVOTER_COUNT | translate
-      }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row">
+      <th bc-header-cell sort *headerCellDef>
+        {{ 'registration.statistics.table.columns.' + columns.TOTAL_EVOTER_COUNT | translate }}
+      </th>
+      <td bc-data-cell *dataCellDef="let row">
         {{ row[columns.TOTAL_EVOTER_COUNT] | number: '1.0-2' }}
-      </bc-data-cell>
+      </td>
     </ng-container>
     <ng-container [columnDef]="columns.TOTAL_VOTER_COUNT">
-      <bc-header-cell sort *headerCellDef>{{
-        'registration.statistics.table.columns.' + columns.TOTAL_VOTER_COUNT | translate
-      }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row">
+      <th bc-header-cell sort *headerCellDef>
+        {{ 'registration.statistics.table.columns.' + columns.TOTAL_VOTER_COUNT | translate }}
+      </th>
+      <td bc-data-cell *dataCellDef="let row">
         {{ row[columns.TOTAL_VOTER_COUNT] | number: '1.0-2' }}
-      </bc-data-cell>
+      </td>
     </ng-container>
     <ng-container [columnDef]="columns.EVOTER_SHARE">
-      <bc-header-cell sort *headerCellDef>{{
-        'registration.statistics.table.columns.' + columns.EVOTER_SHARE | translate
-      }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row">
-        {{ row[columns.EVOTER_SHARE] | number: '1.0-2' }} %
-      </bc-data-cell>
+      <th bc-header-cell sort *headerCellDef>
+        {{ 'registration.statistics.table.columns.' + columns.EVOTER_SHARE | translate }}
+      </th>
+      <td bc-data-cell *dataCellDef="let row">{{ row[columns.EVOTER_SHARE] | number: '1.0-2' }} %</td>
     </ng-container>
     <ng-container [columnDef]="columns.EVOTER_SHARE_CHART">
-      <bc-header-cell *headerCellDef>{{
-        'registration.statistics.table.columns.' + columns.EVOTER_SHARE_CHART | translate
-      }}</bc-header-cell>
-      <bc-data-cell *dataCellDef="let row">
+      <th bc-header-cell *headerCellDef>
+        {{ 'registration.statistics.table.columns.' + columns.EVOTER_SHARE_CHART | translate }}
+      </th>
+      <td bc-data-cell *dataCellDef="let row">
         <div class="bar-container">
           <div
             class="bar"
@@ -64,10 +62,10 @@
             }"
           ></div>
         </div>
-      </bc-data-cell>
+      </td>
     </ng-container>
-    <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-    <bc-data-row *dataRowDef="let row; columns: columnsToDisplay"></bc-data-row>
+    <tr bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></tr>
+    <tr bc-data-row *dataRowDef="let row; columns: columnsToDisplay"></tr>
   </bc-table>
   <bc-paginator
     showFirstLastButtons

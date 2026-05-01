@@ -1,6 +1,6 @@
 <form class="filter-container" [formGroup]="filterForm" (ngSubmit)="triggerSearch($event)">
   <div class="search-filter">
-    @for (criteria of criteria; track criteria) {
+    @for (criteria of criteria; track criteria; let first = $first) {
       <div>
         @if (criteria.filterDataType === 'string') {
           <div class="search-filter-input">
@@ -21,6 +21,7 @@
                 [icon]="criteria.filterOperator"
                 (filterChange)="filterChange($event, criteria)"
                 [operation]="criteria.filterOperator"
+                [autoFocus]="first"
                 subscriptSizing="dynamic"
               >
               </bc-filter-text>
@@ -39,6 +40,7 @@
                   )
                 "
                 [(ngModel)]="criteria.filterValue"
+                [autoFocus]="first"
                 subscriptSizing="dynamic"
               >
               </bc-text>
@@ -67,6 +69,7 @@
               [clearable]="false"
               (filterChange)="filterChange($event, criteria)"
               [operation]="criteria.filterOperator"
+              [autoFocus]="first"
             ></bc-filter-date>
             <mat-icon
               fontSet="abraxas-icons"
@@ -82,6 +85,7 @@
               [formControlName]="criteria.referenceId"
               [label]="'shared.filter-labels.' + criteria.referenceId | translate"
               [(ngModel)]="criteria.filterValue"
+              [autoFocus]="first"
               subscriptSizing="dynamic"
             ></bc-checkbox>
             <mat-icon
@@ -103,6 +107,7 @@
               [(ngModel)]="criteria.filterValue"
               (filterChange)="filterChange($event, criteria)"
               [operations]="numberFilterOperations"
+              [autoFocus]="first"
               subscriptSizing="dynamic"
             ></bc-filter-number>
             <mat-icon
@@ -124,6 +129,7 @@
               [(ngModel)]="criteria.filterValue"
               (filterChange)="filterChange($event, criteria)"
               [operation]="criteria.filterOperator"
+              [autoFocus]="first"
               subscriptSizing="dynamic"
             ></bc-filter-number>
             <mat-icon
@@ -146,6 +152,7 @@
               [multiple]="true"
               [optionalText]="''"
               [(ngModel)]="criteria.filterValue"
+              [autoFocus]="first"
               subscriptSizing="dynamic"
             >
             </bc-dropdown>
@@ -169,6 +176,7 @@
               [multiple]="false"
               [optionalText]="''"
               [(ngModel)]="criteria.filterValue"
+              [autoFocus]="first"
               subscriptSizing="dynamic"
             ></bc-dropdown>
             <mat-icon

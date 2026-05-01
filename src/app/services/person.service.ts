@@ -215,6 +215,7 @@ export class PersonService {
       isHouseholder: person.isHouseholder === true,
       residenceBuildingId: person.residenceBuildingId,
       residenceApartmentId: person.residenceApartmentId,
+      origins: person.origins,
     };
     return person1;
   }

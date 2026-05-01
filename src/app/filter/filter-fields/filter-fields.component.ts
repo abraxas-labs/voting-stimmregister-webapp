@@ -322,6 +322,22 @@ export class FilterFieldsComponent implements OnInit, OnChanges {
         '',
         [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
       ],
+      [FilterCriteriaReferenceId.elementarySchoolCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.elementarySchoolCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
+      [FilterCriteriaReferenceId.upperSchoolCircleId]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],
+      ],
+      [FilterCriteriaReferenceId.upperSchoolCircleName]: [
+        '',
+        [Validators.pattern(InputValidatorHelper.getComplexSlText()), Validators.maxLength(100)],
+      ],
       [FilterCriteriaReferenceId.trafficCircleId]: [
         '',
         [Validators.pattern(InputValidatorHelper.getSimpleSlText()), Validators.maxLength(50)],

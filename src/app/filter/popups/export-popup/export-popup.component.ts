@@ -12,7 +12,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 enum ExportType {
   CSV = 'csv',
-  ECH = 'ech',
+  ECHV6 = 'echv6',
   STISTAT = 'stistat',
 }
 
@@ -35,11 +35,11 @@ export class ExportPopupComponent {
   private readonly exportService = inject(ExportService);
 
   public readonly exportTypes: typeof ExportType = ExportType;
-  public type: ExportType = ExportType.ECH;
+  public type: ExportType = ExportType.ECHV6;
   public types: DropdownItem[] = [
     {
-      id: ExportType.ECH,
-      displayValue: this.translate.instant('export-filter.dropdown.ech'),
+      id: ExportType.ECHV6,
+      displayValue: this.translate.instant('export-filter.dropdown.echv6'),
       disabled: false,
     },
     {
@@ -69,7 +69,7 @@ export class ExportPopupComponent {
         case ExportType.CSV:
           await this.exportService.exportCSV(this.dialogData.filterId, this.dialogData.versionId);
           break;
-        case ExportType.ECH:
+        case ExportType.ECHV6:
           await this.exportService.exportEch0045(this.dialogData.filterId, this.dialogData.versionId);
           break;
         case ExportType.STISTAT:

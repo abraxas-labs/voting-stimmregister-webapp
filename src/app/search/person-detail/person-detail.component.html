@@ -120,7 +120,21 @@
             ></app-person-attribute-evoting-template>
           </bc-card-content>
         </bc-card>
-        <app-person-address [person]="person"></app-person-address>
+        <div>
+          <app-person-address [person]="person"></app-person-address>
+          <bc-card class="mt-3" [sideStripe]="true">
+            <bc-card-header>
+              <bc-card-title [label]="'person.origins-title' | translate"></bc-card-title>
+            </bc-card-header>
+            <bc-card-content>
+              @for (origin of person.origins; track origin) {
+                <p>{{ origin }}</p>
+              } @empty {
+                <p>-</p>
+              }
+            </bc-card-content>
+          </bc-card>
+        </div>
         <bc-card [sideStripe]="true" [height]="'445px'">
           <bc-card-header>
             <bc-card-title [label]="'person.information-title' | translate"></bc-card-title>
@@ -149,30 +163,28 @@
           <bc-card-content>
             <bc-table [dataSource]="person.domainOfInfluences">
               <ng-container columnDef="type">
-                <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.typ' | translate }}</bc-header-cell>
-                <bc-data-cell *dataCellDef="let row">
+                <th bc-header-cell *headerCellDef>{{ 'domainOfInfluence.typ' | translate }}</th>
+                <td bc-data-cell *dataCellDef="let row">
                   {{ 'domain-of-influence-types.' + row.domainOfInfluenceType | translate }}
-                </bc-data-cell>
+                </td>
               </ng-container>
               <ng-container columnDef="localId">
-                <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.localId' | translate }}</bc-header-cell>
-                <bc-data-cell *dataCellDef="let row">
+                <th bc-header-cell *headerCellDef>{{ 'domainOfInfluence.localId' | translate }}</th>
+                <td bc-data-cell *dataCellDef="let row">
                   {{ row.identifier }}
-                </bc-data-cell>
+                </td>
               </ng-container>
               <ng-container columnDef="name">
-                <bc-header-cell *headerCellDef>{{ 'domainOfInfluence.name' | translate }}</bc-header-cell>
-                <bc-data-cell *dataCellDef="let row">
+                <th bc-header-cell *headerCellDef>{{ 'domainOfInfluence.name' | translate }}</th>
+                <td bc-data-cell *dataCellDef="let row">
                   {{ row.name }}
                   @if (!!row.canton) {
                     <span> ({{ 'cantons.short.' + row.canton | translate }})</span>
                   }
-                </bc-data-cell>
+                </td>
               </ng-container>
-              <bc-header-row *headerRowDef="let row; columns: ['type', 'localId', 'name']"></bc-header-row>
-              <bc-data-row
-                *dataRowDef="let row; columns: ['type', 'localId', 'name']; let i = index"
-              ></bc-data-row>
+              <tr bc-header-row *headerRowDef="let row; columns: ['type', 'localId', 'name']"></tr>
+              <tr bc-data-row *dataRowDef="let row; columns: ['type', 'localId', 'name']; let i = index"></tr>
             </bc-table>
           </bc-card-content>
         </bc-card>
@@ -183,20 +195,18 @@
           <bc-card-content>
             <bc-table [dataSource]="personAddressTypes">
               <ng-container columnDef="typeOfResidence">
-                <bc-header-cell *headerCellDef>{{
-                  'reportingRelationship.addressTyp' | translate
-                }}</bc-header-cell>
-                <bc-data-cell *dataCellDef="let addressType">
+                <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.addressTyp' | translate }}</th>
+                <td bc-data-cell *dataCellDef="let addressType">
                   @if (addressType === addressTypes.ResidenceAddress) {
                     <span>{{ 'person.residenceType.' + person.typeOfResidence | translate }}</span>
                   } @else {
                     <span>{{ 'person.moveInAddress' | translate }}</span>
                   }
-                </bc-data-cell>
+                </td>
               </ng-container>
               <ng-container columnDef="residenceEntryDate">
-                <bc-header-cell *headerCellDef>{{ 'reportingRelationship.date' | translate }}</bc-header-cell>
-                <bc-data-cell *dataCellDef="let addressType">
+                <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.date' | translate }}</th>
+                <td bc-data-cell *dataCellDef="let addressType">
                   @if (addressType === addressTypes.ResidenceAddress) {
                     @if (person.residenceEntryDate) {
                       <span>{{
@@ -209,13 +219,11 @@
                       <span>{{ person.moveInArrivalDate | localDate }}</span>
                     }
                   }
-                </bc-data-cell>
+                </td>
               </ng-container>
               <ng-container columnDef="residenceAddress">
-                <bc-header-cell *headerCellDef>{{
-                  'reportingRelationship.address' | translate
-                }}</bc-header-cell>
-                <bc-data-cell *dataCellDef="let addressType">
+                <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.address' | translate }}</th>
+                <td bc-data-cell *dataCellDef="let addressType">
                   <div class="address">
                     @if (addressType === addressTypes.ResidenceAddress) {
                       <span
@@ -249,21 +257,23 @@
                       }
                     }
                   </div>
-                </bc-data-cell>
+                </td>
               </ng-container>
-              <bc-header-row
+              <tr
+                bc-header-row
                 *headerRowDef="
                   let row;
                   columns: ['typeOfResidence', 'residenceEntryDate', 'residenceAddress']
                 "
-              ></bc-header-row>
-              <bc-data-row
+              ></tr>
+              <tr
+                bc-data-row
                 *dataRowDef="
                   let row;
                   columns: ['typeOfResidence', 'residenceEntryDate', 'residenceAddress'];
                   let i = index
                 "
-              ></bc-data-row>
+              ></tr>
             </bc-table>
           </bc-card-content>
         </bc-card>

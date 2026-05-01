@@ -107,6 +107,10 @@ export function newFilterCriteria(referenceId: FilterCriteriaReferenceId): Filte
     case FilterCriteriaReferenceId.evangelicCircleName:
     case FilterCriteriaReferenceId.schoolCircleId:
     case FilterCriteriaReferenceId.schoolCircleName:
+    case FilterCriteriaReferenceId.elementarySchoolCircleId:
+    case FilterCriteriaReferenceId.elementarySchoolCircleName:
+    case FilterCriteriaReferenceId.upperSchoolCircleId:
+    case FilterCriteriaReferenceId.upperSchoolCircleName:
     case FilterCriteriaReferenceId.trafficCircleId:
     case FilterCriteriaReferenceId.trafficCircleName:
     case FilterCriteriaReferenceId.residentialDistrictCircleId:

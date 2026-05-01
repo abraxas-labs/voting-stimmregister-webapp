@@ -52,6 +52,7 @@ export class PersonTableComponent implements OnChanges {
     PersonColumn.actuality,
     PersonColumn.officialName,
     PersonColumn.firstName,
+    PersonColumn.sex,
     PersonColumn.dateOfBirth,
     PersonColumn.street,
     PersonColumn.houseNumber,
@@ -59,8 +60,8 @@ export class PersonTableComponent implements OnChanges {
     PersonColumn.town,
     PersonColumn.countryNameShort,
     PersonColumn.locality,
+    PersonColumn.origins,
     PersonColumn.residence,
-    PersonColumn.source,
     PersonColumn.isVotingAllowed,
   ];
 

@@ -8,6 +8,7 @@ export enum PersonColumn {
   actuality = 'actuality',
   officialName = 'officialName',
   firstName = 'firstName',
+  sex = 'sex',
   dateOfBirth = 'dateOfBirth',
   street = 'street',
   houseNumber = 'houseNumber',
@@ -15,7 +16,7 @@ export enum PersonColumn {
   town = 'town',
   countryNameShort = 'countryNameShort',
   locality = 'locality',
+  origins = 'origins',
   residence = 'residence',
-  source = 'source',
   isVotingAllowed = 'isVotingAllowed',
 }

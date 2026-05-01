@@ -61,3 +61,7 @@ bc-button {
 ::ng-deep .mat-mdc-select-arrow {
   padding-right: 20px;
 }
+
+::ng-deep .menu-overlay {
+  max-height: 60vh !important;
+}

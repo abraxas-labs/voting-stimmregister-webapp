@@ -1,4 +1,4 @@
-# ✨ Changelog (`v3.10.7`)
+# ✨ Changelog (`v3.13.3`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,69 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v3.10.7
-Previous version ---- v3.10.2
+This version -------- v3.13.3
+Previous version ---- v3.10.7
 Initial version ----- v1.77.15
-Total commits ------- 5
+Total commits ------- 9
 ```
+
+## [v3.13.3] - 2026-05-01
+
+### 🔄 Changed
+
+- correct pluralization for origins translation
+
+## [v3.13.2] - 2026-04-28
+
+### 🆕 Added
+
+- add auto focus for first filter field
+
+## [v3.13.1] - 2026-04-28
+
+### 🆕 Added
+
+- add origins to person detail
+
+## [v3.13.0] - 2026-04-28
+
+### 🆕 Added
+
+- add elementary and upper school circle filter
+
+## [v3.12.3] - 2026-04-28
+
+### 🔄 Changed
+
+- adjust person overview table
+
+## [v3.12.2] - 2026-04-27
+
+### 🔄 Changed
+
+- limit add filter menu height
+
+## [v3.12.1] - 2026-04-15
+
+### 🔄 Changed
+
+- update dependencies
+
+## [v3.12.0] - 2026-03-27
+
+### 🔄 Changed
+
+- update angular 21 and base-components
+
+Updated to angular 21
+
+Updated to newest base-components (replaced table components and colors)
+
+## [v3.11.0] - 2026-02-06
+
+### 🆕 Added
+
+- add eCH-0045 v6 export
 
 ## [v3.10.7] - 2026-02-06
 

@@ -20,7 +20,7 @@
       <p>
         {{
           'export-filter.invalid-persons-count.' +
-            (type === exportTypes.ECH ? 'filtered' : 'included') +
+            (type === exportTypes.ECHV6 ? 'filtered' : 'included') +
             (invalidPersonCount === 1 ? '-single' : '') | translate: { count: invalidPersonCount | number }
         }}
       </p>
@@ -36,7 +36,7 @@
     ></bc-button>
     <bc-button
       [label]="'shared.action.export' | translate"
-      [color]="'primary'"
+      [color]="'default'"
       [variant]="'primary'"
       (buttonClick)="export()"
     ></bc-button>

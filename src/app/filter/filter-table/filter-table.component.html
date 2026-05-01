@@ -8,22 +8,20 @@
   @if (filterDatasource.data.length !== 0) {
     <bc-table [dataSource]="filterDatasource" [fixed]="false">
       <ng-container [columnDef]="columns.NAME">
-        <bc-header-cell *headerCellDef>{{ 'filter-overview.table.name' | translate }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        <th bc-header-cell *headerCellDef>{{ 'filter-overview.table.name' | translate }}</th>
+        <td bc-data-cell *dataCellDef="let row">
           {{ row[columns.NAME] }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.DESCRIPTION">
-        <bc-header-cell *headerCellDef>{{ 'filter-overview.table.description' | translate }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        <th bc-header-cell *headerCellDef>{{ 'filter-overview.table.description' | translate }}</th>
+        <td bc-data-cell *dataCellDef="let row">
           {{ row[columns.DESCRIPTION] }}
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.LATEST_VERSION">
-        <bc-header-cell *headerCellDef>{{
-          'filter-overview.table.latestVersion' | translate
-        }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        <th bc-header-cell *headerCellDef>{{ 'filter-overview.table.latestVersion' | translate }}</th>
+        <td bc-data-cell *dataCellDef="let row">
           @if (row.latestVersion) {
             <span>
               {{
@@ -38,20 +36,21 @@
               }}
             </span>
           }
-        </bc-data-cell>
+        </td>
       </ng-container>
       <ng-container [columnDef]="columns.TENANT_NAME">
-        <bc-header-cell *headerCellDef>{{ 'filter-overview.table.tenantName' | translate }}</bc-header-cell>
-        <bc-data-cell *dataCellDef="let row">
+        <th bc-header-cell *headerCellDef>{{ 'filter-overview.table.tenantName' | translate }}</th>
+        <td bc-data-cell *dataCellDef="let row">
           {{ row[columns.TENANT_NAME] }}
-        </bc-data-cell>
+        </td>
       </ng-container>
-      <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-      <bc-data-row
+      <tr bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></tr>
+      <tr
+        bc-data-row
         *dataRowDef="let row; columns: columnsToDisplay"
         class="pointer"
         (click)="openDetailView(row)"
-      ></bc-data-row>
+      ></tr>
     </bc-table>
   }
 </div>

@@ -31,6 +31,7 @@ import {
   NumberModule,
   SegmentedControlGroupModule,
   TimeModule,
+  TruncateWithTooltipModule,
   UserModule,
 } from '@abraxas/base-components';
 import { BaseComponentsModule } from './modules/base-components/base-components.module';
@@ -132,6 +133,7 @@ import { MatMenuModule } from '@angular/material/menu';
     FilterModule,
     TimeModule,
     AppHeaderBarModule,
+    TruncateWithTooltipModule,
   ],
   declarations: [
     AppComponent,

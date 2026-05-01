@@ -129,43 +129,43 @@
           <h5>{{ 'data-overview.infos.errors' | translate }}</h5>
           <bc-table [dataSource]="selectedDetailStatistic.recordValidationErrors">
             <ng-container [columnDef]="'record'">
-              <bc-header-cell *headerCellDef>{{
-                'data-overview.record-error-table.record' | translate
-              }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let column">
+              <th bc-header-cell *headerCellDef>
+                {{ 'data-overview.record-error-table.record' | translate }}
+              </th>
+              <td bc-data-cell *dataCellDef="let column">
                 {{ column.recordNumber }}
-              </bc-data-cell>
+              </td>
             </ng-container>
             <ng-container [columnDef]="'recordIdentifier'">
-              <bc-header-cell *headerCellDef>{{
-                'data-overview.record-error-table.recordIdentifier' | translate
-              }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let column">
+              <th bc-header-cell *headerCellDef>
+                {{ 'data-overview.record-error-table.recordIdentifier' | translate }}
+              </th>
+              <td bc-data-cell *dataCellDef="let column">
                 {{ column.recordIdentifier }}
-              </bc-data-cell>
+              </td>
             </ng-container>
             <ng-container [columnDef]="'field'">
-              <bc-header-cell *headerCellDef>{{
-                'data-overview.record-error-table.field' | translate
-              }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let column">
+              <th bc-header-cell *headerCellDef>
+                {{ 'data-overview.record-error-table.field' | translate }}
+              </th>
+              <td bc-data-cell *dataCellDef="let column">
                 {{ column.field[0].fieldName }}
-              </bc-data-cell>
+              </td>
             </ng-container>
             <ng-container [columnDef]="'error'">
-              <bc-header-cell *headerCellDef>{{
-                'data-overview.record-error-table.error' | translate
-              }}</bc-header-cell>
-              <bc-data-cell *dataCellDef="let column">
+              <th bc-header-cell *headerCellDef>
+                {{ 'data-overview.record-error-table.error' | translate }}
+              </th>
+              <td bc-data-cell *dataCellDef="let column">
                 @for (error of column.field[0].errors; track error) {
                   <div>
                     {{ error }}
                   </div>
                 }
-              </bc-data-cell>
+              </td>
             </ng-container>
-            <bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></bc-header-row>
-            <bc-data-row *dataRowDef="let row; columns: columnsToDisplay"></bc-data-row>
+            <tr bc-header-row *headerRowDef="let row; columns: columnsToDisplay"></tr>
+            <tr bc-data-row *dataRowDef="let row; columns: columnsToDisplay"></tr>
           </bc-table>
         </div>
       </div>

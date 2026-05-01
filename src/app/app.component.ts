@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { AuthorizationService } from '@abraxas/base-components';
+import { AuthorizationService, CornerRadiusTokensThemes, StylingService } from '@abraxas/base-components';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Component, OnInit, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,6 +21,10 @@ export class AppComponent implements OnInit {
   private readonly oauthService = inject(OAuthService);
 
   constructor() {
+    const stylingService = inject(StylingService);
+
+    stylingService.setRadius(CornerRadiusTokensThemes.Default);
+
     // this language will be used as a fallback when a translation isn't found in the current language
     this.translate.setDefaultLang('de');
     // the lang to use, if the lang isn't available, it will use the current loader to get them

@@ -83,6 +83,7 @@ export interface Person {
   isHouseholder: boolean;
   residenceBuildingId?: number;
   residenceApartmentId?: number;
+  origins?: string[];
 }
 
 export interface PersonWithDomainOfInfluences extends Person {
