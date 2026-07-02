@@ -471,31 +471,6 @@
       }
     }
   },
-  "errors": {
-    "generic": {
-      "title": "Fehler",
-      "message": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es später nochmal.\nCode: {{statusCode}}\nDetails: {{statusMessage}}",
-      "messageShort": "Dienst nicht verfügbar"
-    },
-    "3": {
-      "message": "Die eingegebenen Daten sind nicht valide."
-    },
-    "7": {
-      "message": "Zugriff verweigert."
-    },
-    "16": {
-      "message": "Nicht authentisiert. Loggen Sie sich erneut ein."
-    },
-    "400": {
-      "message": "Die eingegebenen Daten sind nicht valide."
-    },
-    "401": {
-      "message": "Nicht authentisiert. Loggen Sie sich erneut ein."
-    },
-    "403": {
-      "message": "Zugriff verweigert."
-    }
-  },
   "misc": {
     "paginator": {
       "FIRST_PAGE": "erste Seite",

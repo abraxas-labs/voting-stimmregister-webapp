@@ -5,16 +5,24 @@
  */
 
 import { Injectable, inject } from '@angular/core';
+import { firstValueFrom, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Empty } from '@ngx-grpc/well-known-types';
+import { ImportServiceClient, VerifyManualImportRequest } from '@abraxas/voting-stimmregister-proto';
 import { MultipartFromDataHttpService } from './http/multipart-from-data-http.service';
 import { ImportType } from '../models/data/importType';
 import { environment } from '../../environments/environment';
 import { ImportSourceSystem } from '../models/data/importSourceSystem';
+import { SecondFactorTransaction, mapSecondFactorTransaction } from '../models/secondFactorTransaction.model';
+
+const SECOND_FACTOR_TRANSACTION_ID_HEADER = 'X-Second-Factor-Transaction-Id';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
   private readonly http = inject(MultipartFromDataHttpService);
+  private readonly importClient = inject(ImportServiceClient);
 
   private readonly restApiUrl: string = '';
   private readonly personLogantoEndpoint: string = '/import/loganto/persons';
@@ -27,9 +35,33 @@ export class DataService {
     this.restApiUrl = `${environment.restApiEndpoint}`;
   }
 
-  public async uploadData(type: ImportType, sourceSystem: ImportSourceSystem, file?: File): Promise<any> {
+  public uploadData(
+    type: ImportType,
+    sourceSystem: ImportSourceSystem,
+    file?: File,
+    secondFactorTransactionId?: string
+  ): Promise<any> {
     const url = this.getUploadDataUrl(type, sourceSystem);
-    return await this.http.post(url, null, file);
+    const headers = secondFactorTransactionId
+      ? { [SECOND_FACTOR_TRANSACTION_ID_HEADER]: secondFactorTransactionId }
+      : undefined;
+    return this.http.post(url, null, file, headers);
+  }
+
+  public async prepareManualImport(): Promise<SecondFactorTransaction | undefined> {
+    const response = await firstValueFrom(this.importClient.prepareManualImport(new Empty()));
+    return mapSecondFactorTransaction(response.secondFactorTransaction);
+  }
+
+  public verifyManualImport(secondFactorTransactionId: string, otpCode?: string): Observable<void> {
+    return this.importClient
+      .verifyManualImport(
+        new VerifyManualImportRequest({
+          secondFactorTransactionId,
+          otpCode,
+        })
+      )
+      .pipe(map(() => undefined));
   }
 
   private getUploadDataUrl(type: ImportType, sourceSystem: ImportSourceSystem): string {

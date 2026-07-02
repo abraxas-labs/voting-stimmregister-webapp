@@ -7,6 +7,7 @@
 import { Component, ErrorHandler, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DropdownItem, FileWithProgress } from '@abraxas/base-components';
+import { SecondFactorTransactionService } from '@abraxas/voting-lib';
 import { ImportType } from '../../models/data/importType';
 import { DataService } from '../../services/data.service';
 import { ToastService } from '../../services/toast.service';
@@ -41,6 +42,7 @@ export class UploadDataPopupComponent implements OnInit {
   private readonly dialogRef = inject<MatDialogRef<UploadDataPopupComponent>>(MatDialogRef);
   private readonly role = inject(RoleService);
   private readonly toastService = inject(ToastService);
+  private readonly secondFactorTransactionService = inject(SecondFactorTransactionService);
 
   public readonly maxUploadFileSize: number = 600 * 1024 * 1024; // 600MB
 
@@ -145,10 +147,12 @@ export class UploadDataPopupComponent implements OnInit {
     try {
       this.uploading = true;
       this.dialogRef.disableClose = true;
+      const secondFactorTransactionId = await this.runSecondFactor(this.selectedImportSourceSystem);
       await this.dataService.uploadData(
         this.selectedImportType,
         this.selectedImportSourceSystem,
-        this.fileData.file
+        this.fileData.file,
+        secondFactorTransactionId
       );
       this.dialogRef.close();
       this.toastService.success('shared.state.uploaded');
@@ -159,6 +163,28 @@ export class UploadDataPopupComponent implements OnInit {
       this.dialogRef.disableClose = false;
       this.uploading = false;
     }
+  }
+
+  private async runSecondFactor(sourceSystem: ImportSourceSystem): Promise<string | undefined> {
+    if (
+      sourceSystem !== ImportSourceSystem.IMPORT_SOURCE_SYSTEM_COBRA &&
+      sourceSystem !== ImportSourceSystem.IMPORT_SOURCE_SYSTEM_COBRA_TG
+    ) {
+      return;
+    }
+
+    const transaction = await this.dataService.prepareManualImport();
+    if (!transaction?.id) {
+      return;
+    }
+
+    await this.secondFactorTransactionService.showDialogAndExecuteVerifyAction(
+      (otp) => this.dataService.verifyManualImport(transaction.id, otp),
+      transaction.nevis,
+      transaction.availableProviders
+    );
+
+    return transaction.id;
   }
 
   public updateSelectedTypeSystem(selectedTypeSystemId: number | string): void {

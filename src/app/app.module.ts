@@ -5,7 +5,7 @@
  */
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ErrorHandler, LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app-routing.module';
 import { environment } from '../environments/environment';
@@ -16,7 +16,6 @@ import { GRPC_INTERCEPTORS, GrpcCoreModule, GrpcLoggerModule } from '@ngx-grpc/c
 import { GrpcWebClientModule } from '@ngx-grpc/grpc-web-client';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { GlobalErrorHandler } from './core/handlers/global.errorHandler';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
@@ -38,9 +37,7 @@ import { BaseComponentsModule } from './modules/base-components/base-components.
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TranslationLoader } from './services/translation-loader';
 import { GrpcAuthInterceptor } from './core/interceptors/grpc-auth.interceptor';
-import { GrpcErrorToastInterceptor } from './core/interceptors/grpc-error-toast.interceptor';
 import { GrpcTenantInterceptor } from './core/interceptors/grpc-tenant-interceptor.service';
-import { RestErrorToastInterceptor } from './core/interceptors/rest-error-toast.interceptor';
 import { RestTenantInterceptor } from './core/interceptors/rest-tenant.interceptor';
 import { GrpcLanguageInterceptor } from './core/interceptors/grpc-language-interceptor.service';
 import { RestLanguageInterceptor } from './core/interceptors/rest-language.interceptor';
@@ -81,7 +78,8 @@ import { FixedSpaceLoadingBarComponent } from './shared/components/fixed-space-l
 import { LabeledSpinnerComponent } from './shared/components/labeled-spinner/labeled-spinner.component';
 import { PersonAddressComponent } from './search/person-detail/person-address/person-address.component';
 import { IfHasAnyRoleDirective } from './shared/directives/if-has-any-role.directive';
-import { ENV_INJECTION_TOKEN, VotingLibModule } from '@abraxas/voting-lib';
+import { ENV_INJECTION_TOKEN, GRPC_ERROR_MAPPER, VotingLibModule } from '@abraxas/voting-lib';
+import { GrpcStatusEvent } from '@ngx-grpc/common';
 import { FilterTableComponent } from './filter/filter-table/filter-table.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
@@ -183,8 +181,11 @@ import { MatMenuModule } from '@angular/material/menu';
       useValue: environment.env,
     },
     {
-      provide: ErrorHandler,
-      useClass: GlobalErrorHandler,
+      provide: GRPC_ERROR_MAPPER,
+      useValue: (error: unknown) =>
+        error instanceof GrpcStatusEvent
+          ? { code: error.statusCode, message: error.statusMessage }
+          : undefined,
     },
     {
       provide: HTTP_INTERCEPTORS,
@@ -194,11 +195,6 @@ import { MatMenuModule } from '@angular/material/menu';
     {
       provide: LOCALE_ID,
       useValue: 'de-CH',
-    },
-    {
-      provide: GRPC_INTERCEPTORS,
-      multi: true,
-      useClass: GrpcErrorToastInterceptor,
     },
     {
       provide: GRPC_INTERCEPTORS,
@@ -219,11 +215,6 @@ import { MatMenuModule } from '@angular/material/menu';
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: RestTenantInterceptor,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      multi: true,
-      useClass: RestErrorToastInterceptor,
     },
     {
       provide: HTTP_INTERCEPTORS,

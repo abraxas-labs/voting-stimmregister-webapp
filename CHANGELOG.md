@@ -1,4 +1,4 @@
-# ✨ Changelog (`v3.13.3`)
+# ✨ Changelog (`v3.14.0`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v3.13.3
-Previous version ---- v3.10.7
+This version -------- v3.14.0
+Previous version ---- v3.13.3
 Initial version ----- v1.77.15
-Total commits ------- 9
+Total commits ------- 2
 ```
+
+## [v3.14.0] - 2026-06-29
+
+### 🆕 Added
+
+- mfa for cobra file uploads
+
+## [v3.13.4] - 2026-05-06
+
+### 🔄 Changed
+
+- change sg theme to schalter-e
 
 ## [v3.13.3] - 2026-05-01
 

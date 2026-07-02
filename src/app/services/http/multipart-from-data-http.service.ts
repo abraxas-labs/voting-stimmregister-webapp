@@ -5,7 +5,7 @@
  */
 
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
@@ -14,9 +14,16 @@ import { firstValueFrom } from 'rxjs';
 export class MultipartFromDataHttpService {
   private readonly http = inject(HttpClient);
 
-  public async post<TData, TResponse>(url: string, data: TData, file?: File): Promise<TResponse> {
+  public async post<TData, TResponse>(
+    url: string,
+    data: TData,
+    file?: File,
+    headers?: Record<string, string>
+  ): Promise<TResponse> {
     return firstValueFrom(
-      this.http.post<TResponse>(url, MultipartFromDataHttpService.buildFormData(data, file))
+      this.http.post<TResponse>(url, MultipartFromDataHttpService.buildFormData(data, file), {
+        headers: headers ? new HttpHeaders(headers) : undefined,
+      })
     );
   }
 
