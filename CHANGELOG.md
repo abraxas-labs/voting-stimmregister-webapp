@@ -1,4 +1,4 @@
-# ✨ Changelog (`v3.14.0`)
+# ✨ Changelog (`v3.15.3`)
 
 All notable changes to this project will be documented in this file.
 
@@ -8,11 +8,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Version Info
 
 ```text
-This version -------- v3.14.0
-Previous version ---- v3.13.3
+This version -------- v3.15.3
+Previous version ---- v3.14.0
 Initial version ----- v1.77.15
-Total commits ------- 2
+Total commits ------- 4
 ```
+
+## [v3.15.3] - 2026-08-14
+
+### 🔄 Changed
+
+- show validation errors in person detail view
+
+## [v3.15.2] - 2026-08-12
+
+### 🔄 Changed
+
+- creating filter uses correct municipality id
+
+## [v3.15.1] - 2026-07-27
+
+### 🔄 Changed
+
+- fix vn filter label
+
+## [v3.15.0] - 2026-07-22
+
+### 🆕 Added
+
+- support custom header color
 
 ## [v3.14.0] - 2026-06-29
 

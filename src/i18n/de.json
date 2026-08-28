@@ -48,6 +48,7 @@
     "data-title": "Weitere Personendaten",
     "address-title": "Kontakt-Adresse",
     "information-title": "Alle Informationen",
+    "validation-errors-title": "Validierungsfehler",
     "domainOfInfluence-title": "Kreis-Informationen",
     "actuality": "Aktualisierung am ",
     "origins-title": "Heimatort(e)",
@@ -386,7 +387,7 @@
       "uploaded": "Hochladen erfolgreich."
     },
     "filter-labels": {
-      "vn": "AHVN13",
+      "vn": "Versichertennummer",
       "municipalityId": "BFS",
       "restrictedVotingAndElectionRightFederation": "Stimmverzicht",
       "age": "Alter",

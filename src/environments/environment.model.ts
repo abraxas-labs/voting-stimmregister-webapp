@@ -17,4 +17,5 @@ export interface Environment {
   restApiEndpoint: string;
   maxEvoterSharePercentage: number;
   thresholdEvoterSharePercentage: number;
+  customHeaderColor?: string;
 }

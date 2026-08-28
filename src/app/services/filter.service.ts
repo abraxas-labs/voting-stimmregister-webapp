@@ -4,7 +4,7 @@
  * For license information see LICENSE file.
  */
 
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { FilterDefinition } from '../models/filter/filterDefinition';
 import {
   FilterCriteriaModel,
@@ -13,6 +13,7 @@ import {
   FilterOperator,
   FilterReference,
   FilterServiceClient,
+  FilterServiceCreateFilterRequest,
   FilterServiceCreateFilterVersionRequest,
   FilterServiceDeleteFilterRequest,
   FilterServiceDeleteFilterVersionRequest,
@@ -22,7 +23,7 @@ import {
   FilterServiceGetSingleRequest,
   FilterServiceGetSingleResponse,
   FilterServiceRenameFilterVersionRequest,
-  FilterServiceSaveFilterRequest,
+  FilterServiceUpdateFilterRequest,
   FilterVersionModel,
 } from '@abraxas/voting-stimmregister-proto';
 import { lastValueFrom } from 'rxjs';
@@ -52,20 +53,25 @@ export class FilterService {
     );
   }
 
-  public async save(
+  public async create(name: string, description: string, criteria: FilterCriteria[]): Promise<string> {
+    const request = this.mapToFilterCreateRequest(name, description, criteria);
+    const response = await lastValueFrom(this.client.create(request));
+    return response.id!;
+  }
+
+  public async update(
     id: string,
     name: string,
     description: string,
     criteria: FilterCriteria[]
-  ): Promise<string> {
-    const request = this.mapToFilterSaveRequest(id, name, description, criteria);
-    const response = await lastValueFrom(this.client.save(request));
-    return response.id!;
+  ): Promise<void> {
+    const request = this.mapToFilterUpdateRequest(id, name, description, criteria);
+    await lastValueFrom(this.client.update(request));
   }
 
   public async delete(id: string): Promise<void> {
     const request = this.mapToFilterDeleteRequest(id);
-    return lastValueFrom(this.client.delete(request)).then((_) => {});
+    await lastValueFrom(this.client.delete(request));
   }
 
   public async duplicate(id: string): Promise<string> {
@@ -111,13 +117,25 @@ export class FilterService {
     };
   }
 
-  private mapToFilterSaveRequest(
+  private mapToFilterCreateRequest(
+    name: string,
+    description: string,
+    criteria: FilterCriteria[]
+  ): FilterServiceCreateFilterRequest {
+    const request = new FilterServiceCreateFilterRequest();
+    request.name = name;
+    request.description = description;
+    request.criteria = FilterService.mapToFilterCriteria(criteria);
+    return request;
+  }
+
+  private mapToFilterUpdateRequest(
     id: string,
     name: string,
     description: string,
     criteria: FilterCriteria[]
-  ): FilterServiceSaveFilterRequest {
-    const request = new FilterServiceSaveFilterRequest();
+  ): FilterServiceUpdateFilterRequest {
+    const request = new FilterServiceUpdateFilterRequest();
     request.filterId = id;
     request.name = name;
     request.description = description;

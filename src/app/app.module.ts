@@ -86,6 +86,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
+import { ValidationErrorMessagePipe } from './shared/pipes/validation-error-message.pipe';
 
 @NgModule({
   imports: [
@@ -173,6 +174,7 @@ import { MatMenuModule } from '@angular/material/menu';
     LabeledSpinnerComponent,
     PersonAddressComponent,
     FilterTableComponent,
+    ValidationErrorMessagePipe,
   ],
   bootstrap: [AppComponent],
   providers: [

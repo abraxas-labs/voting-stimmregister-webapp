@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import 'moment/locale/de';
 import { SnackbarService, ThemeService } from '@abraxas/voting-lib';
 import { firstValueFrom, Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-layout',
@@ -28,6 +29,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   public theme?: string;
   public customLogo?: string;
   public appTitle: string = '';
+  public customHeaderColor?: string;
 
   @ViewChild('snackbar') public snackbarComponent!: SnackbarComponent;
 
@@ -39,6 +41,8 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
   constructor() {
     const themeService = inject(ThemeService);
     const snackbarService = inject(SnackbarService);
+
+    this.customHeaderColor = environment.customHeaderColor;
 
     const snackbarSubscription = snackbarService.message$.subscribe((m) => {
       if (!this.snackbarComponent) {

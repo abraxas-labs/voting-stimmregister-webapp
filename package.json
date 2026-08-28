@@ -23,7 +23,7 @@
   "dependencies": {
     "@abraxas/base-components": "21.76.0",
     "@abraxas/voting-lib": "5.17.13",
-    "@abraxas/voting-stimmregister-proto": "3.11.0",
+    "@abraxas/voting-stimmregister-proto": "3.12.1",
     "@angular/animations": "21.2.8",
     "@angular/cdk": "21.2.6",
     "@angular/cdk-experimental": "21.2.6",

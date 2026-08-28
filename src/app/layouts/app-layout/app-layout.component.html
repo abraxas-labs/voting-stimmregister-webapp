@@ -14,6 +14,8 @@
           [customLogoPath]="customLogo ?? ''"
           (tenantChanged)="reload()"
           [showThemes]="false"
+          [style.--color-component-appheader-bg]="customHeaderColor"
+          [style.--color-component-appheader-border]="customHeaderColor"
         >
           <vo-lib-environment-chip></vo-lib-environment-chip>
         </bc-app-header-bar-iam>
@@ -22,6 +24,8 @@
           [link]="['/']"
           [title]="'misc.application-title.default' | translate"
           logo="VO"
+          [style.--color-component-appheader-bg]="customHeaderColor"
+          [style.--color-component-appheader-border]="customHeaderColor"
         ></bc-app-header-bar>
       }
       <ng-content select="[navigation]"></ng-content>

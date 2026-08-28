@@ -83,8 +83,14 @@ export class HandleFilterComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       const name = this.filterForm.value.name;
       const description = this.filterForm.value.description;
-      const id = await this.filterService.save(this.filter.id, name, description, this.filter.criteria);
-      await this.router.navigate(['-', 'filters', id]);
+      if (this.isNew) {
+        const id = await this.filterService.create(name, description, this.filter.criteria);
+        await this.router.navigate(['-', 'filters', id]);
+      } else {
+        await this.filterService.update(this.filter.id, name, description, this.filter.criteria);
+        await this.router.navigate(['-', 'filters', this.filter.id]);
+      }
+
       this.toast.success('shared.state.saved');
     } finally {
       this.isLoading = false;

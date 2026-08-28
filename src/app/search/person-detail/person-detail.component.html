@@ -188,95 +188,112 @@
             </bc-table>
           </bc-card-content>
         </bc-card>
-        <bc-card [sideStripe]="true">
-          <bc-card-header>
-            <bc-card-title [label]="'person.residence-title' | translate"></bc-card-title>
-          </bc-card-header>
-          <bc-card-content>
-            <bc-table [dataSource]="personAddressTypes">
-              <ng-container columnDef="typeOfResidence">
-                <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.addressTyp' | translate }}</th>
-                <td bc-data-cell *dataCellDef="let addressType">
-                  @if (addressType === addressTypes.ResidenceAddress) {
-                    <span>{{ 'person.residenceType.' + person.typeOfResidence | translate }}</span>
-                  } @else {
-                    <span>{{ 'person.moveInAddress' | translate }}</span>
-                  }
-                </td>
-              </ng-container>
-              <ng-container columnDef="residenceEntryDate">
-                <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.date' | translate }}</th>
-                <td bc-data-cell *dataCellDef="let addressType">
-                  @if (addressType === addressTypes.ResidenceAddress) {
-                    @if (person.residenceEntryDate) {
-                      <span>{{
-                        'person.residence-entry-date-value'
-                          | translate: { date: (person.residenceEntryDate | localDate) }
-                      }}</span>
-                    }
-                  } @else {
-                    @if (person.moveInArrivalDate) {
-                      <span>{{ person.moveInArrivalDate | localDate }}</span>
-                    }
-                  }
-                </td>
-              </ng-container>
-              <ng-container columnDef="residenceAddress">
-                <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.address' | translate }}</th>
-                <td bc-data-cell *dataCellDef="let addressType">
-                  <div class="address">
+        <div>
+          <bc-card [sideStripe]="true">
+            <bc-card-header>
+              <bc-card-title [label]="'person.residence-title' | translate"></bc-card-title>
+            </bc-card-header>
+            <bc-card-content>
+              <bc-table [dataSource]="personAddressTypes">
+                <ng-container columnDef="typeOfResidence">
+                  <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.addressTyp' | translate }}</th>
+                  <td bc-data-cell *dataCellDef="let addressType">
                     @if (addressType === addressTypes.ResidenceAddress) {
-                      <span
-                        >{{ person.residenceAddressStreet }} {{ person.residenceAddressHouseNumber }}</span
-                      >
-                      @if (person.residenceAddressExtensionLine1) {
-                        <span>{{ person.residenceAddressExtensionLine1 }}</span>
-                      }
-                      @if (person.residenceAddressExtensionLine2) {
-                        <span>{{ person.residenceAddressExtensionLine2 }}</span>
-                      }
-                      @if (person.residenceAddressPostOfficeBoxText) {
-                        <span>{{ person.residenceAddressPostOfficeBoxText }}</span>
-                      }
-                      <span>{{ person.residenceAddressZipCode }} {{ person.residenceAddressTown }}</span>
-                      @if (person.residenceCountry && person.residenceCountry !== 'CH') {
-                        <span>{{ person.residenceCountry }}</span>
+                      <span>{{ 'person.residenceType.' + person.typeOfResidence | translate }}</span>
+                    } @else {
+                      <span>{{ 'person.moveInAddress' | translate }}</span>
+                    }
+                  </td>
+                </ng-container>
+                <ng-container columnDef="residenceEntryDate">
+                  <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.date' | translate }}</th>
+                  <td bc-data-cell *dataCellDef="let addressType">
+                    @if (addressType === addressTypes.ResidenceAddress) {
+                      @if (person.residenceEntryDate) {
+                        <span>{{
+                            'person.residence-entry-date-value'
+                              | translate: { date: (person.residenceEntryDate | localDate) }
+                          }}</span>
                       }
                     } @else {
-                      @if (person.moveInMunicipalityName) {
-                        <span>{{ person.moveInMunicipalityName }}</span>
-                      }
-                      @if (person.moveInCantonAbbreviation) {
-                        <span>{{ person.moveInCantonAbbreviation }}</span>
-                      }
-                      @if (person.moveInComesFrom) {
-                        <span>{{ person.moveInComesFrom }}</span>
-                      }
-                      @if (person.moveInCountryNameShort && person.moveInCountryNameShort !== 'CH') {
-                        <span>{{ person.moveInCountryNameShort }}</span>
+                      @if (person.moveInArrivalDate) {
+                        <span>{{ person.moveInArrivalDate | localDate }}</span>
                       }
                     }
-                  </div>
-                </td>
-              </ng-container>
-              <tr
-                bc-header-row
-                *headerRowDef="
+                  </td>
+                </ng-container>
+                <ng-container columnDef="residenceAddress">
+                  <th bc-header-cell *headerCellDef>{{ 'reportingRelationship.address' | translate }}</th>
+                  <td bc-data-cell *dataCellDef="let addressType">
+                    <div class="address">
+                      @if (addressType === addressTypes.ResidenceAddress) {
+                        <span>{{ person.residenceAddressStreet }} {{ person.residenceAddressHouseNumber }}</span>
+                        @if (person.residenceAddressExtensionLine1) {
+                          <span>{{ person.residenceAddressExtensionLine1 }}</span>
+                        }
+                        @if (person.residenceAddressExtensionLine2) {
+                          <span>{{ person.residenceAddressExtensionLine2 }}</span>
+                        }
+                        @if (person.residenceAddressPostOfficeBoxText) {
+                          <span>{{ person.residenceAddressPostOfficeBoxText }}</span>
+                        }
+                        <span>{{ person.residenceAddressZipCode }} {{ person.residenceAddressTown }}</span>
+                        @if (person.residenceCountry && person.residenceCountry !== 'CH') {
+                          <span>{{ person.residenceCountry }}</span>
+                        }
+                      } @else {
+                        @if (person.moveInMunicipalityName) {
+                          <span>{{ person.moveInMunicipalityName }}</span>
+                        }
+                        @if (person.moveInCantonAbbreviation) {
+                          <span>{{ person.moveInCantonAbbreviation }}</span>
+                        }
+                        @if (person.moveInComesFrom) {
+                          <span>{{ person.moveInComesFrom }}</span>
+                        }
+                        @if (person.moveInCountryNameShort && person.moveInCountryNameShort !== 'CH') {
+                          <span>{{ person.moveInCountryNameShort }}</span>
+                        }
+                      }
+                    </div>
+                  </td>
+                </ng-container>
+                <tr
+                  bc-header-row
+                  *headerRowDef="
                   let row;
                   columns: ['typeOfResidence', 'residenceEntryDate', 'residenceAddress']
                 "
-              ></tr>
-              <tr
-                bc-data-row
-                *dataRowDef="
+                ></tr>
+                <tr
+                  bc-data-row
+                  *dataRowDef="
                   let row;
                   columns: ['typeOfResidence', 'residenceEntryDate', 'residenceAddress'];
                   let i = index
                 "
-              ></tr>
-            </bc-table>
-          </bc-card-content>
-        </bc-card>
+                ></tr>
+              </bc-table>
+            </bc-card-content>
+          </bc-card>
+          @if (person.hasValidationErrors) {
+            <bc-card [sideStripe]="true" class="mt-3">
+              <bc-card-header>
+                <bc-card-title [label]="'person.validation-errors-title' | translate"></bc-card-title>
+                <bc-icon class="ml-2" [iconColor]="'warning'" [icon]="'exclamation-circle-o'"></bc-icon>
+              </bc-card-header>
+              <bc-card-content>
+                <ul>
+                  @for (item of person.validationErrors | keyvalue; track item.key) {
+                    @for (message of item.value.messages; track message) {
+                      <li>{{ message | validationErrorMessage: item.key }}</li>
+                    }
+                  }
+                </ul>
+              </bc-card-content>
+            </bc-card>
+          }
+        </div>
       </div>
     </div>
   </div>
